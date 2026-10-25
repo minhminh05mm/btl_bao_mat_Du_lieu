@@ -1,0 +1,67 @@
+{
+  "hardware": {
+    "available_memory_bytes": 19905650688,
+    "physical_memory_bytes": 34114363392,
+    "cpu_model": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+    "cpu_model_source": "Windows processor registry",
+    "physical_cores": 4.0,
+    "memory_source": "Windows GlobalMemoryStatusEx",
+    "logical_processors_available": 8
+  },
+  "privacy": "No machine serial, user name, environment dump, credentials, proxy URLs or document contents.",
+  "collection_issues": [],
+  "phase": "after",
+  "schema_version": 1,
+  "run_id": "run-20261019-084335-960c43",
+  "wsl": {
+    "kernel": {
+      "status": "observed",
+      "value": "6.18.54.1-microsoft-standard-WSL2"
+    },
+    "memory": {
+      "MemTotal_bytes": 16648941568,
+      "MemAvailable_bytes": 15151243264,
+      "SwapTotal_bytes": 4294967296,
+      "SwapFree_bytes": 4294967296
+    },
+    "resource_config": {
+      "selected_settings": {},
+      "status": "not_present",
+      "note": "Only allowlisted resource/network settings are retained."
+    },
+    "processors": {
+      "status": "observed",
+      "value": "8"
+    },
+    "distribution": "bmdl-demo",
+    "docker_compose": {
+      "status": "observed",
+      "value": "5.1.4"
+    },
+    "docker_buildx": {
+      "status": "observed",
+      "value": "github.com/docker/buildx v0.34.1 e0b0e77d18d3379bc1e0d55f3b37de288d36fe47"
+    },
+    "os_release": {
+      "PRETTY_NAME": "Alpine Linux v3.24",
+      "NAME": "Alpine Linux",
+      "ID": "alpine",
+      "VERSION_ID": "3.24.2"
+    }
+  },
+  "captured_at_utc": "2026-10-19T15:07:24.8924757Z",
+  "windows": {
+    "architecture_cim": "64-bit",
+    "product_name_registry": "Windows 10 Home Single Language",
+    "platform_version": "10.0.26200.0",
+    "version_cim": "10.0.26200",
+    "caption": "Microsoft Windows 11 Home Single Language",
+    "build": "26200",
+    "is_64_bit": true,
+    "note": "Registry ProductName can be a legacy label; build and DisplayVersion are retained without inferring a marketing name.",
+    "update_build_revision": 8653,
+    "display_version": "25H2",
+    "caption_source": "Win32_OperatingSystem",
+    "edition_id": "CoreSingleLanguage"
+  }
+}

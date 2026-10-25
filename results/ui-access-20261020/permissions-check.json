@@ -1,0 +1,248 @@
+{
+  "results": [
+    {
+      "username": "alice",
+      "path": "/audit",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "b274bf1c-f6c0-4446-858d-4297478bda0c",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "alice",
+      "path": "/alerts",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "2cdceace-15f2-4bcc-9dcd-63d0bcaade21",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "alice",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "498fbda4-d175-44e2-9427-009968eb0d79",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "anna",
+      "path": "/audit",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "75d5aaa0-6fe8-4895-90d5-8df0373afec1",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "anna",
+      "path": "/alerts",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "fcdb8ac5-9d28-4ea2-b229-7067f2a0977f",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "anna",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "b8b47f16-14fa-4c6b-926b-950e14680499",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "adam",
+      "path": "/audit",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "351d9d69-b1b4-4208-9e84-84af1cb52d07",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "adam",
+      "path": "/alerts",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "6b98ab45-323b-4b3a-bbbe-87b496d6a9c3",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "adam",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "7d8ee368-0923-46bc-ac17-c043475d4a0d",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "bob",
+      "path": "/audit",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "2c023fbb-9012-45fa-bdf8-ea3fd094fe0b",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "bob",
+      "path": "/alerts",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "afeb8abd-5477-452c-b9a4-70b92c3787a3",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "bob",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "a080369d-bda2-46c2-a684-ed217b727d95",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "bea",
+      "path": "/audit",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "add1d458-4f5a-4c1d-8fce-63a5094b66d8",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "bea",
+      "path": "/alerts",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "cecc5b1a-aceb-43e2-972a-f199fc473070",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "bea",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "64e49b68-38c9-4132-991b-fb000483dff8",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "brian",
+      "path": "/audit",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "e07e5ff0-41b0-4196-a7c2-d33747425324",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "brian",
+      "path": "/alerts",
+      "status": 403,
+      "reason": "ROLE",
+      "request_id": "5297086c-7db9-4fac-a598-041cfe18a5ce",
+      "item_count": null,
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "username": "brian",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "18e4b1fd-d61f-4541-ae00-8233f924bcfb",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "auditor",
+      "path": "/audit",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "32d59129-5527-4b90-8d43-90251e1f4b46",
+      "item_count": 23,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "auditor",
+      "path": "/alerts",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "1cdd4de2-3cc6-421f-bbfa-cb9269a20f7c",
+      "item_count": 0,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "auditor",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "bce0ad0f-6b18-41e0-9941-4681fda89b6d",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "secadmin",
+      "path": "/audit",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "050f7aa3-44be-4f60-b3d9-748d52ddeb21",
+      "item_count": 5,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "secadmin",
+      "path": "/alerts",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "57e88751-b511-41fc-958b-a2125e467beb",
+      "item_count": 0,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "username": "secadmin",
+      "path": "/me",
+      "status": 200,
+      "reason": "ALLOW",
+      "request_id": "356ba939-138c-41ff-ba50-f01c43844e04",
+      "item_count": null,
+      "expected_status": 200,
+      "passed": true
+    }
+  ],
+  "scope": "Read-only business requests through local operator console, real JWT and matching client certificate. No fixture reset, data deletion or permission changes.",
+  "checked_at": "2026-10-20T06:57:06.2377461Z",
+  "passed": 24,
+  "total": 24
+}

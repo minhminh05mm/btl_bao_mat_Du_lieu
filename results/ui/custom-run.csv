@@ -1,0 +1,4 @@
+﻿id,title,expected,actual,passed,reason,latency_ms,request_id
+UI-CUSTOM-01,UI tùy chỉnh: Anna xem nội bộ A,"{""allow"": true, ""statuses"": [200]}","{""allow"": true, ""status"": 200, ""reason"": ""ALLOW"", ""body_length"": 176}",True,ALLOW,212.208,fafd43ae-7c6a-4290-becc-d1200787d9b3
+OPA-native,Kiểm thử Rego bằng OPA thật,all pass,"{""exit_code"": 0, ""tests"": 31}",True,,,
+JWT-native,"Xác minh chữ ký, issuer, audience, thời hạn token",all pass,"{""exit_code"": 0}",True,,,

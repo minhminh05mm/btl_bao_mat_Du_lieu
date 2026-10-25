@@ -1,0 +1,40 @@
+[
+  {
+    "path": "/lab/employees",
+    "case": "Malformed structure",
+    "status": 422,
+    "passed": true
+  },
+  {
+    "path": "/lab/employees",
+    "case": "Malformed structure",
+    "status": 422,
+    "passed": true
+  },
+  {
+    "path": "/lab/documents",
+    "case": "Malformed structure",
+    "status": 422,
+    "passed": true
+  },
+  {
+    "case": "Fresh account with declared snapshot attributes",
+    "status": 200,
+    "passed": true,
+    "username": "demo_nhan_vien"
+  },
+  {
+    "case": "Fresh account download",
+    "mode": "B0",
+    "status": 200,
+    "reason": "ALLOW",
+    "passed": true
+  },
+  {
+    "case": "Fresh account download",
+    "mode": "B1",
+    "status": 200,
+    "reason": "ALLOW",
+    "passed": true
+  }
+]

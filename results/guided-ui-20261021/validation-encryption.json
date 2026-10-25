@@ -1,0 +1,389 @@
+{
+  "id": "0468333e1b49a636",
+  "kind": "lesson",
+  "status": "completed",
+  "started_at": 1792571060.1232288,
+  "finished_at": 1792571063.6364808,
+  "events": [
+    {
+      "time": 1792571060.5097919,
+      "type": "lesson_step",
+      "step": {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Kiểm tra kho bằng quyền operator; dừng OpenBao thật trong thời gian ngắn rồi khởi động và unseal lại.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571060.5097804
+      }
+    },
+    {
+      "time": 1792571061.0065727,
+      "type": "lesson_step",
+      "step": {
+        "number": 2,
+        "title": "Kiểm tra dữ liệu đang lưu bằng quyền operator",
+        "explanation": "Chỉ hiện đoạn bản mã và kết quả kiểm tra; không đưa khóa hoặc bản rõ vào bằng chứng.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "plaintext_present": false,
+          "key_material_present": false,
+          "app_kms_admin_allowed": false,
+          "app_kms_admin_http_status": 403,
+          "kms_permission_probes": {
+            "read": 403,
+            "rotate": 403,
+            "export": 403
+          },
+          "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "expected_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "database_dump_bytes_scanned": 451463,
+          "private_paths_visible_to_api": {
+            "/runtime/secrets/bao-init.json": false,
+            "/runtime/secrets/config.json": false,
+            "/project/runtime/secrets": false,
+            "/runtime/pki/alice.key": false,
+            "/runtime/pki/server.key": false
+          },
+          "db_role": {
+            "rolsuper": false,
+            "rolcreatedb": false,
+            "rolcreaterole": false
+          },
+          "ciphertext_preview": "vault:v1:9OlH8MfoxUZUjgWPQxEZQdFMin0yzcanu/0URGFxlI2mG+hBuN+K8oMfph8ajkQLUBcVb4BwJZpSIEqQj…"
+        },
+        "at": 1792571061.0065672
+      }
+    },
+    {
+      "time": 1792571061.113814,
+      "type": "lesson_step",
+      "step": {
+        "number": 3,
+        "title": "Tải khi dịch vụ khóa sẵn sàng",
+        "explanation": "API giải mã theo quyền; bằng chứng chỉ lưu hash và số byte.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "e09ff8ae-5566-495d-8826-0a0fd0faee65",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 15713,
+          "content_released": true,
+          "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+        },
+        "at": 1792571061.11381
+      }
+    },
+    {
+      "time": 1792571062.3255594,
+      "type": "lesson_step",
+      "step": {
+        "number": 4,
+        "title": "Người vận hành dừng OpenBao thật",
+        "explanation": "Container dịch vụ khóa bị dừng trong bài; thao tác này ảnh hưởng khả năng giải mã của lab.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "service": "openbao",
+          "running": false
+        },
+        "at": 1792571062.3255548
+      }
+    },
+    {
+      "time": 1792571062.3699524,
+      "type": "lesson_step",
+      "step": {
+        "number": 5,
+        "title": "Thử tải khi không có dịch vụ khóa",
+        "explanation": "Không cấp bản rõ khi thành phần mật mã bắt buộc không sẵn sàng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 503,
+          "reason": "KMS_UNAVAILABLE"
+        },
+        "actual": {
+          "status": 503,
+          "reason": "KMS_UNAVAILABLE",
+          "request_id": "30ea8d64-8f4f-4907-acd2-b1edfe0f1ab3",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 91,
+          "content_released": false
+        },
+        "at": 1792571062.3699458
+      }
+    },
+    {
+      "time": 1792571063.5417776,
+      "type": "lesson_step",
+      "step": {
+        "number": 6,
+        "title": "Khôi phục OpenBao và tải lại",
+        "explanation": "Dịch vụ đã được khởi động và unseal lại.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "bf90d8f7-7791-46f1-9c93-df20ab914141",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 15713,
+          "content_released": true,
+          "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+        },
+        "at": 1792571063.5417707
+      }
+    },
+    {
+      "time": 1792571063.5418136,
+      "type": "lesson_step",
+      "step": {
+        "number": 7,
+        "title": "Đối chiếu hash nội dung trước và sau",
+        "explanation": "Kiểm tra các lần tải thành công thu được cùng nội dung, khớp hash đang lưu.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "before_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "after_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "stored_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+        },
+        "at": 1792571063.5418117
+      }
+    },
+    {
+      "time": 1792571063.630556,
+      "type": "lesson_step",
+      "step": {
+        "number": 8,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571063.6305473
+      }
+    }
+  ],
+  "result": {
+    "run_id": "lesson-20261021-082420-4e5625",
+    "lesson": {
+      "id": "encryption",
+      "title": "Kho lưu bản gì khi người dùng tải tài liệu?",
+      "category": "Mã hóa",
+      "question": "Nội dung được lưu dưới dạng bản mã và điều gì xảy ra khi dịch vụ khóa dừng?",
+      "expected": "Kho không chứa bản rõ của fixture; dừng OpenBao làm yêu cầu tải bị chặn; khôi phục thì tải lại đúng hash.",
+      "changes": "Kiểm tra kho bằng quyền operator; dừng OpenBao thật trong thời gian ngắn rồi khởi động và unseal lại.",
+      "core": "Mã hóa qua Transit, giới hạn quyền khóa, kiểm tra hash và mặc định từ chối.",
+      "compare": false
+    },
+    "steps": [
+      {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Kiểm tra kho bằng quyền operator; dừng OpenBao thật trong thời gian ngắn rồi khởi động và unseal lại.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571060.5097804
+      },
+      {
+        "number": 2,
+        "title": "Kiểm tra dữ liệu đang lưu bằng quyền operator",
+        "explanation": "Chỉ hiện đoạn bản mã và kết quả kiểm tra; không đưa khóa hoặc bản rõ vào bằng chứng.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "plaintext_present": false,
+          "key_material_present": false,
+          "app_kms_admin_allowed": false,
+          "app_kms_admin_http_status": 403,
+          "kms_permission_probes": {
+            "read": 403,
+            "rotate": 403,
+            "export": 403
+          },
+          "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "expected_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "database_dump_bytes_scanned": 451463,
+          "private_paths_visible_to_api": {
+            "/runtime/secrets/bao-init.json": false,
+            "/runtime/secrets/config.json": false,
+            "/project/runtime/secrets": false,
+            "/runtime/pki/alice.key": false,
+            "/runtime/pki/server.key": false
+          },
+          "db_role": {
+            "rolsuper": false,
+            "rolcreatedb": false,
+            "rolcreaterole": false
+          },
+          "ciphertext_preview": "vault:v1:9OlH8MfoxUZUjgWPQxEZQdFMin0yzcanu/0URGFxlI2mG+hBuN+K8oMfph8ajkQLUBcVb4BwJZpSIEqQj…"
+        },
+        "at": 1792571061.0065672
+      },
+      {
+        "number": 3,
+        "title": "Tải khi dịch vụ khóa sẵn sàng",
+        "explanation": "API giải mã theo quyền; bằng chứng chỉ lưu hash và số byte.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "e09ff8ae-5566-495d-8826-0a0fd0faee65",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 15713,
+          "content_released": true,
+          "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+        },
+        "at": 1792571061.11381
+      },
+      {
+        "number": 4,
+        "title": "Người vận hành dừng OpenBao thật",
+        "explanation": "Container dịch vụ khóa bị dừng trong bài; thao tác này ảnh hưởng khả năng giải mã của lab.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "service": "openbao",
+          "running": false
+        },
+        "at": 1792571062.3255548
+      },
+      {
+        "number": 5,
+        "title": "Thử tải khi không có dịch vụ khóa",
+        "explanation": "Không cấp bản rõ khi thành phần mật mã bắt buộc không sẵn sàng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 503,
+          "reason": "KMS_UNAVAILABLE"
+        },
+        "actual": {
+          "status": 503,
+          "reason": "KMS_UNAVAILABLE",
+          "request_id": "30ea8d64-8f4f-4907-acd2-b1edfe0f1ab3",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 91,
+          "content_released": false
+        },
+        "at": 1792571062.3699458
+      },
+      {
+        "number": 6,
+        "title": "Khôi phục OpenBao và tải lại",
+        "explanation": "Dịch vụ đã được khởi động và unseal lại.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "bf90d8f7-7791-46f1-9c93-df20ab914141",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 15713,
+          "content_released": true,
+          "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+        },
+        "at": 1792571063.5417707
+      },
+      {
+        "number": 7,
+        "title": "Đối chiếu hash nội dung trước và sau",
+        "explanation": "Kiểm tra các lần tải thành công thu được cùng nội dung, khớp hash đang lưu.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "before_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "after_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9",
+          "stored_sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+        },
+        "at": 1792571063.5418117
+      },
+      {
+        "number": 8,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571063.6305473
+      }
+    ],
+    "passed": true,
+    "compare": false,
+    "started_at": 1792571060.1238225,
+    "finished_at": 1792571063.6307151,
+    "cleanup": {
+      "restored": true,
+      "errors": []
+    }
+  },
+  "error": null
+}

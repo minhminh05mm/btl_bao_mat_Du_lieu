@@ -1,0 +1,159 @@
+[
+  {
+    "id": "X-GRANT-01",
+    "group": "custom-grant-risk",
+    "name": "B1: chưa có grant nên bị chặn",
+    "username": "brian",
+    "device": "brian",
+    "mode": "B1",
+    "method": "GET",
+    "path": "/documents/B-R02/download",
+    "setup": [],
+    "expected": {
+      "allow": false,
+      "statuses": [
+        403
+      ],
+      "reason": "RESTRICTED_GRANT"
+    }
+  },
+  {
+    "id": "X-GRANT-02",
+    "group": "custom-grant-risk",
+    "name": "B1: grant hợp lệ và thiết bị bình thường",
+    "username": "brian",
+    "device": "brian",
+    "mode": "B1",
+    "method": "GET",
+    "path": "/documents/B-R02/download",
+    "setup": [
+      {
+        "operation": "grant",
+        "principal_id": "brian",
+        "doc_id": "B-R02",
+        "ttl_seconds": 300
+      }
+    ],
+    "expected": {
+      "allow": true,
+      "statuses": [
+        200
+      ],
+      "reason": "ALLOW"
+    }
+  },
+  {
+    "id": "X-GRANT-03",
+    "group": "custom-grant-risk",
+    "name": "B1: có grant nhưng thiết bị rủi ro cao",
+    "username": "brian",
+    "device": "brian",
+    "mode": "B1",
+    "method": "GET",
+    "path": "/documents/B-R02/download",
+    "setup": [
+      {
+        "operation": "grant",
+        "principal_id": "brian",
+        "doc_id": "B-R02",
+        "ttl_seconds": 300
+      },
+      {
+        "operation": "device",
+        "id": "dev-brian",
+        "changes": {
+          "risk": "HIGH"
+        }
+      }
+    ],
+    "expected": {
+      "allow": false,
+      "statuses": [
+        403
+      ],
+      "reason": "RISK_HIGH"
+    }
+  },
+  {
+    "id": "X-GRANT-04",
+    "group": "custom-grant-risk",
+    "name": "B0: đối chứng bỏ qua rủi ro thiết bị",
+    "username": "brian",
+    "device": "brian",
+    "mode": "B0",
+    "method": "GET",
+    "path": "/documents/B-R02/download",
+    "setup": [
+      {
+        "operation": "grant",
+        "principal_id": "brian",
+        "doc_id": "B-R02",
+        "ttl_seconds": 300
+      },
+      {
+        "operation": "device",
+        "id": "dev-brian",
+        "changes": {
+          "risk": "HIGH"
+        }
+      }
+    ],
+    "expected": {
+      "allow": true,
+      "statuses": [
+        200
+      ],
+      "reason": "ALLOW"
+    }
+  },
+  {
+    "id": "X-GRANT-05",
+    "group": "custom-grant-risk",
+    "name": "B1: có grant nhưng dùng chứng thư bob",
+    "username": "brian",
+    "device": "bob",
+    "mode": "B1",
+    "method": "GET",
+    "path": "/documents/B-R02/download",
+    "setup": [
+      {
+        "operation": "grant",
+        "principal_id": "brian",
+        "doc_id": "B-R02",
+        "ttl_seconds": 300
+      }
+    ],
+    "expected": {
+      "allow": false,
+      "statuses": [
+        403
+      ],
+      "reason": "DEVICE_MISMATCH"
+    }
+  },
+  {
+    "id": "X-GRANT-06",
+    "group": "custom-grant-risk",
+    "name": "B0: vẫn chặn chứng thư sai chủ thể",
+    "username": "brian",
+    "device": "bob",
+    "mode": "B0",
+    "method": "GET",
+    "path": "/documents/B-R02/download",
+    "setup": [
+      {
+        "operation": "grant",
+        "principal_id": "brian",
+        "doc_id": "B-R02",
+        "ttl_seconds": 300
+      }
+    ],
+    "expected": {
+      "allow": false,
+      "statuses": [
+        403
+      ],
+      "reason": "DEVICE_MISMATCH"
+    }
+  }
+]

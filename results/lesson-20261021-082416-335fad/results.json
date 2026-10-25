@@ -1,0 +1,146 @@
+{
+  "run_id": "lesson-20261021-082416-335fad",
+  "lesson": {
+    "id": "revocation",
+    "title": "Đăng nhập rồi có giữ quyền mãi không?",
+    "category": "Quyền hiện tại",
+    "question": "Nếu Alice bị thu hồi quyền khi token còn hạn thì sao?",
+    "expected": "Yêu cầu mới dùng cùng token bị chặn sau thu hồi.",
+    "changes": "Tạm thu hồi active của Alice qua API secadmin rồi khôi phục thuộc tính sau bài.",
+    "core": "Đánh giá quyền hiện tại ở từng yêu cầu; phân biệt xác thực và cấp quyền.",
+    "compare": true
+  },
+  "steps": [
+    {
+      "number": 1,
+      "title": "Chuẩn bị điều kiện của bài",
+      "explanation": "Tạm thu hồi active của Alice qua API secadmin rồi khôi phục thuộc tính sau bài.",
+      "kind": "setup",
+      "passed": true,
+      "expected": null,
+      "actual": {
+        "prepared": true
+      },
+      "at": 1792571057.2808955
+    },
+    {
+      "number": 2,
+      "title": "Trước thu hồi: Alice tải nội bộ",
+      "explanation": "Token và quyền hiện tại đều hợp lệ.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 200,
+        "reason": "ALLOW"
+      },
+      "actual": {
+        "status": 200,
+        "reason": "ALLOW",
+        "request_id": "07f574c4-7ae2-4961-b675-71f85b154a66",
+        "username": "alice",
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 15713,
+        "content_released": true,
+        "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+      },
+      "at": 1792571057.402922
+    },
+    {
+      "number": 3,
+      "title": "Secadmin thu hồi quyền hiện tại của Alice",
+      "explanation": "Thay active qua API quản trị; token của Alice vẫn được giữ nguyên trong bài.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 200,
+        "reason": "ALLOW"
+      },
+      "actual": {
+        "status": 200,
+        "reason": "ALLOW",
+        "request_id": "6706a43e-9492-440c-8b05-30d2d6ed6ab5",
+        "username": "secadmin",
+        "method": "PUT",
+        "path": "/admin/principals/alice",
+        "mode": "B1",
+        "device": "secadmin",
+        "bytes": 116,
+        "content_released": false
+      },
+      "at": 1792571057.5463235
+    },
+    {
+      "number": 4,
+      "title": "Gửi lại bằng chính token cũ",
+      "explanation": "B1 đọc active hiện tại và chặn yêu cầu mới; không thu hồi các byte đã tải trước đó.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 403,
+        "reason": "INACTIVE"
+      },
+      "actual": {
+        "status": 403,
+        "reason": "INACTIVE",
+        "request_id": "6395d751-68f4-4489-bbb5-157b6495ee6b",
+        "username": "alice",
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 84,
+        "content_released": false
+      },
+      "at": 1792571057.5859027
+    },
+    {
+      "number": 5,
+      "title": "Đối chứng B0 với token cũ",
+      "explanation": "B0 vẫn dùng quyền chụp lúc đăng nhập trên đường đọc được đối chứng.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 200,
+        "reason": "ALLOW"
+      },
+      "actual": {
+        "status": 200,
+        "reason": "ALLOW",
+        "request_id": "f2b27bec-ec7b-473c-a28a-899f89a85925",
+        "username": "alice",
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "mode": "B0",
+        "device": "alice",
+        "bytes": 15713,
+        "content_released": true,
+        "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+      },
+      "at": 1792571057.64886
+    },
+    {
+      "number": 6,
+      "title": "Khôi phục các thuộc tính đã thay đổi",
+      "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+      "kind": "cleanup",
+      "passed": true,
+      "expected": null,
+      "actual": {
+        "restored": true,
+        "errors": []
+      },
+      "at": 1792571057.7285628
+    }
+  ],
+  "passed": true,
+  "compare": true,
+  "started_at": 1792571056.8689437,
+  "finished_at": 1792571057.7287881,
+  "cleanup": {
+    "restored": true,
+    "errors": []
+  }
+}

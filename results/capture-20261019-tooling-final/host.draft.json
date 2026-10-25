@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "phase": "draft",
+  "run_id": "capture-20261019-tooling-final",
+  "windows": {
+    "build": "26200",
+    "update_build_revision": 8653,
+    "product_name_registry": "Windows 10 Home Single Language",
+    "platform_version": "10.0.26200.0",
+    "is_64_bit": true,
+    "version_cim": "10.0.26200",
+    "caption_source": "Win32_OperatingSystem",
+    "architecture_cim": "64-bit",
+    "caption": "Microsoft Windows 11 Home Single Language",
+    "note": "Registry ProductName can be a legacy label; build and DisplayVersion are retained without inferring a marketing name.",
+    "display_version": "25H2",
+    "edition_id": "CoreSingleLanguage"
+  },
+  "captured_at_utc": "2026-10-19T08:41:53.0705112Z",
+  "hardware": {
+    "cpu_model_source": "Windows processor registry",
+    "logical_processors_available": 8,
+    "available_memory_bytes": 13782462464,
+    "cpu_model": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+    "memory_source": "Windows GlobalMemoryStatusEx",
+    "physical_cores": 4.0,
+    "physical_memory_bytes": 34114363392
+  },
+  "collection_issues": [],
+  "privacy": "No machine serial, user name, environment dump, credentials, proxy URLs or document contents.",
+  "wsl": {
+    "distribution": "bmdl-demo",
+    "resource_config": {
+      "selected_settings": {},
+      "note": "Only allowlisted resource/network settings are retained.",
+      "status": "not_present"
+    },
+    "processors": {
+      "value": "8",
+      "status": "observed"
+    },
+    "kernel": {
+      "value": "6.18.54.1-microsoft-standard-WSL2",
+      "status": "observed"
+    },
+    "os_release": {
+      "NAME": "Alpine Linux",
+      "VERSION_ID": "3.24.2",
+      "PRETTY_NAME": "Alpine Linux v3.24",
+      "ID": "alpine"
+    },
+    "docker_buildx": {
+      "value": "github.com/docker/buildx v0.34.1 e0b0e77d18d3379bc1e0d55f3b37de288d36fe47",
+      "status": "observed"
+    },
+    "memory": {
+      "SwapFree_bytes": 4294967296,
+      "MemTotal_bytes": 16648941568,
+      "MemAvailable_bytes": 15279804416,
+      "SwapTotal_bytes": 4294967296
+    },
+    "docker_compose": {
+      "value": "5.1.4",
+      "status": "observed"
+    }
+  }
+}

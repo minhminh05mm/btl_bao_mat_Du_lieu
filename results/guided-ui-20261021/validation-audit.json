@@ -1,0 +1,533 @@
+{
+  "id": "678fa9439df6fe16",
+  "kind": "lesson",
+  "status": "completed",
+  "started_at": 1792571064.2091925,
+  "finished_at": 1792571065.3311253,
+  "events": [
+    {
+      "time": 1792571064.7341802,
+      "type": "lesson_step",
+      "step": {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Gửi 5 yêu cầu thật. Nhật ký và cảnh báo phát sinh được giữ để quan sát; không đặt lại dữ liệu lab.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571064.7341723
+      }
+    },
+    {
+      "time": 1792571064.8450131,
+      "type": "lesson_step",
+      "step": {
+        "number": 2,
+        "title": "Lần truy cập ngoài quyền 1/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "4c9ff860-911a-465b-b06e-4f6baf3e1390",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.8450086
+      }
+    },
+    {
+      "time": 1792571064.8858373,
+      "type": "lesson_step",
+      "step": {
+        "number": 3,
+        "title": "Lần truy cập ngoài quyền 2/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "1cd6ee9b-cb3f-4882-9a19-1fa1f3ec5169",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.8858328
+      }
+    },
+    {
+      "time": 1792571064.9241328,
+      "type": "lesson_step",
+      "step": {
+        "number": 4,
+        "title": "Lần truy cập ngoài quyền 3/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "b5e1ab47-54a7-410a-aed9-658dab576197",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.9241292
+      }
+    },
+    {
+      "time": 1792571064.9650304,
+      "type": "lesson_step",
+      "step": {
+        "number": 5,
+        "title": "Lần truy cập ngoài quyền 4/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "6240f181-b903-4e8c-92a2-f72d901b73d1",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.9650254
+      }
+    },
+    {
+      "time": 1792571065.0051522,
+      "type": "lesson_step",
+      "step": {
+        "number": 6,
+        "title": "Lần truy cập ngoài quyền 5/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "e86841d1-1ac0-42b5-aa60-3ad542e72688",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571065.005148
+      }
+    },
+    {
+      "time": 1792571065.1357315,
+      "type": "lesson_step",
+      "step": {
+        "number": 7,
+        "title": "Auditor đọc nhật ký",
+        "explanation": "Đọc audit không đồng nghĩa được tải nội dung tài liệu.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "a8e32465-1b73-4db3-a16a-7b05e752524e",
+          "username": "auditor",
+          "method": "GET",
+          "path": "/audit",
+          "mode": "B1",
+          "device": "auditor",
+          "bytes": 40404,
+          "content_released": false,
+          "item_count": 101
+        },
+        "at": 1792571065.1357272
+      }
+    },
+    {
+      "time": 1792571065.135775,
+      "type": "lesson_step",
+      "step": {
+        "number": 8,
+        "title": "Tìm dấu vết của cả 5 yêu cầu",
+        "explanation": "Đối chiếu Request ID, không suy từ màu hiển thị.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "matched": 5,
+          "expected": 5,
+          "request_ids": [
+            "4c9ff860-911a-465b-b06e-4f6baf3e1390",
+            "1cd6ee9b-cb3f-4882-9a19-1fa1f3ec5169",
+            "b5e1ab47-54a7-410a-aed9-658dab576197",
+            "6240f181-b903-4e8c-92a2-f72d901b73d1",
+            "e86841d1-1ac0-42b5-aa60-3ad542e72688"
+          ]
+        },
+        "at": 1792571065.1357734
+      }
+    },
+    {
+      "time": 1792571065.1753664,
+      "type": "lesson_step",
+      "step": {
+        "number": 9,
+        "title": "Auditor đọc cảnh báo",
+        "explanation": "Cảnh báo có thể đã tồn tại trong cửa sổ thời gian; kiểm tra có cảnh báo cho Alice, không xóa lịch sử để tạo số mới.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "daad5299-0d07-417d-8a02-aae7bd31a002",
+          "username": "auditor",
+          "method": "GET",
+          "path": "/alerts",
+          "mode": "B1",
+          "device": "auditor",
+          "bytes": 237,
+          "content_released": false,
+          "item_count": 1
+        },
+        "at": 1792571065.1753616
+      }
+    },
+    {
+      "time": 1792571065.1754363,
+      "type": "lesson_step",
+      "step": {
+        "number": 10,
+        "title": "Kiểm tra cảnh báo theo ngưỡng",
+        "explanation": "Lab tổng hợp từ các yêu cầu bị từ chối, không lấy số cảnh báo giả.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "matching_alerts": 1,
+          "principal_id": "alice"
+        },
+        "at": 1792571065.175435
+      }
+    },
+    {
+      "time": 1792571065.3260598,
+      "type": "lesson_step",
+      "step": {
+        "number": 11,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571065.3260512
+      }
+    }
+  ],
+  "result": {
+    "run_id": "lesson-20261021-082424-1056b5",
+    "lesson": {
+      "id": "audit",
+      "title": "Ai ghi nhận các lần truy cập bị chặn?",
+      "category": "Nhật ký và cảnh báo",
+      "question": "Năm lần Alice truy cập ngoài quyền có dấu vết và cảnh báo không?",
+      "expected": "Cả 5 yêu cầu bị chặn, tìm được Request ID trong audit và cảnh báo của Alice.",
+      "changes": "Gửi 5 yêu cầu thật. Nhật ký và cảnh báo phát sinh được giữ để quan sát; không đặt lại dữ liệu lab.",
+      "core": "Liên kết phản hồi với audit; cảnh báo theo ngưỡng 5 lần từ chối trong 60 giây.",
+      "compare": false
+    },
+    "steps": [
+      {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Gửi 5 yêu cầu thật. Nhật ký và cảnh báo phát sinh được giữ để quan sát; không đặt lại dữ liệu lab.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571064.7341723
+      },
+      {
+        "number": 2,
+        "title": "Lần truy cập ngoài quyền 1/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "4c9ff860-911a-465b-b06e-4f6baf3e1390",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.8450086
+      },
+      {
+        "number": 3,
+        "title": "Lần truy cập ngoài quyền 2/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "1cd6ee9b-cb3f-4882-9a19-1fa1f3ec5169",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.8858328
+      },
+      {
+        "number": 4,
+        "title": "Lần truy cập ngoài quyền 3/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "b5e1ab47-54a7-410a-aed9-658dab576197",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.9241292
+      },
+      {
+        "number": 5,
+        "title": "Lần truy cập ngoài quyền 4/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "6240f181-b903-4e8c-92a2-f72d901b73d1",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571064.9650254
+      },
+      {
+        "number": 6,
+        "title": "Lần truy cập ngoài quyền 5/5",
+        "explanation": "Mỗi lần là một yêu cầu thật và có Request ID riêng.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "e86841d1-1ac0-42b5-aa60-3ad542e72688",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571065.005148
+      },
+      {
+        "number": 7,
+        "title": "Auditor đọc nhật ký",
+        "explanation": "Đọc audit không đồng nghĩa được tải nội dung tài liệu.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "a8e32465-1b73-4db3-a16a-7b05e752524e",
+          "username": "auditor",
+          "method": "GET",
+          "path": "/audit",
+          "mode": "B1",
+          "device": "auditor",
+          "bytes": 40404,
+          "content_released": false,
+          "item_count": 101
+        },
+        "at": 1792571065.1357272
+      },
+      {
+        "number": 8,
+        "title": "Tìm dấu vết của cả 5 yêu cầu",
+        "explanation": "Đối chiếu Request ID, không suy từ màu hiển thị.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "matched": 5,
+          "expected": 5,
+          "request_ids": [
+            "4c9ff860-911a-465b-b06e-4f6baf3e1390",
+            "1cd6ee9b-cb3f-4882-9a19-1fa1f3ec5169",
+            "b5e1ab47-54a7-410a-aed9-658dab576197",
+            "6240f181-b903-4e8c-92a2-f72d901b73d1",
+            "e86841d1-1ac0-42b5-aa60-3ad542e72688"
+          ]
+        },
+        "at": 1792571065.1357734
+      },
+      {
+        "number": 9,
+        "title": "Auditor đọc cảnh báo",
+        "explanation": "Cảnh báo có thể đã tồn tại trong cửa sổ thời gian; kiểm tra có cảnh báo cho Alice, không xóa lịch sử để tạo số mới.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "daad5299-0d07-417d-8a02-aae7bd31a002",
+          "username": "auditor",
+          "method": "GET",
+          "path": "/alerts",
+          "mode": "B1",
+          "device": "auditor",
+          "bytes": 237,
+          "content_released": false,
+          "item_count": 1
+        },
+        "at": 1792571065.1753616
+      },
+      {
+        "number": 10,
+        "title": "Kiểm tra cảnh báo theo ngưỡng",
+        "explanation": "Lab tổng hợp từ các yêu cầu bị từ chối, không lấy số cảnh báo giả.",
+        "kind": "inspection",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "matching_alerts": 1,
+          "principal_id": "alice"
+        },
+        "at": 1792571065.175435
+      },
+      {
+        "number": 11,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571065.3260512
+      }
+    ],
+    "passed": true,
+    "compare": false,
+    "started_at": 1792571064.2116702,
+    "finished_at": 1792571065.326257,
+    "cleanup": {
+      "restored": true,
+      "errors": []
+    }
+  },
+  "error": null
+}

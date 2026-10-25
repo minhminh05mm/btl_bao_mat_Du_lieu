@@ -1,0 +1,721 @@
+{
+  "schema_version": 2,
+  "run_id": "run-20261019-084335-960c43",
+  "phase": "after",
+  "captured_at_utc": "2026-10-19T15:07:27.504318+00:00",
+  "timezone_for_display": "Asia/Saigon",
+  "host": {
+    "hardware": {
+      "available_memory_bytes": 19905650688,
+      "physical_memory_bytes": 34114363392,
+      "cpu_model": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+      "cpu_model_source": "Windows processor registry",
+      "physical_cores": 4.0,
+      "memory_source": "Windows GlobalMemoryStatusEx",
+      "logical_processors_available": 8
+    },
+    "privacy": "No machine serial, user name, environment dump, credentials, proxy URLs or document contents.",
+    "collection_issues": [],
+    "phase": "after",
+    "schema_version": 1,
+    "run_id": "run-20261019-084335-960c43",
+    "wsl": {
+      "kernel": {
+        "status": "observed",
+        "value": "6.18.54.1-microsoft-standard-WSL2"
+      },
+      "memory": {
+        "MemTotal_bytes": 16648941568,
+        "MemAvailable_bytes": 15151243264,
+        "SwapTotal_bytes": 4294967296,
+        "SwapFree_bytes": 4294967296
+      },
+      "resource_config": {
+        "selected_settings": {},
+        "status": "not_present",
+        "note": "Only allowlisted resource/network settings are retained."
+      },
+      "processors": {
+        "status": "observed",
+        "value": "8"
+      },
+      "distribution": "bmdl-demo",
+      "docker_compose": {
+        "status": "observed",
+        "value": "5.1.4"
+      },
+      "docker_buildx": {
+        "status": "observed",
+        "value": "github.com/docker/buildx v0.34.1 e0b0e77d18d3379bc1e0d55f3b37de288d36fe47"
+      },
+      "os_release": {
+        "PRETTY_NAME": "Alpine Linux v3.24",
+        "NAME": "Alpine Linux",
+        "ID": "alpine",
+        "VERSION_ID": "3.24.2"
+      }
+    },
+    "captured_at_utc": "2026-10-19T15:07:24.8924757Z",
+    "windows": {
+      "architecture_cim": "64-bit",
+      "product_name_registry": "Windows 10 Home Single Language",
+      "platform_version": "10.0.26200.0",
+      "version_cim": "10.0.26200",
+      "caption": "Microsoft Windows 11 Home Single Language",
+      "build": "26200",
+      "is_64_bit": true,
+      "note": "Registry ProductName can be a legacy label; build and DisplayVersion are retained without inferring a marketing name.",
+      "update_build_revision": 8653,
+      "display_version": "25H2",
+      "caption_source": "Win32_OperatingSystem",
+      "edition_id": "CoreSingleLanguage"
+    }
+  },
+  "host_manifest_sha256": "1ae3ae9734dc33f51bfb1137af2ad96dc46062bd44ef368b9390e1e3d0897aed",
+  "engine": {
+    "Version": "29.8.2",
+    "ApiVersion": "1.56",
+    "Os": "linux",
+    "Arch": "amd64",
+    "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+    "GitCommit": "8af9fe3a36bab3e039862a2ab1cef1880c9b4d03",
+    "GoVersion": "go1.26.8",
+    "storage_driver": "overlayfs",
+    "cpus_available": 8,
+    "memory_available_bytes": 16648941568,
+    "networks": {
+      "bmdl_edge": {
+        "driver": "bridge",
+        "internal": false
+      },
+      "bmdl_control": {
+        "driver": "bridge",
+        "internal": true
+      },
+      "bmdl_data": {
+        "driver": "bridge",
+        "internal": true
+      }
+    }
+  },
+  "containers": {
+    "services": {
+      "api": {
+        "container_name": "bmdl-api-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:33:24.550186721Z",
+        "started_at_utc": "2026-10-19T08:45:08.07633743Z",
+        "configured_reference": "bmdl-app:local",
+        "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+        "repo_digests": [
+          "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "1000:1000",
+        "limits": {
+          "Memory": 805306368,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_control",
+          "bmdl_data"
+        ],
+        "published_ports": {},
+        "mount_destinations": [
+          {
+            "destination": "/runtime",
+            "read_only": false
+          },
+          {
+            "destination": "/project/app",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/pki",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/secrets",
+            "read_only": true
+          }
+        ]
+      },
+      "api-baseline": {
+        "container_name": "bmdl-api-baseline-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:33:24.551894789Z",
+        "started_at_utc": "2026-10-19T08:45:09.890171084Z",
+        "configured_reference": "bmdl-app:local",
+        "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+        "repo_digests": [
+          "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "1000:1000",
+        "limits": {
+          "Memory": 805306368,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_control",
+          "bmdl_data"
+        ],
+        "published_ports": {},
+        "mount_destinations": [
+          {
+            "destination": "/runtime",
+            "read_only": false
+          },
+          {
+            "destination": "/project/app",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/pki",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/secrets",
+            "read_only": true
+          }
+        ]
+      },
+      "gateway": {
+        "container_name": "bmdl-gateway-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:33:24.534719236Z",
+        "started_at_utc": "2026-10-19T08:31:35.093772836Z",
+        "configured_reference": "nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+        "image_id": "sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+        "repo_digests": [
+          "nginx@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "",
+        "limits": {
+          "Memory": 134217728,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_control",
+          "bmdl_edge"
+        ],
+        "published_ports": {
+          "8443/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "8443"
+            }
+          ],
+          "8444/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "8444"
+            }
+          ],
+          "9443/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "9443"
+            }
+          ]
+        },
+        "mount_destinations": [
+          {
+            "destination": "/etc/nginx/nginx.conf",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/pki/ca.crt",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/pki/server.crt",
+            "read_only": true
+          },
+          {
+            "destination": "/runtime/pki/server.key",
+            "read_only": true
+          }
+        ]
+      },
+      "keycloak": {
+        "container_name": "bmdl-keycloak-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:32:38.400590613Z",
+        "started_at_utc": "2026-10-19T08:31:35.081434209Z",
+        "configured_reference": "quay.io/keycloak/keycloak:26.8.0@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+        "image_id": "sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+        "repo_digests": [
+          "quay.io/keycloak/keycloak@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "1000",
+        "limits": {
+          "Memory": 1073741824,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_control"
+        ],
+        "published_ports": {},
+        "mount_destinations": [
+          {
+            "destination": "/opt/keycloak/data",
+            "read_only": false
+          },
+          {
+            "destination": "/opt/keycloak/data/import/bmdl.json",
+            "read_only": true
+          }
+        ]
+      },
+      "lab": {
+        "container_name": "bmdl-lab-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:33:24.519472454Z",
+        "started_at_utc": "2026-10-19T08:41:21.239300366Z",
+        "configured_reference": "bmdl-app:local",
+        "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+        "repo_digests": [
+          "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "0:0",
+        "limits": {
+          "Memory": 1073741824,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_control",
+          "bmdl_data",
+          "bmdl_edge"
+        ],
+        "published_ports": {
+          "8088/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "8088"
+            }
+          ]
+        },
+        "mount_destinations": [
+          {
+            "destination": "/project",
+            "read_only": false
+          },
+          {
+            "destination": "/runtime",
+            "read_only": false
+          },
+          {
+            "destination": "/var/run/docker.sock",
+            "read_only": false
+          }
+        ]
+      },
+      "opa": {
+        "container_name": "bmdl-opa-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:32:38.331367354Z",
+        "started_at_utc": "2026-10-19T08:44:48.964258003Z",
+        "configured_reference": "openpolicyagent/opa:1.21.2@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+        "image_id": "sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+        "repo_digests": [
+          "openpolicyagent/opa@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "1000:1000",
+        "limits": {
+          "Memory": 268435456,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_control"
+        ],
+        "published_ports": {},
+        "mount_destinations": [
+          {
+            "destination": "/policies",
+            "read_only": true
+          }
+        ]
+      },
+      "openbao": {
+        "container_name": "bmdl-openbao-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:32:38.456538234Z",
+        "started_at_utc": "2026-10-19T08:45:48.341434241Z",
+        "configured_reference": "ghcr.io/openbao/openbao:2.7.1@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+        "image_id": "sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+        "repo_digests": [
+          "ghcr.io/openbao/openbao@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "openbao",
+        "limits": {
+          "Memory": 536870912,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_data"
+        ],
+        "published_ports": {},
+        "mount_destinations": [
+          {
+            "destination": "/bao/data",
+            "read_only": false
+          },
+          {
+            "destination": "/bao/config/openbao.hcl",
+            "read_only": true
+          }
+        ]
+      },
+      "postgres": {
+        "container_name": "bmdl-postgres-1",
+        "state": "running",
+        "created_at_utc": "2026-10-15T07:32:38.494457746Z",
+        "started_at_utc": "2026-10-19T08:31:35.116518264Z",
+        "configured_reference": "postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+        "image_id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+        "repo_digests": [
+          "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+        ],
+        "architecture": "amd64",
+        "os": "linux",
+        "user": "",
+        "limits": {
+          "Memory": 536870912,
+          "MemorySwap": -1,
+          "NanoCpus": 0,
+          "CpuQuota": 0,
+          "CpuPeriod": 0,
+          "CpusetCpus": ""
+        },
+        "networks": [
+          "bmdl_data"
+        ],
+        "published_ports": {},
+        "mount_destinations": [
+          {
+            "destination": "/docker-entrypoint-initdb.d/01-bmdl.sql",
+            "read_only": true
+          },
+          {
+            "destination": "/var/lib/postgresql/data",
+            "read_only": false
+          }
+        ]
+      }
+    },
+    "versions": {
+      "gateway": {
+        "status": "observed",
+        "value": "1.30.6"
+      },
+      "restic": {
+        "status": "observed",
+        "value": "0.19.1"
+      },
+      "postgres": {
+        "status": "observed",
+        "value": "17.11"
+      },
+      "openbao": {
+        "status": "observed",
+        "value": "2.7.1"
+      },
+      "keycloak": {
+        "status": "observed",
+        "value": "26.8.0"
+      },
+      "opa": {
+        "status": "observed",
+        "value": "1.21.2"
+      }
+    }
+  },
+  "python": {
+    "version": "3.12.15",
+    "observed_in_service": "lab",
+    "same_image_services": [
+      "api",
+      "api-baseline",
+      "lab"
+    ],
+    "implementation": "CPython",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "container_os": {
+      "NAME": "Debian GNU/Linux",
+      "ID": "debian",
+      "PRETTY_NAME": "Debian GNU/Linux 13 (trixie)",
+      "VERSION_ID": "13",
+      "VERSION": "13 (trixie)",
+      "VERSION_CODENAME": "trixie",
+      "DEBIAN_VERSION_FULL": "13.7",
+      "HOME_URL": "https://www.debian.org/",
+      "SUPPORT_URL": "https://www.debian.org/support",
+      "BUG_REPORT_URL": "https://bugs.debian.org/"
+    },
+    "openssl": "OpenSSL 3.5.7 9 Jun 2026"
+  },
+  "dependencies": {
+    "fastapi": "0.143.1",
+    "uvicorn": "0.54.0",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "httpx": "0.28.1",
+    "PyJWT": "2.15.1",
+    "cryptography": "50.0.2",
+    "python-multipart": "0.0.32",
+    "docker": "7.2.0",
+    "pytest": "9.1.1",
+    "Jinja2": "3.1.6",
+    "psutil": "7.2.2",
+    "pydantic": "2.14.1",
+    "starlette": "1.8.0"
+  },
+  "installed_dependencies": {
+    "Jinja2": "3.1.6",
+    "MarkupSafe": "3.0.4",
+    "PyJWT": "2.15.1",
+    "Pygments": "2.21.0",
+    "annotated-doc": "0.0.5",
+    "annotated-types": "0.8.0",
+    "anyio": "4.15.1",
+    "certifi": "2026.7.22",
+    "cffi": "2.1.1",
+    "charset-normalizer": "3.5.2",
+    "click": "8.5.0",
+    "cryptography": "50.0.2",
+    "docker": "7.2.0",
+    "fastapi": "0.143.1",
+    "h11": "0.16.0",
+    "httpcore": "1.0.9",
+    "httpx": "0.28.1",
+    "idna": "3.20",
+    "iniconfig": "2.3.1",
+    "opentelemetry-api": "1.45.1",
+    "packaging": "26.3",
+    "pip": "25.0.1",
+    "pluggy": "1.6.0",
+    "psutil": "7.2.2",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "pycparser": "3.11",
+    "pydantic": "2.14.1",
+    "pydantic_core": "2.50.1",
+    "pytest": "9.1.1",
+    "python-multipart": "0.0.32",
+    "requests": "2.34.2",
+    "starlette": "1.8.0",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0",
+    "urllib3": "2.8.0",
+    "uvicorn": "0.54.0"
+  },
+  "dependency_lock_sha256": "0627a1cade108dcf8e0512ec27f129e48442f013c3a23d9991d598bf0c62b55e",
+  "source_sha256": {
+    "Run-Tests.ps1": "38ad17b7e1f61cc7b70319d2cafc4b38ea05510846607ade7b4426529fa9c680",
+    "Start-Demo.ps1": "f9d2091379db84ad174ab3ae073f584ec5dd2d995e95c4216fa6f90067ab8e43",
+    "Stop-Demo.ps1": "7bbe5861b95db1d634c633b14137eead6db3a731033abb5713f2e01b54d2531e",
+    "app/__init__.py": "c9cec0217262b7f109790981e941ec48850dd61a4217fccbf828847696b83364",
+    "app/bootstrap.py": "c7166f4a1bb5b9aed81a2767bf816b27329748d3d7c93531403d1ff0589bf294",
+    "app/config.py": "9607170ce63f1fd51f67ee7ba8d61a7c8e616544855bda57959931d23760aff2",
+    "app/db.py": "7a7b7d61055c9af4736cacc0eff834dd2d19f7d5344093c924b4ff22355899bf",
+    "app/fixture_data.py": "d270bf44636a7e4e629be985a63207c21a271abbc8650f4b216473a9fa209622",
+    "app/ledger.py": "e7e7df81591d78815f643f682dba7dba1664b07b518429116d4e156c36309bfe",
+    "app/main.py": "0764b29d97c02e13981ed548ef33bc525d7adef88930888ba29be6558bc36d5b",
+    "app/security.py": "54c7443f00dcff8441ccb4a82f461787e3cad6ca5583068fcfee2b2a7bfaf945",
+    "compose.lock.yaml": "0c51d174b807fb2f00070068fe55450855e9065b98bdfbd0197c8d1a07115c86",
+    "compose.yaml": "465da844c97c863840af6df2756c710b5515ea460384268cab1740ff3d7819eb",
+    "fixtures/cases.json": "fcb92b3e9d6d08cf93ef4ba6abfcf70dc3c8c2abcc84b8a043b277528d3f9e6b",
+    "fixtures/dataset-manifest.json": "43b7b6ee9c2c871a113c8a8ffc904205394f9a4669659700169241061088a6da",
+    "infra/Dockerfile": "01c7b9dcb543dd23fe7f35c6fe676552171aa442264b7abf4e7db0be07ee777d",
+    "infra/images.lock.json": "d542a309b1db6106b87722ab3c96d3270fbf3dccf43dfb9541c697dac9c547ed",
+    "infra/openbao.hcl": "21c794c94a2dacbd17d578c2a32a2009deca216a47f7a2c4ca2527490368765d",
+    "infra/postgres-init.sql": "a77a422c4ebcead9314f35c66c2f06f88713a18cf164cc297b07aeb2d1da8a45",
+    "lab/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lab/benchmark.py": "9e637bd04feb2850abea6f57f9ff41f16105a616f6815bf57870e9c48ae5da14",
+    "lab/client.py": "6d434b22d2350badb550ed5e03460fddd659e148c644f79bc9119cf3063efa71",
+    "lab/operations.py": "dd6515b6a4f99b5e3fd5203eabd4afba2696e812c94d71fd59d11324a3f23d88",
+    "lab/recovery.py": "3f7314d894feec983af476d02f3e8d71bbf6be21a62ebda9d08a002058989f8b",
+    "lab/runner.py": "3c55ef7faeab18b68431d5977ae6654fd1bd0080cbdd53e8da552c6b6fa0bc9c",
+    "lab/static/app.css": "6afddf30db88eda9d3742d4cf0e8c14f79ad4b2279a43f506635c11e5409ffe3",
+    "lab/static/app.js": "fd4520455abfb8a4dee8d87f228e2da4f9c4c0180ce550870f08329e00a48f1b",
+    "lab/templates/index.html": "f9cbbf0542e49d2d0a40346afcc6b0b2a18ebb8c5a067d1827b46d63cb2f02d2",
+    "lab/wait_ready.py": "c989cbcac67ac80f94de23ec8e30a273235ff3f4502f0c522dacc6c22af61e68",
+    "lab/web.py": "4360e1c91d93be3a20594d3ba241b9e5c5d2f85cacce90bf737eb52ce4e84402",
+    "policies/bmdl.rego": "e17e9827f17e7d06df4fe048d21a8750d3896bc079c33271b381da371d29cf8d",
+    "policies/bmdl_test.rego": "8e7747d6a00fe753b04069f9a8f9753517c703ae374f0a665c635ba4163de374",
+    "requirements.lock.txt": "0627a1cade108dcf8e0512ec27f129e48442f013c3a23d9991d598bf0c62b55e",
+    "requirements.txt": "ffef0856764abe90d64cd1bb99abe5d23effd2e524f7680f4efd2b56ffdaeeec",
+    "scripts/Assert-Space.ps1": "28db1f5a04b5a0f2ebbfe038e0ccd84bde26d8fe0d844ca1486046a7b4660363",
+    "scripts/Capture-Environment.ps1": "520c635f1d5c10404074833b33398086e84f7acbd4611f9f1fd7d1c1f66d363f",
+    "scripts/capture_environment.py": "14ff99d2d515e5f8360ba46ceb48e42f6422567ba02659ca3af5acb6213f9e46",
+    "scripts/check_environment_manifest.py": "1d425fb40317eeaa6b99004c2438d434aeafaaf9ece93cbcef517562a6a9db8f",
+    "scripts/check_exports.py": "969656333fed55f80a74c974cb4146c24e239e378a30943018611ead81b99b1b",
+    "scripts/environment_manifest.py": "32656bba5f12be4c712d5f828cbe4ac507a834ba0e8b7c9c0af0635953a03fd3",
+    "scripts/fix_gateway_dns.py": "61bf13dfff554210ba1a7d378881320717dcfe2fffc12cd926c585d24cbd0e18",
+    "scripts/prepare.py": "24ce0814fbde6a7fa22c3fa9195ed571e6e1d8b8e687322e5113763e5a93bd69",
+    "scripts/start-engine.sh": "8a4c6f4990f1f578530870b4713dcae4eacb605d3e56f24480fcc548cd6ad6ac",
+    "scripts/summarize_results.py": "d540360a069af9079825d0cdcd0b8aba3e56b29e3d264e58f5b19fa2db352660",
+    "scripts/test_environment_manifest.py": "01fad89b76bede03df2478acd2730f15aa7f5c0c60b11aa20167d9a5530edca7",
+    "tests/__init__.py": "a9b98218b75ccc1f3071be1f2597772c2927289e0035542b9e3a70d119f35140",
+    "tests/make_oracle.py": "eb861fe31fe18382c26e5f208785d360207379cd0c3d0cc8f62d7a7311a3538e",
+    "tests/run_smoke.py": "ff761902e29fec200c501b9dde36927feced62404ea7302296671313674e31f4",
+    "tests/scenarios.py": "3fa6830337e90bbb3ce84b992b0a764fe4253fd16e85efefc245fc1bbca458b7",
+    "tests/test_auth_verifier.py": "a4f16b3cbb121c0571d2a9127c1db80d33edcdc9dbca419afb14948894cb7167",
+    "tests/test_fixture_data.py": "4e0d3839c9f7a180a31440a980ac819bc49297d4077b1e46412c32eba02bdbc1",
+    "tests/test_fixture_seed.py": "1cf61c1506afa56b037c95513ab2b500fc0e0062d04cf79ee0f14c1733cca0d0",
+    "tests/test_oracle.py": "d96745ed3855c76bd9b30c5e4a9b7efb2bb874f424e7c8b63f7a3119077f267e",
+    "tests/test_scenario_harness.py": "0117d68ff776c1b99c03b89aab592513ecb2cb98745028f3177211bef01a92a5"
+  },
+  "dataset": {
+    "status": "observed",
+    "transaction_read_only": true,
+    "postgresql_server_version": "17.11",
+    "seed_version": "1",
+    "dataset_version": "business-v1",
+    "document_count": 20,
+    "active_documents": 20,
+    "principals": 8,
+    "active_principals": 8,
+    "devices": 8,
+    "grants": 0,
+    "documents_by_label": {
+      "confidential": 6,
+      "internal": 10,
+      "restricted": 4
+    },
+    "documents_by_department": {
+      "A": 10,
+      "B": 10
+    },
+    "document_id_content_sha256": "d498b22ab8845591bf4ed93b413d0d9a395dc2c7bdbb224070331430126d5c9f",
+    "logical_state_sha256": "af0b1cd0c7fd782279e63c41127e6d43e02cae6030ce9c1ca7d12947beafbc2a",
+    "hash_definition": "Sorted compact JSON. Content hash uses ID+stored plaintext SHA256. Logical state adds ownership/labels/versions/rights/device flags/grants, excluding timestamps. No plaintext or full DB dump."
+  },
+  "test_conditions": {
+    "source": "Static source/config; actual statistics are recorded in run.summary",
+    "policy_constants": {
+      "POLICY_VERSION": "bmdl-v1",
+      "SIGNAL_TTL": 60,
+      "LABEL_DAYS": {
+        "internal": 180,
+        "confidential": 90,
+        "restricted": 30
+      }
+    },
+    "oracle_cases": 40,
+    "dataset_definition_sha256": {
+      "app/db.py": "7a7b7d61055c9af4736cacc0eff834dd2d19f7d5344093c924b4ff22355899bf",
+      "app/fixture_data.py": "d270bf44636a7e4e629be985a63207c21a271abbc8650f4b216473a9fa209622",
+      "tests/make_oracle.py": "eb861fe31fe18382c26e5f208785d360207379cd0c3d0cc8f62d7a7311a3538e"
+    },
+    "dataset_catalog": {
+      "path": "fixtures/dataset-manifest.json",
+      "sha256": "43b7b6ee9c2c871a113c8a8ffc904205394f9a4669659700169241061088a6da",
+      "dataset_version": "business-v1",
+      "document_count": 20,
+      "document_id_content_sha256": "d498b22ab8845591bf4ed93b413d0d9a395dc2c7bdbb224070331430126d5c9f"
+    },
+    "oracle_schema_version": 1,
+    "oracle_expected_allow": 20,
+    "oracle_expected_deny": 20,
+    "oracle_sha256": "fcb92b3e9d6d08cf93ef4ba6abfcf70dc3c8c2abcc84b8a043b277528d3f9e6b",
+    "transport": "Real Keycloak JWT, TLS validation and client certificate through gateway",
+    "declared_operator_condition": "One trusted local operator, no concurrent operator mutations",
+    "limitations": [
+      "Simulated device/risk signals",
+      "Synthetic data; one shared physical host"
+    ]
+  },
+  "run": {
+    "status": "observed",
+    "run_id": "run-20261019-084335-960c43",
+    "results_sha256": "02251466f88c2dc7e7aefec8521e935c5683ae147dad9a3a4bd97c753f857bff",
+    "summary": {
+      "run_id": "run-20261019-084335-960c43",
+      "started_at": 1792399415.631996,
+      "finished_at": 1792399554.38898,
+      "duration_seconds": 138.757,
+      "total": 127,
+      "passed": 127,
+      "failed": 0,
+      "expected_allow_count": 42,
+      "expected_deny_count": 73,
+      "false_allow": 0,
+      "false_deny": 0,
+      "false_allow_rate": 0.0,
+      "false_deny_rate": 0.0,
+      "scope": "Real gateway/JWT/mTLS/OPA/Transit/PostgreSQL; synthetic fixtures; unit tests reported separately"
+    },
+    "record_count": 127
+  },
+  "privacy": {
+    "credentials_environment_dumped": false,
+    "document_contents_dumped": false,
+    "excluded": [
+      ".env",
+      "runtime/secrets",
+      "private keys",
+      "JWTs",
+      "database URLs",
+      "generated infra/nginx.conf and infra/keycloak-realm.json"
+    ]
+  },
+  "comparison": {
+    "before_manifest": "results/capture-20261019-final/environment.before.json",
+    "before_manifest_sha256": "4226de9dcdca3e6042a19308979a9e3fc6f04cb38d402b73f9a436f6dbaf23db",
+    "before_captured_at_utc": "2026-10-19T08:43:22.000287+00:00",
+    "source_unchanged": true,
+    "changed_source_files": [],
+    "service_images_unchanged": true,
+    "dataset_content_unchanged": true,
+    "logical_state_unchanged": true,
+    "interpretation": "Suites intentionally mutate state. Differences are reported, never reset by capture."
+  },
+  "validation": {
+    "complete": true,
+    "errors": [],
+    "warnings": []
+  }
+}

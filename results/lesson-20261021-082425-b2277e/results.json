@@ -1,0 +1,168 @@
+{
+  "run_id": "lesson-20261021-082425-b2277e",
+  "lesson": {
+    "id": "lifecycle",
+    "title": "Khi nào được đọc và được xóa tài liệu?",
+    "category": "Vòng đời dữ liệu",
+    "question": "Hết hạn đọc và legal hold ảnh hưởng việc xóa như thế nào?",
+    "expected": "Chưa hết hạn không được xóa; hết hạn bị chặn đọc; legal hold chặn xóa; xóa hợp lệ tạo tombstone.",
+    "changes": "Tạm đổi thời hạn và legal hold của A-I01; thực hiện xóa logic trong DB demo rồi hoàn tác thuộc tính thử nghiệm. Không xóa file nguồn trên máy.",
+    "core": "Lưu giữ, bảo toàn tài liệu, xóa logic và dấu vết phục hồi.",
+    "compare": false
+  },
+  "steps": [
+    {
+      "number": 1,
+      "title": "Chuẩn bị điều kiện của bài",
+      "explanation": "Tạm đổi thời hạn và legal hold của A-I01; thực hiện xóa logic trong DB demo rồi hoàn tác thuộc tính thử nghiệm. Không xóa file nguồn trên máy.",
+      "kind": "setup",
+      "passed": true,
+      "expected": null,
+      "actual": {
+        "prepared": true
+      },
+      "at": 1792571066.261536
+    },
+    {
+      "number": 2,
+      "title": "Chưa hết thời hạn: yêu cầu xóa",
+      "explanation": "Bị chặn để giữ tài liệu trong thời hạn quy định của lab.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 403,
+        "reason": "RETENTION_ACTIVE"
+      },
+      "actual": {
+        "status": 403,
+        "reason": "RETENTION_ACTIVE",
+        "request_id": "e1454ce8-1750-43c6-9892-28b600bf87f0",
+        "username": "alice",
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 92,
+        "content_released": false
+      },
+      "at": 1792571066.3724515
+    },
+    {
+      "number": 3,
+      "title": "Hết thời hạn: thử đọc",
+      "explanation": "Thời hạn đọc đã hết, dù Alice vẫn sở hữu tài liệu.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 403,
+        "reason": "RETENTION_EXPIRED"
+      },
+      "actual": {
+        "status": 403,
+        "reason": "RETENTION_EXPIRED",
+        "request_id": "b66ca213-bba3-4aca-85f4-12e17112ee12",
+        "username": "alice",
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 93,
+        "content_released": false
+      },
+      "at": 1792571066.4533985
+    },
+    {
+      "number": 4,
+      "title": "Có legal hold: thử xóa",
+      "explanation": "Giữ tài liệu để bảo toàn nên chưa được xóa.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 403,
+        "reason": "LEGAL_HOLD"
+      },
+      "actual": {
+        "status": 403,
+        "reason": "LEGAL_HOLD",
+        "request_id": "4a1de440-fd17-4575-a225-91c5009d2cb0",
+        "username": "alice",
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 86,
+        "content_released": false
+      },
+      "at": 1792571066.5028315
+    },
+    {
+      "number": 5,
+      "title": "Bỏ hold và xóa logic trong kho demo",
+      "explanation": "API đánh dấu deleted và ghi tombstone; file nguồn, bản mã và backup vẫn được giữ.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 200,
+        "reason": "ALLOW"
+      },
+      "actual": {
+        "status": 200,
+        "reason": "ALLOW",
+        "request_id": "f1e4f6da-190d-411b-8534-d184bc230814",
+        "username": "alice",
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 72,
+        "content_released": false
+      },
+      "at": 1792571066.7993119
+    },
+    {
+      "number": 6,
+      "title": "Thử đọc tài liệu đã đánh dấu xóa",
+      "explanation": "API không phục vụ lại tài liệu này.",
+      "kind": "request",
+      "passed": true,
+      "expected": {
+        "status": 404,
+        "reason": "NOT_FOUND"
+      },
+      "actual": {
+        "status": 404,
+        "reason": "NOT_FOUND",
+        "request_id": "66d69a81-a5ee-487f-9b81-a3543135b7dc",
+        "username": "alice",
+        "method": "GET",
+        "path": "/documents/A-I01/metadata",
+        "mode": "B1",
+        "device": "alice",
+        "bytes": 85,
+        "content_released": false
+      },
+      "at": 1792571066.8417664
+    },
+    {
+      "number": 7,
+      "title": "Khôi phục các thuộc tính đã thay đổi",
+      "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+      "kind": "cleanup",
+      "passed": true,
+      "expected": null,
+      "actual": {
+        "restored": true,
+        "errors": []
+      },
+      "at": 1792571066.938336
+    }
+  ],
+  "passed": true,
+  "compare": false,
+  "started_at": 1792571065.8569374,
+  "finished_at": 1792571066.9385612,
+  "cleanup": {
+    "restored": true,
+    "errors": []
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "run_id": "run-20261021-085704-91efc1",
+  "summary": {
+    "run_id": "run-20261021-085704-91efc1",
+    "started_at": 1792573024.6393936,
+    "finished_at": 1792573123.2055137,
+    "duration_seconds": 98.566,
+    "total": 127,
+    "passed": 127,
+    "failed": 0,
+    "expected_allow_count": 42,
+    "expected_deny_count": 73,
+    "false_allow": 0,
+    "false_deny": 0,
+    "false_allow_rate": 0.0,
+    "false_deny_rate": 0.0,
+    "scope": "Real gateway/JWT/mTLS/OPA/Transit/PostgreSQL; synthetic fixtures; unit tests reported separately",
+    "output_dir": "/project/results/run-20261021-085704-91efc1"
+  }
+}

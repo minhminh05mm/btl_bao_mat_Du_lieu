@@ -1,0 +1,203 @@
+{
+  "total": 39,
+  "passed": 39,
+  "failed": 0,
+  "created_documents": [
+    "U-839fc78f5acd4e5490b8ee9c943bdc18",
+    "U-a4222d99764749f9a8e8bcc31793278e",
+    "U-83ba4baa833d46639dd49eb0cc60bf24"
+  ],
+  "checks": [
+    {
+      "test": "Staff cannot create restricted document",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Manager needs explicit approver",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Business API rejects restricted upload without approval",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Denied creates do not save documents",
+      "passed": true
+    },
+    {
+      "test": "Restricted upload saves directly with approved label",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Creator can download immediately",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Live download permission allows metadata edit",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Disallowed editor alice",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Disallowed editor brian",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Disallowed editor secadmin",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Disallowed editor auditor",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Restricted content cannot be downgraded through editor",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Download permission cannot change lifecycle legal_hold",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Download permission cannot change lifecycle retention_until",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Grant form rejects cross-department manager",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Explicit approver can revoke document permission",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Revocation blocks GET",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Revocation blocks PUT",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Metadata visibility does not imply download/edit permission",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "B0 cannot bypass mutation permission",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Grant panel can restore download and edit permission",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Edit works after grant is restored",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Expired grant blocks edit with actionable error",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Restore usable test document",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Approval authenticated by security admin",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Creation approval is bound to approved principal",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Audit failure rejects creation",
+      "passed": true,
+      "status": 503
+    },
+    {
+      "test": "Failed creation leaves no partial document",
+      "passed": true
+    },
+    {
+      "test": "Rolled-back approval remains usable for a successful retry",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Consumed approval cannot be replayed",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Approval authenticated by security admin",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Expired creation approval rejected",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Ordinary upload remains usable",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Approval authenticated by security admin",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Upgrade approval cannot be used for new upload",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Label upgrade binds grant to new document version",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Upgraded restricted document receives shorter retention limit",
+      "passed": true
+    },
+    {
+      "test": "Approved upgrade remains downloadable",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Existing documents retained",
+      "passed": true
+    }
+  ]
+}

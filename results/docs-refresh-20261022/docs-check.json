@@ -1,0 +1,107 @@
+{
+  "files": 14,
+  "bytes_before": 269089,
+  "bytes_after": 123796,
+  "missing_links": [],
+  "format_issues": [],
+  "inventory": [
+    {
+      "file": "README.md",
+      "bytes_before": 9001,
+      "bytes_after": 4908,
+      "lines": 59,
+      "sha256": "dbcc214865e22002ef66fb5ed81fb6cc20ece8be166a78c989af334dcf63f7f7"
+    },
+    {
+      "file": "huong_dan_nhanh.md",
+      "bytes_before": 10871,
+      "bytes_after": 10059,
+      "lines": 109,
+      "sha256": "b400ee5a72c7651b9bcc97d40e6d8e7482b348364de7e3d861425ba3fa10934f"
+    },
+    {
+      "file": "giai_thich_ky_hieu.md",
+      "bytes_before": 48297,
+      "bytes_after": 15652,
+      "lines": 181,
+      "sha256": "7a3472668ffb7419f8b767f39fdc1e777f5e20bfe985a9afb27ce574eff4ef45"
+    },
+    {
+      "file": "results/SUMMARY.md",
+      "bytes_before": 3493,
+      "bytes_after": 4617,
+      "lines": 40,
+      "sha256": "d930b2574d60f3ec252ae5380b1931c9d6f14c8a4d965ff4e6a1a31294c47ec6"
+    },
+    {
+      "file": "docs/architecture.md",
+      "bytes_before": 32477,
+      "bytes_after": 14649,
+      "lines": 123,
+      "sha256": "93828e6269ef905cef84103fe103b259e8dd52598bbaebe6a9410254d1a7d21e"
+    },
+    {
+      "file": "docs/data-classification.md",
+      "bytes_before": 13675,
+      "bytes_after": 15319,
+      "lines": 82,
+      "sha256": "b4905c4d11303da780d5f30852ab42e3750374d657e34f78bf87a4c8299ebc4c"
+    },
+    {
+      "file": "docs/demo-guide.md",
+      "bytes_before": 23922,
+      "bytes_after": 604,
+      "lines": 12,
+      "sha256": "9caac43ed056e873035973371c5b4126bd14545672f50874100e96065f8ee909"
+    },
+    {
+      "file": "docs/design-approved.md",
+      "bytes_before": 46042,
+      "bytes_after": 6504,
+      "lines": 42,
+      "sha256": "e476c9a9ecff6782e1918bfb6fd884e7992588e56345db17f8731d0d253bec6b"
+    },
+    {
+      "file": "docs/huong-dan-trinh-dien-va-doi-chieu-bao-cao.md",
+      "bytes_before": 29954,
+      "bytes_after": 11907,
+      "lines": 124,
+      "sha256": "ef73207685aee71de03d682cb19d367db2514746e188d89efdb281f9a7929531"
+    },
+    {
+      "file": "docs/implementation-contract.md",
+      "bytes_before": 11711,
+      "bytes_after": 11928,
+      "lines": 118,
+      "sha256": "b1a4f0587987007fa5f14df5841706819099d58575cbb23c2cccc609125adc0f"
+    },
+    {
+      "file": "docs/reproduction.md",
+      "bytes_before": 5908,
+      "bytes_after": 6792,
+      "lines": 80,
+      "sha256": "08dc9dcd11f4cf63e03c5a3983e51c7d60f45b321914c3be941ab3644362aff8"
+    },
+    {
+      "file": "docs/software-inventory.md",
+      "bytes_before": 11319,
+      "bytes_after": 5285,
+      "lines": 58,
+      "sha256": "820bebfa7f64d9245da9dca32de810863ad1c08f4ac2b58a148591f8268d6905"
+    },
+    {
+      "file": "docs/test-matrix.md",
+      "bytes_before": 13339,
+      "bytes_after": 8202,
+      "lines": 67,
+      "sha256": "dd89bfe7ddba9890f1675bea5819ad9401b80759ea6a73296d460ed04036e9c3"
+    },
+    {
+      "file": "docs/verification-review.md",
+      "bytes_before": 9080,
+      "bytes_after": 7370,
+      "lines": 50,
+      "sha256": "d0c71b518024b73c66b3620b40ecc8e6d931e7d0dcb5ef871481a91c87b2973f"
+    }
+  ]
+}

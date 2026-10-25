@@ -1,0 +1,35 @@
+{
+  "snapshot_id": "b58050e6b7188f3e4360fd537960f61cc4e3d56c6c0202619948c0aed62ed68d",
+  "run_id": "bmdl-restore-9da9896e0eca46ff",
+  "isolated": true,
+  "reconciled": true,
+  "contents_verified": true,
+  "verified_documents": 20,
+  "available_documents": 20,
+  "blocked_documents": 0,
+  "revocation_checks": {
+    "inactive_principals": 1,
+    "revoked_devices": 0,
+    "tombstones": 0,
+    "revoked_grants": 1
+  },
+  "reconciliation": {
+    "events_available": 1,
+    "events_applied": 1,
+    "absent_post_snapshot_entities": []
+  },
+  "reconciliation_checked_at": 1792571093.2083626,
+  "rto_seconds": 17.574,
+  "rpo_seconds": 6.288,
+  "rpo_definition": "Snapshot age at recovery start; exposure window, not a measurement of lost business content",
+  "checkpoint": 1792571069.3461611,
+  "pair_hashes_verified": true,
+  "internal_network": true,
+  "published_ports": false,
+  "primary_replaced": false,
+  "kms_driver": "actual isolated OpenBao Raft snapshot",
+  "recovery_material_external": true,
+  "database_driver": "actual isolated PostgreSQL pg_restore",
+  "temporary_resources_removed": true,
+  "cleanup_errors": []
+}

@@ -1,0 +1,12 @@
+{
+  "restoration_passed": true,
+  "differences": [],
+  "new_grants": 1,
+  "new_grants_all_revoked": true,
+  "services_all_running": true,
+  "principals": 8,
+  "documents": 20,
+  "version_counters_monotonic": true,
+  "new_snapshots": 2,
+  "note": "Signal timestamps may advance under auto_refresh. Business update timestamps and permission/document version counters retain the experiment history. Audit, alerts and evidence are retained."
+}

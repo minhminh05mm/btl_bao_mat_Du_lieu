@@ -1,0 +1,24 @@
+[
+  {
+    "path": "owner",
+    "csrf": true,
+    "expected": 422,
+    "status": 422,
+    "passed": true
+  },
+  {
+    "path": "unknown",
+    "csrf": true,
+    "expected": 404,
+    "status": 404,
+    "passed": true
+  },
+  {
+    "path": "owner",
+    "csrf": false,
+    "expected": 403,
+    "status": 403,
+    "passed": true,
+    "note": "Fresh cookie session without retained request headers"
+  }
+]

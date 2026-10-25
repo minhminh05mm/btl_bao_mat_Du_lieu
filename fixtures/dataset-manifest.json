@@ -1,0 +1,275 @@
+{
+  "dataset_version": "business-v1",
+  "synthetic": true,
+  "scope": "20 tài liệu của doanh nghiệp mô phỏng BMDL; nhãn theo giả định nghiệp vụ, không phải cấp độ bí mật nhà nước.",
+  "classification_method": "Chủ sở hữu dữ liệu xác định thủ công từ nội dung và hậu quả tiết lộ; không phân loại tự động. Nhãn hiện hành do máy chủ kiểm soát.",
+  "departments": {
+    "A": "Phòng Kinh doanh",
+    "B": "Phòng Vận hành"
+  },
+  "rules": {
+    "internal": {
+      "name": "Nội bộ",
+      "criterion": "Quy trình, lịch làm việc hoặc số liệu tổng hợp phục vụ phối hợp trong phòng; không có giá chào riêng, phương án đàm phán hay điểm yếu chưa xử lý.",
+      "consequence": "Phát tán sai phạm vi có thể gây nhầm lẫn công việc; chưa trực tiếp làm lộ bí quyết giao dịch hoặc phương án bảo vệ trọng yếu.",
+      "access": "Nhân viên và trưởng phòng cùng phòng ban được đọc khi danh tính, thiết bị và thời hạn hợp lệ.",
+      "retention_days": 180
+    },
+    "confidential": {
+      "name": "Mật",
+      "criterion": "Chi tiết chưa công bố của một dự án, báo giá, phân tích sự cố hoặc dự toán; chủ sở hữu và trưởng phòng cần sử dụng theo nhiệm vụ.",
+      "consequence": "Tiết lộ có thể làm giảm lợi thế thương mại hoặc làm lộ chi tiết vận hành của một dự án.",
+      "access": "Nhân viên chỉ đọc tài liệu do mình sở hữu trong cùng phòng; trưởng phòng đọc trong phạm vi phòng.",
+      "retention_days": 90
+    },
+    "restricted": {
+      "name": "Hạn chế",
+      "criterion": "Ngưỡng quyết định ngoại lệ, phân bổ ngân sách chưa duyệt, điểm yếu chưa khắc phục hoặc kế hoạch phục hồi trọng yếu cần phê duyệt giới hạn theo người nhận, tài liệu, phiên bản, hành động và thời hạn.",
+      "consequence": "Tiết lộ có thể làm mất giới hạn thương lượng hoặc tăng khả năng gây gián đoạn dịch vụ; chỉ quyền sở hữu chưa đủ để tải nội dung.",
+      "access": "Trưởng phòng cùng phòng chỉ tải khi có grant đúng người, tài liệu, phiên bản, hành động và thời hạn; người duyệt khác người nhận.",
+      "retention_days": 30
+    }
+  },
+  "items": [
+    {
+      "id": "A-I01",
+      "title": "Quy trình tiếp nhận yêu cầu báo giá.txt",
+      "owner_id": "alice",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "internal",
+      "document_type": "Quy trình nghiệp vụ",
+      "classification_reason": "Hướng dẫn thao tác chung trong phòng, không chứa báo giá của từng khách hàng hoặc mức chiết khấu riêng.",
+      "size_bytes": 15713,
+      "sha256": "13c98433da56c9749e8b090e42aa23e008cc768cff2dc4b36e417f3a7dd3daa9"
+    },
+    {
+      "id": "A-I02",
+      "title": "Lịch phối hợp tư vấn tháng 10.txt",
+      "owner_id": "anna",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "internal",
+      "document_type": "Lịch phối hợp",
+      "classification_reason": "Lịch phân ca theo vai trò để dùng trong phòng; không có thông tin liên hệ cá nhân hoặc nội dung đàm phán của khách hàng.",
+      "size_bytes": 15624,
+      "sha256": "f82e5eda12a2f4162a2ae7af35db94c19d4871d9e02dc65caa2a8a856111c59c"
+    },
+    {
+      "id": "A-I03",
+      "title": "Hướng dẫn cập nhật cơ hội bán hàng.txt",
+      "owner_id": "adam",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "internal",
+      "document_type": "Hướng dẫn sử dụng",
+      "classification_reason": "Quy ước cập nhật trạng thái cơ hội, không bao gồm mức giá, xác suất trúng thầu riêng hoặc cam kết thương mại chưa công bố.",
+      "size_bytes": 15732,
+      "sha256": "525900e5f1d23cf757a4e89e6b99654239eb718507f8aa9717bef35924aa9fb1"
+    },
+    {
+      "id": "A-I04",
+      "title": "Báo cáo tổng hợp lượt tư vấn tháng 10.txt",
+      "owner_id": "alice",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "internal",
+      "document_type": "Báo cáo tổng hợp",
+      "classification_reason": "Chỉ chứa số lượt theo nhóm dịch vụ, không gắn khách hàng cụ thể, giá bán hoặc hồ sơ giao dịch.",
+      "size_bytes": 15822,
+      "sha256": "afad022963372198fd3b5589e0bde4bf581f11bc3edb62ea91171dea0450e9f0"
+    },
+    {
+      "id": "A-I05",
+      "title": "Biên bản họp điều phối kinh doanh.txt",
+      "owner_id": "anna",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "internal",
+      "document_type": "Biên bản phối hợp",
+      "classification_reason": "Ghi nhận việc chung và trách nhiệm theo vai trò; không ghi giá chào hoặc giới hạn thương lượng của hợp đồng.",
+      "size_bytes": 15651,
+      "sha256": "df7d35ea865c22ec5ef89ecae27f73484e90f20413803e9c54c3d54ddb8bb46c"
+    },
+    {
+      "id": "A-C01",
+      "title": "Dự thảo báo giá dự án Mây Xanh.txt",
+      "owner_id": "alice",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "confidential",
+      "document_type": "Dự thảo thương mại",
+      "classification_reason": "Có đơn giá và cấu phần chào bán chưa công bố của một dự án; chia sẻ rộng có thể làm lộ lợi thế thương mại.",
+      "size_bytes": 15783,
+      "sha256": "78ef7e78d2d238bcb66dd816c7051d08fb857a7179a2f6193dd2560439c9d80b"
+    },
+    {
+      "id": "A-C02",
+      "title": "Kế hoạch đàm phán dự án Bình Minh.txt",
+      "owner_id": "anna",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "confidential",
+      "document_type": "Kế hoạch đàm phán",
+      "classification_reason": "Có thứ tự ưu tiên và điều kiện trao đổi riêng của dự án chưa công bố; chỉ chủ hồ sơ và trưởng phòng cần dùng.",
+      "size_bytes": 15820,
+      "sha256": "9aa4d03bcb8c6000e4d0275988453d358be5316cbf9a73a9cb5f28c13e207835"
+    },
+    {
+      "id": "A-C03",
+      "title": "Dự toán doanh thu theo cơ hội quý IV.txt",
+      "owner_id": "adam",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "confidential",
+      "document_type": "Dự toán kinh doanh",
+      "classification_reason": "Có giá trị và dự kiến chuyển đổi theo từng cơ hội; đây là thông tin quản trị chưa công bố của phòng.",
+      "size_bytes": 15784,
+      "sha256": "22e2f1a4fd69516c9ce817b9b4d7aa3e186b36a0ad1ce0467734a0fb57d2bbdf"
+    },
+    {
+      "id": "A-R01",
+      "title": "Ngưỡng chiết khấu ngoại lệ dự án Mây Xanh.txt",
+      "owner_id": "alice",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "restricted",
+      "document_type": "Phương án thương mại ngoại lệ",
+      "classification_reason": "Có giới hạn nhượng bộ và mức chấp thuận ngoại lệ chưa công bố; lộ nội dung có thể làm mất giới hạn thương lượng, nên cần grant giới hạn theo người nhận, tài liệu, phiên bản, hành động và thời hạn.",
+      "size_bytes": 16202,
+      "sha256": "6d2e019241251116aa45edbfadc84a51134fe0dff732a9d8d305b92bb138d44a"
+    },
+    {
+      "id": "A-R02",
+      "title": "Phương án phân bổ ngân sách kinh doanh.txt",
+      "owner_id": "adam",
+      "department": "A",
+      "department_name": "Phòng Kinh doanh",
+      "baseline_label": "restricted",
+      "document_type": "Phương án ngân sách chưa duyệt",
+      "classification_reason": "Có mức dự phòng và thứ tự ưu tiên ngân sách chưa được duyệt; tác động vượt một hồ sơ dự án, nên giới hạn người sử dụng bằng phê duyệt có thời hạn.",
+      "size_bytes": 15938,
+      "sha256": "77ab88b7f8c63af0934ae18699789c8316d06ea464f7c40f594790cce9219ecb"
+    },
+    {
+      "id": "B-I01",
+      "title": "Quy trình bàn giao ca vận hành.txt",
+      "owner_id": "bob",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "internal",
+      "document_type": "Quy trình vận hành",
+      "classification_reason": "Hướng dẫn bàn giao việc chung theo vai trò, không chứa sơ đồ hệ thống hoặc phương án ứng phó trọng yếu.",
+      "size_bytes": 15633,
+      "sha256": "3c344eba44e13e1d8dc9ec972e7341a5bbabef687bfb7ebc09fecf8ef70f9a0a"
+    },
+    {
+      "id": "B-I02",
+      "title": "Lịch bảo trì dịch vụ nội bộ.txt",
+      "owner_id": "bea",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "internal",
+      "document_type": "Lịch bảo trì",
+      "classification_reason": "Chỉ mô tả khung phối hợp và nhóm công việc; không có địa chỉ hệ thống, cấu hình đặc quyền hoặc điểm yếu chưa khắc phục.",
+      "size_bytes": 15740,
+      "sha256": "af1b78e0133be0f56c982fcba96cb56aac172781fb73a40fcbdb00d200cae4f3"
+    },
+    {
+      "id": "B-I03",
+      "title": "Hướng dẫn ghi nhận sự cố.txt",
+      "owner_id": "brian",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "internal",
+      "document_type": "Hướng dẫn nghiệp vụ",
+      "classification_reason": "Biểu mẫu và quy ước ghi nhận chung, không bao gồm nguyên nhân kỹ thuật hoặc lỗ hổng của từng hệ thống.",
+      "size_bytes": 15820,
+      "sha256": "68e112f99ae81a64b3aa5adec2366424a075d54548b8df4c56eb7eedd6f6964c"
+    },
+    {
+      "id": "B-I04",
+      "title": "Báo cáo tổng hợp yêu cầu hỗ trợ.txt",
+      "owner_id": "bob",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "internal",
+      "document_type": "Báo cáo tổng hợp",
+      "classification_reason": "Chỉ có số lượng yêu cầu theo nhóm và thời gian xử lý tổng hợp, không lộ hồ sơ riêng hoặc thông số hạ tầng.",
+      "size_bytes": 15732,
+      "sha256": "3be8b5d250588b29d500028ee383e4e20afe9569d32af0659eb4506b875fa932"
+    },
+    {
+      "id": "B-I05",
+      "title": "Biên bản họp cải tiến vận hành.txt",
+      "owner_id": "bea",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "internal",
+      "document_type": "Biên bản phối hợp",
+      "classification_reason": "Nêu việc cải tiến quy trình chung, không mô tả điểm yếu hoặc thứ tự khôi phục dịch vụ trọng yếu.",
+      "size_bytes": 15783,
+      "sha256": "516262a1dd4b90763d8cdc3f6dce3af94c526c881ece4442d90ae76038b4b08f"
+    },
+    {
+      "id": "B-C01",
+      "title": "Kế hoạch triển khai dịch vụ dự án Mây Xanh.txt",
+      "owner_id": "bob",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "confidential",
+      "document_type": "Kế hoạch triển khai dự án",
+      "classification_reason": "Có trình tự và nhu cầu nguồn lực riêng của dự án chưa công bố; chia sẻ rộng có thể làm lộ chi tiết vận hành.",
+      "size_bytes": 15753,
+      "sha256": "43ba8bc0cc7453487817725c960a65ae8749a6db8d99ce2035434ac66c56ba34"
+    },
+    {
+      "id": "B-C02",
+      "title": "Biên bản phân tích sự cố dự án Bình Minh.txt",
+      "owner_id": "bea",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "confidential",
+      "document_type": "Phân tích sự cố dự án",
+      "classification_reason": "Có diễn biến và ảnh hưởng của một sự cố mô phỏng riêng; hồ sơ do chủ phụ trách và trưởng phòng sử dụng để xử lý.",
+      "size_bytes": 15842,
+      "sha256": "7c1aa150befea899e43bb8ee1214e56b068080226dc51a6f92910f219f728c92"
+    },
+    {
+      "id": "B-C03",
+      "title": "Dự toán chi phí vận hành quý IV.txt",
+      "owner_id": "brian",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "confidential",
+      "document_type": "Dự toán vận hành",
+      "classification_reason": "Có chi phí dự kiến theo nhóm dịch vụ và phương án sử dụng nguồn lực chưa công bố của phòng.",
+      "size_bytes": 15792,
+      "sha256": "ffdbc0aaf574614226266aadce929196f37b8dcfc891e72e9db306d2eacde3e0"
+    },
+    {
+      "id": "B-R01",
+      "title": "Phương án xử lý điểm yếu chưa khắc phục.txt",
+      "owner_id": "bob",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "restricted",
+      "document_type": "Phương án bảo vệ trọng yếu",
+      "classification_reason": "Nêu tình trạng chưa khắc phục và thứ tự giảm thiểu của tài nguyên mô phỏng; lộ nội dung có thể tăng nguy cơ gián đoạn, nên chỉ tải bằng grant hợp lệ.",
+      "size_bytes": 16060,
+      "sha256": "aa411a075839b2995a150edda2a69898bfc514f28f361e4676c1a724ad44028a"
+    },
+    {
+      "id": "B-R02",
+      "title": "Kế hoạch phục hồi dịch vụ trọng yếu.txt",
+      "owner_id": "brian",
+      "department": "B",
+      "department_name": "Phòng Vận hành",
+      "baseline_label": "restricted",
+      "document_type": "Kế hoạch phục hồi trọng yếu",
+      "classification_reason": "Có thứ tự phục hồi và điều kiện chuyển sang phục vụ của dịch vụ trọng yếu; cần kiểm soát người nhận và thời hạn phê duyệt riêng.",
+      "size_bytes": 16055,
+      "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+    }
+  ]
+}

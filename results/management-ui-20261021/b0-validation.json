@@ -1,0 +1,16 @@
+[
+  {
+    "username": "demo_an_673d",
+    "mode": "B0",
+    "status": 200,
+    "reason": "ALLOW",
+    "passed": true
+  },
+  {
+    "username": "demo_binh_1e49",
+    "mode": "B0",
+    "status": 200,
+    "reason": "ALLOW",
+    "passed": true
+  }
+]

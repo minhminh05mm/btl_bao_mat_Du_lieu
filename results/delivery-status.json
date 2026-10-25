@@ -1,0 +1,14 @@
+{
+  "ready": true,
+  "web": "http://localhost:8088",
+  "project": "E:\\btl_bao_mat_Du_lieu",
+  "final_run": "run-20261015-073412-8c81dc",
+  "passed": 127,
+  "failed": 0,
+  "benchmark": "benchmark-20261015-072521-15829f",
+  "measured_requests": 2400,
+  "benchmark_errors": 0,
+  "system_drive_free_gb": 22.6,
+  "data_drive_free_gb": 113.52,
+  "updated_at": "2026-10-15T14:38:19.0035315+07:00"
+}

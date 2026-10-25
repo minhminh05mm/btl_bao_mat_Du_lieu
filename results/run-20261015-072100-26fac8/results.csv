@@ -1,0 +1,4 @@
+﻿id,group,name,passed,expected,actual,request_id,latency_ms,evidence
+UI-CUSTOM-01,oracle,UI tùy chỉnh: Anna xem nội bộ A,True,"{""allow"": true, ""statuses"": [200]}","{""allow"": true, ""status"": 200, ""reason"": ""ALLOW"", ""body_length"": 176}",fafd43ae-7c6a-4290-becc-d1200787d9b3,212.208,"{""method"": ""GET"", ""path"": ""/documents/A-I01/metadata"", ""username"": ""anna"", ""mode"": ""B1""}"
+OPA-native,unit-policy,Kiểm thử Rego bằng OPA thật,True,all pass,"{""exit_code"": 0, ""tests"": 31}",,,
+JWT-native,unit-identity,"Xác minh chữ ký, issuer, audience, thời hạn token",True,all pass,"{""exit_code"": 0}",,,

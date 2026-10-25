@@ -1,0 +1,252 @@
+{
+  "id": "697aafb5be2c40fa",
+  "kind": "lesson",
+  "status": "completed",
+  "started_at": 1792571805.7415173,
+  "finished_at": 1792571806.8023796,
+  "events": [
+    {
+      "time": 1792571806.313278,
+      "type": "lesson_step",
+      "step": {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Chuẩn bị Alice, Adam và tài liệu A-C02 theo điều kiện bài; thử tải cùng tài liệu.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571806.3132627
+      }
+    },
+    {
+      "time": 1792571806.4568534,
+      "type": "lesson_step",
+      "step": {
+        "number": 2,
+        "title": "Alice xin tải tài liệu mật của Anna",
+        "explanation": "B1 xét chủ sở hữu: cùng phòng chưa đủ quyền cho nhân viên.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "f968321c-f85e-4f1b-bb69-20879b2705a1",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571806.4568453
+      }
+    },
+    {
+      "time": 1792571806.5866191,
+      "type": "lesson_step",
+      "step": {
+        "number": 3,
+        "title": "Adam tải cùng tài liệu",
+        "explanation": "Trưởng phòng cùng phòng được đọc tài liệu mật.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "351f20d9-dc71-4936-abc9-776a6501e7bb",
+          "username": "adam",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "adam",
+          "bytes": 15820,
+          "content_released": true,
+          "sha256": "9aa4d03bcb8c6000e4d0275988453d358be5316cbf9a73a9cb5f28c13e207835"
+        },
+        "at": 1792571806.586613
+      }
+    },
+    {
+      "time": 1792571806.6788487,
+      "type": "lesson_step",
+      "step": {
+        "number": 4,
+        "title": "Đối chứng B0: Alice tải cùng tài liệu",
+        "explanation": "B0 cố ý chỉ dùng quyền đọc đơn giản hơn; ca này minh họa tác dụng của điều kiện chủ sở hữu.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "bcc0075f-c915-49c4-bf35-c29798f957a2",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B0",
+          "device": "alice",
+          "bytes": 15820,
+          "content_released": true,
+          "sha256": "9aa4d03bcb8c6000e4d0275988453d358be5316cbf9a73a9cb5f28c13e207835"
+        },
+        "at": 1792571806.6788414
+      }
+    },
+    {
+      "time": 1792571806.798041,
+      "type": "lesson_step",
+      "step": {
+        "number": 5,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571806.798032
+      }
+    }
+  ],
+  "result": {
+    "run_id": "lesson-20261021-083645-612ff4",
+    "lesson": {
+      "id": "owner",
+      "title": "Ai được đọc tài liệu của Anna?",
+      "category": "Quyền đọc",
+      "question": "Cùng phòng có đủ quyền đọc một tài liệu mật không?",
+      "expected": "Alice bị chặn; trưởng phòng Adam được đọc.",
+      "changes": "Chuẩn bị Alice, Adam và tài liệu A-C02 theo điều kiện bài; thử tải cùng tài liệu.",
+      "core": "Phân quyền theo vai trò, phòng ban, chủ sở hữu và nhãn.",
+      "compare": true
+    },
+    "steps": [
+      {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Chuẩn bị Alice, Adam và tài liệu A-C02 theo điều kiện bài; thử tải cùng tài liệu.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571806.3132627
+      },
+      {
+        "number": 2,
+        "title": "Alice xin tải tài liệu mật của Anna",
+        "explanation": "B1 xét chủ sở hữu: cùng phòng chưa đủ quyền cho nhân viên.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "OWNER_OR_LABEL",
+          "request_id": "f968321c-f85e-4f1b-bb69-20879b2705a1",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 90,
+          "content_released": false
+        },
+        "at": 1792571806.4568453
+      },
+      {
+        "number": 3,
+        "title": "Adam tải cùng tài liệu",
+        "explanation": "Trưởng phòng cùng phòng được đọc tài liệu mật.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "351f20d9-dc71-4936-abc9-776a6501e7bb",
+          "username": "adam",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B1",
+          "device": "adam",
+          "bytes": 15820,
+          "content_released": true,
+          "sha256": "9aa4d03bcb8c6000e4d0275988453d358be5316cbf9a73a9cb5f28c13e207835"
+        },
+        "at": 1792571806.586613
+      },
+      {
+        "number": 4,
+        "title": "Đối chứng B0: Alice tải cùng tài liệu",
+        "explanation": "B0 cố ý chỉ dùng quyền đọc đơn giản hơn; ca này minh họa tác dụng của điều kiện chủ sở hữu.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "bcc0075f-c915-49c4-bf35-c29798f957a2",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-C02/download",
+          "mode": "B0",
+          "device": "alice",
+          "bytes": 15820,
+          "content_released": true,
+          "sha256": "9aa4d03bcb8c6000e4d0275988453d358be5316cbf9a73a9cb5f28c13e207835"
+        },
+        "at": 1792571806.6788414
+      },
+      {
+        "number": 5,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571806.798032
+      }
+    ],
+    "passed": true,
+    "compare": true,
+    "started_at": 1792571805.742154,
+    "finished_at": 1792571806.7982645,
+    "cleanup": {
+      "restored": true,
+      "errors": []
+    }
+  },
+  "error": null,
+  "lesson_id": "owner"
+}

@@ -1,0 +1,364 @@
+{
+  "id": "7b2ad87471dccf04",
+  "kind": "lesson",
+  "status": "completed",
+  "started_at": 1792571610.2066925,
+  "finished_at": 1792571635.5404048,
+  "events": [
+    {
+      "time": 1792571610.8055816,
+      "type": "lesson_step",
+      "step": {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Tạo snapshot thật, tạm thu hồi Alice, dựng DB/KMS tạm để kiểm tra rồi dọn tài nguyên. API tạm dừng khi lấy cặp backup; snapshot và bằng chứng được giữ.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571610.8055668
+      }
+    },
+    {
+      "time": 1792571617.3700442,
+      "type": "lesson_step",
+      "step": {
+        "number": 2,
+        "title": "Tạo cặp sao lưu dữ liệu và khóa",
+        "explanation": "Snapshot thật được giữ trên ổ E. Các API tạm dừng trong khoảng lấy cặp nhất quán.",
+        "kind": "backup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "snapshot_id": "dc3157223909ea097166fe29ae2510695381efba7bed9c2af7f97255703bc23e",
+          "restic_snapshot_id": "dc3157223909ea097166fe29ae2510695381efba7bed9c2af7f97255703bc23e",
+          "pair_id": "pair-e0ae65f805fd42688302ec49e691ac45",
+          "checkpoint": 1792571612.010888,
+          "archive_path": "/runtime/backups/staging/pair-e0ae65f805fd42688302ec49e691ac45",
+          "hashes": {
+            "db.dump": "8e95c0abcf05c1e51b8d7b889d5600624a4b16518df733de9b07e3cfe8c3a1bb",
+            "bao.snap": "94730a922d3852edb01b0fbadd1c6c0a5dce0a1ef028d3118d3857d7139baf94"
+          },
+          "files": [
+            "db.dump",
+            "bao.snap",
+            "checkpoint.json"
+          ],
+          "recovery_material_external": true,
+          "recovery_keyset_reference": "local-operator-unseal-set-v1",
+          "recovery_keyset_fingerprint": "c6c80d9e0b99da5cf38f7739aea526edcab2f254513d9c4fe553173d2f5193c8",
+          "created_at": 1792571610.9591784,
+          "finished_at": 1792571617.344111,
+          "business_writes_frozen": true,
+          "repository_verified": true,
+          "encrypted": true,
+          "db_format": "PostgreSQL custom archive",
+          "kms_format": "OpenBao integrated Raft snapshot",
+          "duration_seconds": 6.385
+        },
+        "at": 1792571617.3700368
+      }
+    },
+    {
+      "time": 1792571617.5025377,
+      "type": "lesson_step",
+      "step": {
+        "number": 3,
+        "title": "Thu hồi Alice sau thời điểm snapshot",
+        "explanation": "Sự kiện quản trị mới hơn bản sao phải được đối chiếu khi phục hồi.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "a538a9ce-70e7-429b-9553-efda66356adc",
+          "username": "secadmin",
+          "method": "PUT",
+          "path": "/admin/principals/alice",
+          "mode": "B1",
+          "device": "secadmin",
+          "bytes": 115,
+          "content_released": false
+        },
+        "at": 1792571617.5025303
+      }
+    },
+    {
+      "time": 1792571635.3460693,
+      "type": "lesson_step",
+      "step": {
+        "number": 4,
+        "title": "Phục hồi vào DB/KMS riêng và đối chiếu ledger",
+        "explanation": "Đây là kiểm chứng trên môi trường cô lập; không thay thế hệ thống đang phục vụ.",
+        "kind": "recovery",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "snapshot_id": "dc3157223909ea097166fe29ae2510695381efba7bed9c2af7f97255703bc23e",
+          "run_id": "bmdl-restore-94437ee579b84056",
+          "isolated": true,
+          "reconciled": true,
+          "contents_verified": true,
+          "verified_documents": 20,
+          "available_documents": 20,
+          "blocked_documents": 0,
+          "revocation_checks": {
+            "inactive_principals": 1,
+            "revoked_devices": 0,
+            "tombstones": 0,
+            "revoked_grants": 1
+          },
+          "reconciliation": {
+            "events_available": 1,
+            "events_applied": 1,
+            "absent_post_snapshot_entities": []
+          },
+          "reconciliation_checked_at": 1792571634.8153698,
+          "rto_seconds": 17.313,
+          "rpo_seconds": 5.492,
+          "rpo_definition": "Snapshot age at recovery start; exposure window, not a measurement of lost business content",
+          "checkpoint": 1792571612.010888,
+          "pair_hashes_verified": true,
+          "internal_network": true,
+          "published_ports": false,
+          "primary_replaced": false,
+          "kms_driver": "actual isolated OpenBao Raft snapshot",
+          "recovery_material_external": true,
+          "database_driver": "actual isolated PostgreSQL pg_restore",
+          "temporary_resources_removed": true,
+          "cleanup_errors": []
+        },
+        "at": 1792571635.34606
+      }
+    },
+    {
+      "time": 1792571635.4543614,
+      "type": "lesson_step",
+      "step": {
+        "number": 5,
+        "title": "Kiểm tra quyền hiện tại trên hệ thống chính",
+        "explanation": "Ca này kiểm tra primary vẫn chặn Alice; bằng chứng phục hồi cô lập nằm ở bước trước.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "INACTIVE"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "INACTIVE",
+          "request_id": "7d992ee3-7b1f-4c4d-8646-366de65f1f42",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 84,
+          "content_released": false
+        },
+        "at": 1792571635.4543567
+      }
+    },
+    {
+      "time": 1792571635.5360548,
+      "type": "lesson_step",
+      "step": {
+        "number": 6,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571635.5360475
+      }
+    }
+  ],
+  "result": {
+    "run_id": "lesson-20261021-083330-6e1f03",
+    "lesson": {
+      "id": "recovery",
+      "title": "Bản sao cũ có làm sống lại quyền đã thu hồi?",
+      "category": "Sao lưu và phục hồi",
+      "question": "Phục hồi snapshot trước lúc Alice bị thu hồi quyền có bỏ sót thay đổi mới không?",
+      "expected": "DB và khóa phục hồi cô lập; hash đúng; quyền thu hồi được đối chiếu. Primary không bị thay thế.",
+      "changes": "Tạo snapshot thật, tạm thu hồi Alice, dựng DB/KMS tạm để kiểm tra rồi dọn tài nguyên. API tạm dừng khi lấy cặp backup; snapshot và bằng chứng được giữ.",
+      "core": "Snapshot dữ liệu/khóa nhất quán; đối chiếu ledger; phục hồi cô lập.",
+      "compare": false
+    },
+    "steps": [
+      {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Tạo snapshot thật, tạm thu hồi Alice, dựng DB/KMS tạm để kiểm tra rồi dọn tài nguyên. API tạm dừng khi lấy cặp backup; snapshot và bằng chứng được giữ.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571610.8055668
+      },
+      {
+        "number": 2,
+        "title": "Tạo cặp sao lưu dữ liệu và khóa",
+        "explanation": "Snapshot thật được giữ trên ổ E. Các API tạm dừng trong khoảng lấy cặp nhất quán.",
+        "kind": "backup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "snapshot_id": "dc3157223909ea097166fe29ae2510695381efba7bed9c2af7f97255703bc23e",
+          "restic_snapshot_id": "dc3157223909ea097166fe29ae2510695381efba7bed9c2af7f97255703bc23e",
+          "pair_id": "pair-e0ae65f805fd42688302ec49e691ac45",
+          "checkpoint": 1792571612.010888,
+          "archive_path": "/runtime/backups/staging/pair-e0ae65f805fd42688302ec49e691ac45",
+          "hashes": {
+            "db.dump": "8e95c0abcf05c1e51b8d7b889d5600624a4b16518df733de9b07e3cfe8c3a1bb",
+            "bao.snap": "94730a922d3852edb01b0fbadd1c6c0a5dce0a1ef028d3118d3857d7139baf94"
+          },
+          "files": [
+            "db.dump",
+            "bao.snap",
+            "checkpoint.json"
+          ],
+          "recovery_material_external": true,
+          "recovery_keyset_reference": "local-operator-unseal-set-v1",
+          "recovery_keyset_fingerprint": "c6c80d9e0b99da5cf38f7739aea526edcab2f254513d9c4fe553173d2f5193c8",
+          "created_at": 1792571610.9591784,
+          "finished_at": 1792571617.344111,
+          "business_writes_frozen": true,
+          "repository_verified": true,
+          "encrypted": true,
+          "db_format": "PostgreSQL custom archive",
+          "kms_format": "OpenBao integrated Raft snapshot",
+          "duration_seconds": 6.385
+        },
+        "at": 1792571617.3700368
+      },
+      {
+        "number": 3,
+        "title": "Thu hồi Alice sau thời điểm snapshot",
+        "explanation": "Sự kiện quản trị mới hơn bản sao phải được đối chiếu khi phục hồi.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "a538a9ce-70e7-429b-9553-efda66356adc",
+          "username": "secadmin",
+          "method": "PUT",
+          "path": "/admin/principals/alice",
+          "mode": "B1",
+          "device": "secadmin",
+          "bytes": 115,
+          "content_released": false
+        },
+        "at": 1792571617.5025303
+      },
+      {
+        "number": 4,
+        "title": "Phục hồi vào DB/KMS riêng và đối chiếu ledger",
+        "explanation": "Đây là kiểm chứng trên môi trường cô lập; không thay thế hệ thống đang phục vụ.",
+        "kind": "recovery",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "snapshot_id": "dc3157223909ea097166fe29ae2510695381efba7bed9c2af7f97255703bc23e",
+          "run_id": "bmdl-restore-94437ee579b84056",
+          "isolated": true,
+          "reconciled": true,
+          "contents_verified": true,
+          "verified_documents": 20,
+          "available_documents": 20,
+          "blocked_documents": 0,
+          "revocation_checks": {
+            "inactive_principals": 1,
+            "revoked_devices": 0,
+            "tombstones": 0,
+            "revoked_grants": 1
+          },
+          "reconciliation": {
+            "events_available": 1,
+            "events_applied": 1,
+            "absent_post_snapshot_entities": []
+          },
+          "reconciliation_checked_at": 1792571634.8153698,
+          "rto_seconds": 17.313,
+          "rpo_seconds": 5.492,
+          "rpo_definition": "Snapshot age at recovery start; exposure window, not a measurement of lost business content",
+          "checkpoint": 1792571612.010888,
+          "pair_hashes_verified": true,
+          "internal_network": true,
+          "published_ports": false,
+          "primary_replaced": false,
+          "kms_driver": "actual isolated OpenBao Raft snapshot",
+          "recovery_material_external": true,
+          "database_driver": "actual isolated PostgreSQL pg_restore",
+          "temporary_resources_removed": true,
+          "cleanup_errors": []
+        },
+        "at": 1792571635.34606
+      },
+      {
+        "number": 5,
+        "title": "Kiểm tra quyền hiện tại trên hệ thống chính",
+        "explanation": "Ca này kiểm tra primary vẫn chặn Alice; bằng chứng phục hồi cô lập nằm ở bước trước.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "INACTIVE"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "INACTIVE",
+          "request_id": "7d992ee3-7b1f-4c4d-8646-366de65f1f42",
+          "username": "alice",
+          "method": "GET",
+          "path": "/documents/A-I01/download",
+          "mode": "B1",
+          "device": "alice",
+          "bytes": 84,
+          "content_released": false
+        },
+        "at": 1792571635.4543567
+      },
+      {
+        "number": 6,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571635.5360475
+      }
+    ],
+    "passed": true,
+    "compare": false,
+    "started_at": 1792571610.207378,
+    "finished_at": 1792571635.5363185,
+    "cleanup": {
+      "restored": true,
+      "errors": []
+    }
+  },
+  "error": null,
+  "lesson_id": "recovery"
+}

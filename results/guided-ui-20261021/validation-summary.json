@@ -1,0 +1,79 @@
+[
+  {
+    "lesson": "owner",
+    "job_id": "e09c271d66563d1b",
+    "status": "completed",
+    "passed": true,
+    "steps": 5,
+    "cleanup": true,
+    "seconds": 1.12,
+    "failed": [],
+    "error": null
+  },
+  {
+    "lesson": "revocation",
+    "job_id": "d69f846e4eea22f8",
+    "status": "completed",
+    "passed": true,
+    "steps": 6,
+    "cleanup": true,
+    "seconds": 0.87,
+    "failed": [],
+    "error": null
+  },
+  {
+    "lesson": "device",
+    "job_id": "235b07394cc70b25",
+    "status": "completed",
+    "passed": true,
+    "steps": 8,
+    "cleanup": true,
+    "seconds": 0.91,
+    "failed": [],
+    "error": null
+  },
+  {
+    "lesson": "encryption",
+    "job_id": "0468333e1b49a636",
+    "status": "completed",
+    "passed": true,
+    "steps": 8,
+    "cleanup": true,
+    "seconds": 3.51,
+    "failed": [],
+    "error": null
+  },
+  {
+    "lesson": "audit",
+    "job_id": "678fa9439df6fe16",
+    "status": "completed",
+    "passed": true,
+    "steps": 11,
+    "cleanup": true,
+    "seconds": 1.12,
+    "failed": [],
+    "error": null
+  },
+  {
+    "lesson": "lifecycle",
+    "job_id": "c958b28d6a97f618",
+    "status": "completed",
+    "passed": true,
+    "steps": 7,
+    "cleanup": true,
+    "seconds": 1.09,
+    "failed": [],
+    "error": null
+  },
+  {
+    "lesson": "recovery",
+    "job_id": "f8e0d36f5d62e9ba",
+    "status": "completed",
+    "passed": true,
+    "steps": 6,
+    "cleanup": true,
+    "seconds": 26.41,
+    "failed": [],
+    "error": null
+  }
+]

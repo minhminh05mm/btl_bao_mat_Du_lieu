@@ -1,0 +1,38 @@
+[
+  {
+    "file": "lab\\static\\guide.js",
+    "matches": true
+  },
+  {
+    "file": "lab\\web.py",
+    "matches": true
+  },
+  {
+    "file": "lab\\static\\management.js",
+    "matches": true
+  },
+  {
+    "file": "lab\\templates\\index.html",
+    "matches": true
+  },
+  {
+    "file": "lab\\operations.py",
+    "matches": true
+  },
+  {
+    "file": "lab\\static\\app.js",
+    "matches": true
+  },
+  {
+    "file": "lab\\static\\management.css",
+    "matches": true
+  },
+  {
+    "file": "lab\\management.py",
+    "matches": true
+  },
+  {
+    "file": "lab\\client.py",
+    "matches": true
+  }
+]

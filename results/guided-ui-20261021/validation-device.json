@@ -1,0 +1,383 @@
+{
+  "id": "235b07394cc70b25",
+  "kind": "lesson",
+  "status": "completed",
+  "started_at": 1792571058.4889004,
+  "finished_at": 1792571059.3939118,
+  "events": [
+    {
+      "time": 1792571058.8823087,
+      "type": "lesson_step",
+      "step": {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Tạo grant 5 phút cho Brian tải B-R02; tạm đổi risk của thiết bị mẫu rồi khôi phục. Grant của bài được thu hồi khi kết thúc.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571058.8823009
+      }
+    },
+    {
+      "time": 1792571059.0074105,
+      "type": "lesson_step",
+      "step": {
+        "number": 2,
+        "title": "Secadmin phê duyệt tải trong 5 phút",
+        "explanation": "Đây là bước chuẩn bị bằng API cấp grant; không phải Brian tự cấp quyền.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "4cd66561-0e9e-46ad-88ae-b53508d6773e",
+          "username": "secadmin",
+          "method": "POST",
+          "path": "/admin/grants",
+          "mode": "B1",
+          "device": "secadmin",
+          "bytes": 255,
+          "content_released": false
+        },
+        "at": 1792571059.0074065
+      }
+    },
+    {
+      "time": 1792571059.1382878,
+      "type": "lesson_step",
+      "step": {
+        "number": 3,
+        "title": "Brian có grant và thiết bị bình thường",
+        "explanation": "Grant gắn với Brian, B-R02 và phiên bản hiện tại.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "e56e00fa-6fd7-4829-aeb3-a0bb912c08ac",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B1",
+          "device": "brian",
+          "bytes": 16055,
+          "content_released": true,
+          "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+        },
+        "at": 1792571059.1382837
+      }
+    },
+    {
+      "time": 1792571059.1848812,
+      "type": "lesson_step",
+      "step": {
+        "number": 4,
+        "title": "Giữ tài khoản Brian, dùng chứng thư Bob",
+        "explanation": "Chứng thư phải khớp chủ thể; grant không thay thế điều kiện này.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "DEVICE_MISMATCH"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "DEVICE_MISMATCH",
+          "request_id": "38dc046b-90c8-4386-8e8a-a1f868a58e81",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B1",
+          "device": "bob",
+          "bytes": 91,
+          "content_released": false
+        },
+        "at": 1792571059.1848776
+      }
+    },
+    {
+      "time": 1792571059.2095678,
+      "type": "lesson_step",
+      "step": {
+        "number": 5,
+        "title": "Người vận hành đặt tín hiệu rủi ro HIGH",
+        "explanation": "Đây là tín hiệu thiết bị mẫu được giả lập phía máy chủ; không phải quét mã độc trên máy thật.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "risk": "HIGH"
+        },
+        "at": 1792571059.2095604
+      }
+    },
+    {
+      "time": 1792571059.2456088,
+      "type": "lesson_step",
+      "step": {
+        "number": 6,
+        "title": "Đúng chứng thư, có grant, nhưng thiết bị HIGH",
+        "explanation": "B1 chặn theo rủi ro hiện tại dù quyền tải còn hạn.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "RISK_HIGH"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "RISK_HIGH",
+          "request_id": "ff45de51-060d-4761-af68-f2bf99b1cb4b",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B1",
+          "device": "brian",
+          "bytes": 85,
+          "content_released": false
+        },
+        "at": 1792571059.2456045
+      }
+    },
+    {
+      "time": 1792571059.2979817,
+      "type": "lesson_step",
+      "step": {
+        "number": 7,
+        "title": "Đối chứng B0 khi thiết bị HIGH",
+        "explanation": "B0 bỏ qua điều kiện rủi ro trong phép đối chứng này.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "86bd57ba-9538-488a-8a21-7e7702297ce6",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B0",
+          "device": "brian",
+          "bytes": 16055,
+          "content_released": true,
+          "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+        },
+        "at": 1792571059.297978
+      }
+    },
+    {
+      "time": 1792571059.3886955,
+      "type": "lesson_step",
+      "step": {
+        "number": 8,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571059.3886878
+      }
+    }
+  ],
+  "result": {
+    "run_id": "lesson-20261021-082418-2c2efc",
+    "lesson": {
+      "id": "device",
+      "title": "Có phê duyệt nhưng thiết bị không phù hợp",
+      "category": "Thiết bị",
+      "question": "Grant hợp lệ có bỏ qua rủi ro hoặc chứng thư sai không?",
+      "expected": "Thiết bị bình thường được đọc; sai chứng thư hoặc rủi ro cao bị chặn.",
+      "changes": "Tạo grant 5 phút cho Brian tải B-R02; tạm đổi risk của thiết bị mẫu rồi khôi phục. Grant của bài được thu hồi khi kết thúc.",
+      "core": "Ràng buộc danh tính với chứng thư; kết hợp grant và trạng thái thiết bị giả lập.",
+      "compare": true
+    },
+    "steps": [
+      {
+        "number": 1,
+        "title": "Chuẩn bị điều kiện của bài",
+        "explanation": "Tạo grant 5 phút cho Brian tải B-R02; tạm đổi risk của thiết bị mẫu rồi khôi phục. Grant của bài được thu hồi khi kết thúc.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "prepared": true
+        },
+        "at": 1792571058.8823009
+      },
+      {
+        "number": 2,
+        "title": "Secadmin phê duyệt tải trong 5 phút",
+        "explanation": "Đây là bước chuẩn bị bằng API cấp grant; không phải Brian tự cấp quyền.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "4cd66561-0e9e-46ad-88ae-b53508d6773e",
+          "username": "secadmin",
+          "method": "POST",
+          "path": "/admin/grants",
+          "mode": "B1",
+          "device": "secadmin",
+          "bytes": 255,
+          "content_released": false
+        },
+        "at": 1792571059.0074065
+      },
+      {
+        "number": 3,
+        "title": "Brian có grant và thiết bị bình thường",
+        "explanation": "Grant gắn với Brian, B-R02 và phiên bản hiện tại.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "e56e00fa-6fd7-4829-aeb3-a0bb912c08ac",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B1",
+          "device": "brian",
+          "bytes": 16055,
+          "content_released": true,
+          "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+        },
+        "at": 1792571059.1382837
+      },
+      {
+        "number": 4,
+        "title": "Giữ tài khoản Brian, dùng chứng thư Bob",
+        "explanation": "Chứng thư phải khớp chủ thể; grant không thay thế điều kiện này.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "DEVICE_MISMATCH"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "DEVICE_MISMATCH",
+          "request_id": "38dc046b-90c8-4386-8e8a-a1f868a58e81",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B1",
+          "device": "bob",
+          "bytes": 91,
+          "content_released": false
+        },
+        "at": 1792571059.1848776
+      },
+      {
+        "number": 5,
+        "title": "Người vận hành đặt tín hiệu rủi ro HIGH",
+        "explanation": "Đây là tín hiệu thiết bị mẫu được giả lập phía máy chủ; không phải quét mã độc trên máy thật.",
+        "kind": "setup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "risk": "HIGH"
+        },
+        "at": 1792571059.2095604
+      },
+      {
+        "number": 6,
+        "title": "Đúng chứng thư, có grant, nhưng thiết bị HIGH",
+        "explanation": "B1 chặn theo rủi ro hiện tại dù quyền tải còn hạn.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 403,
+          "reason": "RISK_HIGH"
+        },
+        "actual": {
+          "status": 403,
+          "reason": "RISK_HIGH",
+          "request_id": "ff45de51-060d-4761-af68-f2bf99b1cb4b",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B1",
+          "device": "brian",
+          "bytes": 85,
+          "content_released": false
+        },
+        "at": 1792571059.2456045
+      },
+      {
+        "number": 7,
+        "title": "Đối chứng B0 khi thiết bị HIGH",
+        "explanation": "B0 bỏ qua điều kiện rủi ro trong phép đối chứng này.",
+        "kind": "request",
+        "passed": true,
+        "expected": {
+          "status": 200,
+          "reason": "ALLOW"
+        },
+        "actual": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "86bd57ba-9538-488a-8a21-7e7702297ce6",
+          "username": "brian",
+          "method": "GET",
+          "path": "/documents/B-R02/download",
+          "mode": "B0",
+          "device": "brian",
+          "bytes": 16055,
+          "content_released": true,
+          "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+        },
+        "at": 1792571059.297978
+      },
+      {
+        "number": 8,
+        "title": "Khôi phục các thuộc tính đã thay đổi",
+        "explanation": "Nhật ký, cảnh báo, snapshot, bằng chứng và bộ đếm phiên bản được giữ. Grant mới của bài được thu hồi. Không đặt lại toàn bộ lab.",
+        "kind": "cleanup",
+        "passed": true,
+        "expected": null,
+        "actual": {
+          "restored": true,
+          "errors": []
+        },
+        "at": 1792571059.3886878
+      }
+    ],
+    "passed": true,
+    "compare": true,
+    "started_at": 1792571058.4894333,
+    "finished_at": 1792571059.3889835,
+    "cleanup": {
+      "restored": true,
+      "errors": []
+    }
+  },
+  "error": null
+}

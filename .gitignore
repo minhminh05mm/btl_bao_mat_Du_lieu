@@ -1,0 +1,25 @@
+runtime/
+downloads/
+.env
+infra/postgres-init.sql
+infra/keycloak-realm.json
+infra/nginx.conf
+__pycache__/
+*.pyc
+.pytest_cache/
+results/**/raw-secrets*
+
+# Local archives and superseded document copies
+docs/luu_tru/
+results/**/before/
+results/**/*-before.*
+results/**/before-*
+results/report-layout-*/
+results/report-revision-*/
+results/repro-tools-backup-*/
+results/revision-*/
+*.pem
+*.key
+*.pfx
+*.p12
+

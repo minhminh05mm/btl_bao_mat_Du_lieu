@@ -1,0 +1,72 @@
+[
+  {
+    "file": "README.md",
+    "matches": true,
+    "sha256": "dbcc214865e22002ef66fb5ed81fb6cc20ece8be166a78c989af334dcf63f7f7"
+  },
+  {
+    "file": "huong_dan_nhanh.md",
+    "matches": true,
+    "sha256": "b400ee5a72c7651b9bcc97d40e6d8e7482b348364de7e3d861425ba3fa10934f"
+  },
+  {
+    "file": "giai_thich_ky_hieu.md",
+    "matches": true,
+    "sha256": "7a3472668ffb7419f8b767f39fdc1e777f5e20bfe985a9afb27ce574eff4ef45"
+  },
+  {
+    "file": "results/SUMMARY.md",
+    "matches": true,
+    "sha256": "d930b2574d60f3ec252ae5380b1931c9d6f14c8a4d965ff4e6a1a31294c47ec6"
+  },
+  {
+    "file": "docs/architecture.md",
+    "matches": true,
+    "sha256": "93828e6269ef905cef84103fe103b259e8dd52598bbaebe6a9410254d1a7d21e"
+  },
+  {
+    "file": "docs/data-classification.md",
+    "matches": true,
+    "sha256": "b4905c4d11303da780d5f30852ab42e3750374d657e34f78bf87a4c8299ebc4c"
+  },
+  {
+    "file": "docs/demo-guide.md",
+    "matches": true,
+    "sha256": "9caac43ed056e873035973371c5b4126bd14545672f50874100e96065f8ee909"
+  },
+  {
+    "file": "docs/design-approved.md",
+    "matches": true,
+    "sha256": "e476c9a9ecff6782e1918bfb6fd884e7992588e56345db17f8731d0d253bec6b"
+  },
+  {
+    "file": "docs/huong-dan-trinh-dien-va-doi-chieu-bao-cao.md",
+    "matches": true,
+    "sha256": "ef73207685aee71de03d682cb19d367db2514746e188d89efdb281f9a7929531"
+  },
+  {
+    "file": "docs/implementation-contract.md",
+    "matches": true,
+    "sha256": "b1a4f0587987007fa5f14df5841706819099d58575cbb23c2cccc609125adc0f"
+  },
+  {
+    "file": "docs/reproduction.md",
+    "matches": true,
+    "sha256": "08dc9dcd11f4cf63e03c5a3983e51c7d60f45b321914c3be941ab3644362aff8"
+  },
+  {
+    "file": "docs/software-inventory.md",
+    "matches": true,
+    "sha256": "820bebfa7f64d9245da9dca32de810863ad1c08f4ac2b58a148591f8268d6905"
+  },
+  {
+    "file": "docs/test-matrix.md",
+    "matches": true,
+    "sha256": "dd89bfe7ddba9890f1675bea5819ad9401b80759ea6a73296d460ed04036e9c3"
+  },
+  {
+    "file": "docs/verification-review.md",
+    "matches": true,
+    "sha256": "d0c71b518024b73c66b3620b40ecc8e6d931e7d0dcb5ef871481a91c87b2973f"
+  }
+]

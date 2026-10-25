@@ -1,0 +1,59 @@
+{
+  "total": 10,
+  "passed": 9,
+  "failed": 1,
+  "created_documents": [
+    "U-74a5dbc6b7bd448a904d04d090c68108"
+  ],
+  "checks": [
+    {
+      "test": "Staff cannot create restricted document",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Manager needs explicit approver",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Business API rejects restricted upload without approval",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Denied creates do not save documents",
+      "passed": true
+    },
+    {
+      "test": "Restricted upload saves directly with approved label",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Creator can download immediately",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Live download permission allows metadata edit",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "test": "Disallowed editor alice",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Disallowed editor brian",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "test": "Disallowed editor secadmin",
+      "passed": false,
+      "status": 422
+    }
+  ]
+}

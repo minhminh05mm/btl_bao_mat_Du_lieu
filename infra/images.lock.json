@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "observed_date": "2026-10-15",
+  "timezone": "Asia/Saigon",
+  "platform": "linux/amd64",
+  "evidence": {
+    "service_images": "Docker Engine image inspect RepoDigests on the running demo engine",
+    "build_materials": "docker buildx history inspect tkd4npj5qxgd2e6yuez230iod --format json",
+    "build_completed_at_utc": "2026-10-15T05:56:08.947880722Z",
+    "build_ref": "tkd4npj5qxgd2e6yuez230iod"
+  },
+  "images": {
+    "postgres": {
+      "tag": "postgres:17-alpine",
+      "repo_digest": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "reference": "postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "version": "17.11"
+    },
+    "keycloak": {
+      "tag": "quay.io/keycloak/keycloak:26.8.0",
+      "repo_digest": "quay.io/keycloak/keycloak@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+      "reference": "quay.io/keycloak/keycloak:26.8.0@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+      "version": "26.8.0"
+    },
+    "opa": {
+      "tag": "openpolicyagent/opa:1.21.2",
+      "repo_digest": "openpolicyagent/opa@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+      "reference": "openpolicyagent/opa:1.21.2@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+      "version": "1.21.2",
+      "rego_version": "v1"
+    },
+    "openbao": {
+      "tag": "ghcr.io/openbao/openbao:2.7.1",
+      "repo_digest": "ghcr.io/openbao/openbao@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+      "reference": "ghcr.io/openbao/openbao:2.7.1@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+      "version": "2.7.1"
+    },
+    "nginx": {
+      "tag": "nginx:stable-alpine",
+      "repo_digest": "nginx@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+      "reference": "nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+      "version": "1.30.6"
+    },
+    "app_observed": {
+      "tag": "bmdl-app:local",
+      "repo_digest": "bmdl-app@sha256:f591e0e0da85d5e812532d0867122aa57bc7d928f96b6609ff5ee64027c83154",
+      "image_index_digest": "sha256:f591e0e0da85d5e812532d0867122aa57bc7d928f96b6609ff5ee64027c83154",
+      "platform_manifest_digest": "sha256:5f62a6898e198743b32b4824c8b9f5d3d8ac391d3f8bd7171faf1be1a33ebc17",
+      "config_digest": "sha256:f5339e0cd7a2c7a97f4827dc37a01d4ec0947702adba9edb96c56f6692c8ad37",
+      "note": "Locally built artifact, not a public registry image. Runtime app code is bind mounted. New builds can produce a different image digest."
+    },
+    "python_base": {
+      "tag": "python:3.12-slim",
+      "reference": "python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1",
+      "material_digest": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1",
+      "version": "3.12.15",
+      "source": "BuildKit materials of the actual app build"
+    },
+    "restic_build_stage": {
+      "tag": "restic/restic:0.19.1",
+      "reference": "restic/restic:0.19.1@sha256:136600b6ff6843d61d355f7f71f460a166429f35de6fd11b568fece3c9a4d510",
+      "material_digest": "sha256:136600b6ff6843d61d355f7f71f460a166429f35de6fd11b568fece3c9a4d510",
+      "version": "0.19.1",
+      "source": "BuildKit materials of the actual app build"
+    }
+  },
+  "runtime": {
+    "docker_engine": "29.8.2",
+    "docker_compose": "5.1.4",
+    "docker_buildx": "0.34.1",
+    "wsl_distribution": "Alpine Linux 3.24.2",
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "storage_driver": "overlayfs",
+    "container_os": "Debian GNU/Linux 13.7 trixie",
+    "python": "3.12.15"
+  }
+}

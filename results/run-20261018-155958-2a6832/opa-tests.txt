@@ -1,0 +1,64 @@
+/policies/bmdl_test.rego:41:
+data.bmdl_test.test_revoked_device_denied: PASS (3.804396ms)
+/policies/bmdl_test.rego:37:
+data.bmdl_test.test_device_owner_must_match: PASS (5.36419ms)
+/policies/bmdl_test.rego:73:
+data.bmdl_test.test_missing_metadata_denied: PASS (7.400777ms)
+/policies/bmdl_test.rego:69:
+data.bmdl_test.test_unknown_label_denied: PASS (7.8304ms)
+/policies/bmdl_test.rego:33:
+data.bmdl_test.test_inactive_denied: PASS (7.776895ms)
+/policies/bmdl_test.rego:45:
+data.bmdl_test.test_noncompliant_denied: PASS (3.889954ms)
+/policies/bmdl_test.rego:21:
+data.bmdl_test.test_own_confidential_allowed: PASS (37.067577ms)
+/policies/bmdl_test.rego:49:
+data.bmdl_test.test_high_risk_denied: PASS (28.949323ms)
+/policies/bmdl_test.rego:61:
+data.bmdl_test.test_missing_risk_timestamp_denied: PASS (2.000158ms)
+/policies/bmdl_test.rego:25:
+data.bmdl_test.test_other_owner_denied: PASS (34.578506ms)
+/policies/bmdl_test.rego:77:
+data.bmdl_test.test_deleted_not_found: PASS (38.523954ms)
+/policies/bmdl_test.rego:57:
+data.bmdl_test.test_expired_signal_denied: PASS (24.314128ms)
+/policies/bmdl_test.rego:29:
+data.bmdl_test.test_department_denied: PASS (31.864677ms)
+/policies/bmdl_test.rego:85:
+data.bmdl_test.test_delete_before_retention_denied: PASS (11.562166ms)
+/policies/bmdl_test.rego:53:
+data.bmdl_test.test_exact_ttl_boundary_accepted: PASS (52.510882ms)
+/policies/bmdl_test.rego:81:
+data.bmdl_test.test_retention_read_expired: PASS (20.879046ms)
+/policies/bmdl_test.rego:108:
+data.bmdl_test.test_auditor_can_audit: PASS (20.381339ms)
+/policies/bmdl_test.rego:104:
+data.bmdl_test.test_auditor_cannot_download: PASS (20.869463ms)
+/policies/bmdl_test.rego:176:
+data.bmdl_test.test_b0_admin_still_uses_current_controls: PASS (1.87986ms)
+/policies/bmdl_test.rego:97:
+data.bmdl_test.test_owner_delete_after_retention: PASS (21.287496ms)
+/policies/bmdl_test.rego:186:
+data.bmdl_test.test_total_decision_on_missing_or_unknown_input: PASS (2.054023ms)
+/policies/bmdl_test.rego:161:
+data.bmdl_test.test_b0_ignores_dynamic_controls_but_not_certificate_owner: PASS (12.539435ms)
+/policies/bmdl_test.rego:123:
+data.bmdl_test.test_staff_cannot_access_restricted_even_as_owner: PASS (4.876575ms)
+/policies/bmdl_test.rego:89:
+data.bmdl_test.test_legal_hold_blocks_delete: PASS (29.06911ms)
+/policies/bmdl_test.rego:134:
+data.bmdl_test.test_manager_restricted_metadata_without_grant: PASS (18.600484ms)
+/policies/bmdl_test.rego:139:
+data.bmdl_test.test_manager_restricted_requires_grant: PASS (19.110344ms)
+/policies/bmdl_test.rego:65:
+data.bmdl_test.test_future_signal_denied: PASS (15.1691ms)
+/policies/bmdl_test.rego:148:
+data.bmdl_test.test_grant_expiry_is_exclusive: PASS (48.5983ms)
+/policies/bmdl_test.rego:143:
+data.bmdl_test.test_manager_restricted_valid_grant: PASS (49.699612ms)
+/policies/bmdl_test.rego:115:
+data.bmdl_test.test_secadmin_can_admin_but_not_read: PASS (71.609896ms)
+/policies/bmdl_test.rego:153:
+data.bmdl_test.test_revoked_or_wrong_grant_does_not_allow: PASS (74.978067ms)
+--------------------------------------------------------------------------------
+PASS: 31/31

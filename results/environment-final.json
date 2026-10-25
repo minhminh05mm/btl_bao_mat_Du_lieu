@@ -1,0 +1,366 @@
+{
+  "captured_at": 1792049790.604375,
+  "engine": {
+    "Platform": {
+      "Name": ""
+    },
+    "Version": "29.8.2",
+    "ApiVersion": "1.56",
+    "MinAPIVersion": "1.40",
+    "Os": "linux",
+    "Arch": "amd64",
+    "Components": [
+      {
+        "Name": "Engine",
+        "Version": "29.8.2",
+        "Details": {
+          "ApiVersion": "1.56",
+          "Arch": "amd64",
+          "BuildTime": "2026-10-01T00:47:56.000000000+00:00",
+          "Experimental": "false",
+          "GitCommit": "8af9fe3a36bab3e039862a2ab1cef1880c9b4d03",
+          "GoVersion": "go1.26.8",
+          "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+          "MinAPIVersion": "1.40",
+          "Module": "github.com/moby/moby/v2",
+          "ModuleVersion": "v2.0.0+unknown",
+          "Os": "linux"
+        }
+      },
+      {
+        "Name": "containerd",
+        "Version": "v2.3.6",
+        "Details": {
+          "GitCommit": "ee2735368117d2eb259779949d5e75cdafec9761"
+        }
+      },
+      {
+        "Name": "runc",
+        "Version": "1.4.3",
+        "Details": {
+          "GitCommit": "bb14dabeb7185bb72c8c86735d090dcb20f36587"
+        }
+      },
+      {
+        "Name": "docker-init",
+        "Version": "0.19.0",
+        "Details": {
+          "GitCommit": ""
+        }
+      }
+    ],
+    "GitCommit": "8af9fe3a36bab3e039862a2ab1cef1880c9b4d03",
+    "GoVersion": "go1.26.8",
+    "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+    "BuildTime": "2026-10-01T00:47:56.000000000+00:00"
+  },
+  "docker_data_root": "/var/lib/docker",
+  "wsl_distribution": "bmdl-demo",
+  "windows_data_path": "E:\\btl_bao_mat_Du_lieu\\runtime\\wsl",
+  "python": "3.12.15",
+  "services": [
+    {
+      "name": "bmdl-api-1",
+      "service": "api",
+      "image_reference": "bmdl-app:local",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "user": "1000:1000",
+      "mounts": [
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/shared",
+          "destination": "/runtime",
+          "read_only": false
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/app",
+          "destination": "/project/app",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/pki-public",
+          "destination": "/runtime/pki",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/api-secrets",
+          "destination": "/runtime/secrets",
+          "read_only": true
+        }
+      ],
+      "published_ports": {}
+    },
+    {
+      "name": "bmdl-api-baseline-1",
+      "service": "api-baseline",
+      "image_reference": "bmdl-app:local",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "user": "1000:1000",
+      "mounts": [
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/shared",
+          "destination": "/runtime",
+          "read_only": false
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/app",
+          "destination": "/project/app",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/pki-public",
+          "destination": "/runtime/pki",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/api-secrets",
+          "destination": "/runtime/secrets",
+          "read_only": true
+        }
+      ],
+      "published_ports": {}
+    },
+    {
+      "name": "bmdl-gateway-1",
+      "service": "gateway",
+      "image_reference": "nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+      "image_id": "sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+      "user": "",
+      "mounts": [
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/infra/nginx.conf",
+          "destination": "/etc/nginx/nginx.conf",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/pki/ca.crt",
+          "destination": "/runtime/pki/ca.crt",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/pki/server.crt",
+          "destination": "/runtime/pki/server.crt",
+          "read_only": true
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime/pki/server.key",
+          "destination": "/runtime/pki/server.key",
+          "read_only": true
+        }
+      ],
+      "published_ports": {
+        "8443/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8443"
+          }
+        ],
+        "8444/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8444"
+          }
+        ],
+        "9443/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "9443"
+          }
+        ]
+      }
+    },
+    {
+      "name": "bmdl-keycloak-1",
+      "service": "keycloak",
+      "image_reference": "quay.io/keycloak/keycloak:26.8.0@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+      "image_id": "sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+      "user": "1000",
+      "mounts": [
+        {
+          "source": "/var/lib/docker/volumes/bmdl_kcdata/_data",
+          "destination": "/opt/keycloak/data",
+          "read_only": false
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/infra/keycloak-realm.json",
+          "destination": "/opt/keycloak/data/import/bmdl.json",
+          "read_only": true
+        }
+      ],
+      "published_ports": {}
+    },
+    {
+      "name": "bmdl-lab-1",
+      "service": "lab",
+      "image_reference": "bmdl-app:local",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "user": "0:0",
+      "mounts": [
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu",
+          "destination": "/project",
+          "read_only": false
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/runtime",
+          "destination": "/runtime",
+          "read_only": false
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "read_only": false
+        }
+      ],
+      "published_ports": {
+        "8088/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8088"
+          }
+        ]
+      }
+    },
+    {
+      "name": "bmdl-opa-1",
+      "service": "opa",
+      "image_reference": "openpolicyagent/opa:1.21.2@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+      "image_id": "sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+      "user": "1000:1000",
+      "mounts": [
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/policies",
+          "destination": "/policies",
+          "read_only": true
+        }
+      ],
+      "published_ports": {}
+    },
+    {
+      "name": "bmdl-openbao-1",
+      "service": "openbao",
+      "image_reference": "ghcr.io/openbao/openbao:2.7.1@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+      "image_id": "sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+      "user": "openbao",
+      "mounts": [
+        {
+          "source": "/var/lib/docker/volumes/bmdl_baodata/_data",
+          "destination": "/bao/data",
+          "read_only": false
+        },
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/infra/openbao.hcl",
+          "destination": "/bao/config/openbao.hcl",
+          "read_only": true
+        }
+      ],
+      "published_ports": {}
+    },
+    {
+      "name": "bmdl-postgres-1",
+      "service": "postgres",
+      "image_reference": "postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "image_id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "user": "",
+      "mounts": [
+        {
+          "source": "/mnt/e/btl_bao_mat_Du_lieu/infra/postgres-init.sql",
+          "destination": "/docker-entrypoint-initdb.d/01-bmdl.sql",
+          "read_only": true
+        },
+        {
+          "source": "/var/lib/docker/volumes/bmdl_pgdata/_data",
+          "destination": "/var/lib/postgresql/data",
+          "read_only": false
+        }
+      ],
+      "published_ports": {}
+    }
+  ],
+  "pip_freeze": [
+    "annotated-doc==0.0.5",
+    "annotated-types==0.8.0",
+    "anyio==4.15.1",
+    "certifi==2026.7.22",
+    "cffi==2.1.1",
+    "charset-normalizer==3.5.2",
+    "click==8.5.0",
+    "cryptography==50.0.2",
+    "docker==7.2.0",
+    "fastapi==0.143.1",
+    "h11==0.16.0",
+    "httpcore==1.0.9",
+    "httpx==0.28.1",
+    "idna==3.20",
+    "iniconfig==2.3.1",
+    "Jinja2==3.1.6",
+    "MarkupSafe==3.0.4",
+    "opentelemetry-api==1.45.1",
+    "packaging==26.3",
+    "pluggy==1.6.0",
+    "psutil==7.2.2",
+    "psycopg==3.3.6",
+    "psycopg-binary==3.3.6",
+    "pycparser==3.11",
+    "pydantic==2.14.1",
+    "pydantic_core==2.50.1",
+    "Pygments==2.21.0",
+    "PyJWT==2.15.1",
+    "pytest==9.1.1",
+    "python-multipart==0.0.32",
+    "requests==2.34.2",
+    "starlette==1.8.0",
+    "typing-inspection==0.4.4",
+    "typing_extensions==4.16.0",
+    "urllib3==2.8.0",
+    "uvicorn==0.54.0"
+  ],
+  "restart_validation": "Windows PowerShell 5 Stop-Demo then Start-Demo; locked image rebuild and readiness checks passed.",
+  "gateway_private_material_minimized": true,
+  "source_sha256": {
+    "Run-Tests.ps1": "38ad17b7e1f61cc7b70319d2cafc4b38ea05510846607ade7b4426529fa9c680",
+    "Start-Demo.ps1": "f9d2091379db84ad174ab3ae073f584ec5dd2d995e95c4216fa6f90067ab8e43",
+    "Stop-Demo.ps1": "7bbe5861b95db1d634c633b14137eead6db3a731033abb5713f2e01b54d2531e",
+    "app/__init__.py": "c9cec0217262b7f109790981e941ec48850dd61a4217fccbf828847696b83364",
+    "app/bootstrap.py": "c7166f4a1bb5b9aed81a2767bf816b27329748d3d7c93531403d1ff0589bf294",
+    "app/config.py": "9607170ce63f1fd51f67ee7ba8d61a7c8e616544855bda57959931d23760aff2",
+    "app/db.py": "244a525219c5d8a6ff9c3980c9bceccf41b5274e505c8618c89574a25ed4a6d6",
+    "app/ledger.py": "e7e7df81591d78815f643f682dba7dba1664b07b518429116d4e156c36309bfe",
+    "app/main.py": "0764b29d97c02e13981ed548ef33bc525d7adef88930888ba29be6558bc36d5b",
+    "app/security.py": "54c7443f00dcff8441ccb4a82f461787e3cad6ca5583068fcfee2b2a7bfaf945",
+    "compose.lock.yaml": "0c51d174b807fb2f00070068fe55450855e9065b98bdfbd0197c8d1a07115c86",
+    "compose.yaml": "465da844c97c863840af6df2756c710b5515ea460384268cab1740ff3d7819eb",
+    "fixtures/cases.json": "fcb92b3e9d6d08cf93ef4ba6abfcf70dc3c8c2abcc84b8a043b277528d3f9e6b",
+    "infra/Dockerfile": "01c7b9dcb543dd23fe7f35c6fe676552171aa442264b7abf4e7db0be07ee777d",
+    "infra/images.lock.json": "d542a309b1db6106b87722ab3c96d3270fbf3dccf43dfb9541c697dac9c547ed",
+    "infra/openbao.hcl": "21c794c94a2dacbd17d578c2a32a2009deca216a47f7a2c4ca2527490368765d",
+    "lab/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lab/benchmark.py": "9e637bd04feb2850abea6f57f9ff41f16105a616f6815bf57870e9c48ae5da14",
+    "lab/client.py": "6d434b22d2350badb550ed5e03460fddd659e148c644f79bc9119cf3063efa71",
+    "lab/operations.py": "dd6515b6a4f99b5e3fd5203eabd4afba2696e812c94d71fd59d11324a3f23d88",
+    "lab/recovery.py": "3f7314d894feec983af476d02f3e8d71bbf6be21a62ebda9d08a002058989f8b",
+    "lab/runner.py": "1367b97db79c7009b143fe264a98ae9f5bfe3f2833581975c772a42d3610ddcf",
+    "lab/static/app.css": "cdd6d15be08b8b08f2b454f1d2b91b219e67e5154e302e621a8406c565269629",
+    "lab/static/app.js": "19297bb1b201166453e1ef5d33f2d8797afec4b317a044c629164d9ae8ebb9d5",
+    "lab/templates/index.html": "c33153f1938c3b34219ca5c7d636e45f07dcdf5f58b658d9b40629ff5d22904d",
+    "lab/wait_ready.py": "c989cbcac67ac80f94de23ec8e30a273235ff3f4502f0c522dacc6c22af61e68",
+    "lab/web.py": "45be30d5d7b8580b776dc620276966c4b6bd59b19753b8920ea2cdfbbe3423f0",
+    "policies/bmdl.rego": "e17e9827f17e7d06df4fe048d21a8750d3896bc079c33271b381da371d29cf8d",
+    "policies/bmdl_test.rego": "8e7747d6a00fe753b04069f9a8f9753517c703ae374f0a665c635ba4163de374",
+    "requirements.lock.txt": "0627a1cade108dcf8e0512ec27f129e48442f013c3a23d9991d598bf0c62b55e",
+    "requirements.txt": "ffef0856764abe90d64cd1bb99abe5d23effd2e524f7680f4efd2b56ffdaeeec",
+    "scripts/Assert-Space.ps1": "28db1f5a04b5a0f2ebbfe038e0ccd84bde26d8fe0d844ca1486046a7b4660363",
+    "scripts/capture_environment.py": "93b7b6938123c4e5d42410b7d9fad77dc38f2a492a3d7966ddade6f5c0b4d105",
+    "scripts/check_exports.py": "969656333fed55f80a74c974cb4146c24e239e378a30943018611ead81b99b1b",
+    "scripts/fix_gateway_dns.py": "61bf13dfff554210ba1a7d378881320717dcfe2fffc12cd926c585d24cbd0e18",
+    "scripts/prepare.py": "24ce0814fbde6a7fa22c3fa9195ed571e6e1d8b8e687322e5113763e5a93bd69",
+    "scripts/start-engine.sh": "8a4c6f4990f1f578530870b4713dcae4eacb605d3e56f24480fcc548cd6ad6ac",
+    "scripts/summarize_results.py": "d540360a069af9079825d0cdcd0b8aba3e56b29e3d264e58f5b19fa2db352660",
+    "tests/__init__.py": "a9b98218b75ccc1f3071be1f2597772c2927289e0035542b9e3a70d119f35140",
+    "tests/make_oracle.py": "eb861fe31fe18382c26e5f208785d360207379cd0c3d0cc8f62d7a7311a3538e",
+    "tests/run_smoke.py": "ff761902e29fec200c501b9dde36927feced62404ea7302296671313674e31f4",
+    "tests/scenarios.py": "3fa6830337e90bbb3ce84b992b0a764fe4253fd16e85efefc245fc1bbca458b7",
+    "tests/test_auth_verifier.py": "a4f16b3cbb121c0571d2a9127c1db80d33edcdc9dbca419afb14948894cb7167",
+    "tests/test_oracle.py": "d96745ed3855c76bd9b30c5e4a9b7efb2bb874f424e7c8b63f7a3119077f267e",
+    "tests/test_scenario_harness.py": "0117d68ff776c1b99c03b89aab592513ecb2cb98745028f3177211bef01a92a5"
+  }
+}

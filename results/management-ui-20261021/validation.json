@@ -1,0 +1,173 @@
+[
+  {
+    "title": "Employee validation identifies fields",
+    "passed": true,
+    "status": 422
+  },
+  {
+    "title": "Document validation identifies fields",
+    "passed": true,
+    "status": 422
+  },
+  {
+    "title": "Create real employee staff",
+    "passed": true,
+    "status": 200,
+    "response": {
+      "id": "demo_an_673d",
+      "username": "demo_an_673d",
+      "display_name": "Nguyễn An",
+      "role": "staff",
+      "department": "A",
+      "active": true,
+      "device_id": "dev-demo_an_673d"
+    }
+  },
+  {
+    "title": "New identity authenticates with certificate staff",
+    "passed": true,
+    "response_status": 200
+  },
+  {
+    "title": "Duplicate username rejected without removing identity staff",
+    "passed": true,
+    "status": 409
+  },
+  {
+    "title": "Create real employee manager",
+    "passed": true,
+    "status": 200,
+    "response": {
+      "id": "demo_binh_1e49",
+      "username": "demo_binh_1e49",
+      "display_name": "Trần Bình",
+      "role": "manager",
+      "department": "B",
+      "active": true,
+      "device_id": "dev-demo_binh_1e49"
+    }
+  },
+  {
+    "title": "New identity authenticates with certificate manager",
+    "passed": true,
+    "response_status": 200
+  },
+  {
+    "title": "Duplicate username rejected without removing identity manager",
+    "passed": true,
+    "status": 409
+  },
+  {
+    "title": "Upload document internal without extension in display title",
+    "passed": true,
+    "status": 200,
+    "response": {
+      "id": "U-3903411e123a488ea7a19c7d03260ee5",
+      "title": "Quy trình trao đổi dự án.txt",
+      "owner_id": "demo_an_673d",
+      "department": "A",
+      "label": "internal",
+      "version": 1,
+      "retention_until": 1808126750.958186,
+      "legal_hold": false,
+      "deleted": false,
+      "sha256": "99c44b01bff58bdbd025cef809c46f3e0ef9e110fc60b88fb6a1a0c69b8c0a72",
+      "created_at": 1792574750.958186,
+      "updated_at": 1792574750.958186,
+      "deleted_at": null
+    }
+  },
+  {
+    "title": "Upload document restricted without extension in display title",
+    "passed": true,
+    "status": 200,
+    "response": {
+      "id": "U-bad6b00f89d6446997f70e2b062c626f",
+      "title": "Phương án vận hành cần phê duyệt.txt",
+      "owner_id": "demo_binh_1e49",
+      "department": "B",
+      "label": "restricted",
+      "version": 2,
+      "retention_until": 1795166753.2694247,
+      "legal_hold": false,
+      "deleted": false,
+      "sha256": "99c44b01bff58bdbd025cef809c46f3e0ef9e110fc60b88fb6a1a0c69b8c0a72",
+      "created_at": 1792574753.1424115,
+      "updated_at": 1792574753.2694247,
+      "deleted_at": null
+    }
+  },
+  {
+    "title": "Uploaded content decrypts unchanged",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Edit label and hold",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Confidential label blocks another staff member",
+    "passed": true,
+    "status": 403,
+    "reason": "OWNER_OR_LABEL"
+  },
+  {
+    "title": "Confidential label allows same-department manager",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Restricted label requires approval",
+    "passed": true,
+    "status": 403,
+    "reason": "RESTRICTED_GRANT"
+  },
+  {
+    "title": "Approve new employee and new document",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Approved manager downloads restricted document",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Employee access toggle False",
+    "passed": true,
+    "status": 403,
+    "reason": "INACTIVE"
+  },
+  {
+    "title": "Employee access toggle True",
+    "passed": true,
+    "status": 200,
+    "reason": "ALLOW"
+  },
+  {
+    "title": "Role change grants audit access immediately",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Auditor role loses business download access",
+    "passed": true,
+    "status": 403,
+    "reason": "ROLE"
+  },
+  {
+    "title": "Restore manager role",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "title": "Existing documents retained",
+    "passed": true
+  },
+  {
+    "title": "All services running",
+    "passed": true
+  }
+]

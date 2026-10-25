@@ -1,0 +1,2542 @@
+{
+  "results": [
+    {
+      "id": "B0-O-A01",
+      "group": "oracle",
+      "name": "Nhân viên A tải nội bộ cùng phòng",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781"
+      },
+      "passed": true,
+      "request_id": "a55634b2-8fac-4395-a47d-973c5f744508",
+      "latency_ms": 156.435,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A02",
+      "group": "oracle",
+      "name": "Alice tải mật do mình sở hữu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 30985,
+        "sha256": "1916de5710a0168c8b5daef78edfba613227ea1f5501d605ef401e3d10ac62ba"
+      },
+      "passed": true,
+      "request_id": "7a264030-1b22-407b-bd52-7d59dd7c7687",
+      "latency_ms": 48.487,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A03",
+      "group": "oracle",
+      "name": "Anna tải mật do mình sở hữu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25625,
+        "sha256": "3e242b090307ed836b34b63f8a3d066a0c33556bfc7418791f2ec6243b7b0a47"
+      },
+      "passed": true,
+      "request_id": "89240b4b-d7b7-45a1-84d7-14f05f1a47f9",
+      "latency_ms": 110.715,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C02/download",
+        "username": "anna",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A04",
+      "group": "oracle",
+      "name": "Trưởng phòng A tải mật của Alice",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 30985,
+        "sha256": "1916de5710a0168c8b5daef78edfba613227ea1f5501d605ef401e3d10ac62ba"
+      },
+      "passed": true,
+      "request_id": "ed1cdf9f-3fcd-473a-9a20-dfb20045bfcf",
+      "latency_ms": 111.997,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C01/download",
+        "username": "adam",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A05",
+      "group": "oracle",
+      "name": "Trưởng phòng A tải mật của Anna",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25625,
+        "sha256": "3e242b090307ed836b34b63f8a3d066a0c33556bfc7418791f2ec6243b7b0a47"
+      },
+      "passed": true,
+      "request_id": "e912ad1f-80dd-4adb-a855-804c8497335f",
+      "latency_ms": 44.817,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C02/download",
+        "username": "adam",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A06",
+      "group": "oracle",
+      "name": "Nhân viên B tải nội bộ cùng phòng",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 18623,
+        "sha256": "a6e9bf66a4e4cce096ccc7874bf974586664513eec74fe2a5eef6769a37fea78"
+      },
+      "passed": true,
+      "request_id": "0a6cd4c4-4656-4e2c-b3dd-6b6f82a60727",
+      "latency_ms": 100.495,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-I01/download",
+        "username": "bob",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A07",
+      "group": "oracle",
+      "name": "Bea tải mật do mình sở hữu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 26262,
+        "sha256": "f8086e13bdf0279f3410790864eb900e9006bba84e41e5347c3191b1e654fa76"
+      },
+      "passed": true,
+      "request_id": "b073ec7e-8c05-4d6c-a590-28ec47cfbcf7",
+      "latency_ms": 102.45,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-C02/download",
+        "username": "bea",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A08",
+      "group": "oracle",
+      "name": "Trưởng phòng B tải mật của Bob",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 17966,
+        "sha256": "84c6af6005b1d87e41a690ff08dfb8ccb08cbc0acfed1b28a32dcf7fe6d749c3"
+      },
+      "passed": true,
+      "request_id": "b9b0bd1c-9282-4b95-9de0-b21db926b308",
+      "latency_ms": 109.282,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-C01/download",
+        "username": "brian",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A09",
+      "group": "oracle",
+      "name": "Trưởng phòng B tải mật của Bea",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 26262,
+        "sha256": "f8086e13bdf0279f3410790864eb900e9006bba84e41e5347c3191b1e654fa76"
+      },
+      "passed": true,
+      "request_id": "c83be71f-cd45-4637-a495-901bf4d7bc29",
+      "latency_ms": 52.658,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-C02/download",
+        "username": "brian",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A10",
+      "group": "oracle",
+      "name": "Trưởng phòng A xem metadata hạn chế",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 178
+      },
+      "passed": true,
+      "request_id": "0c3c4fcb-1946-4eb7-950f-e9adb9ee322f",
+      "latency_ms": 33.051,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/metadata",
+        "username": "adam",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A11",
+      "group": "oracle",
+      "name": "Trưởng phòng B xem metadata hạn chế",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 176
+      },
+      "passed": true,
+      "request_id": "2fbac031-84dd-4f7d-ab37-181c2aeb8c12",
+      "latency_ms": 33.159,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R01/metadata",
+        "username": "brian",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A12",
+      "group": "oracle",
+      "name": "Alice nhận danh sách đã lọc quyền",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 1791,
+        "item_ids": [
+          "A-C01",
+          "A-C02",
+          "A-C03",
+          "A-I01",
+          "A-I02",
+          "A-I03",
+          "A-I04",
+          "A-I05",
+          "A-R01",
+          "A-R02"
+        ]
+      },
+      "passed": false,
+      "request_id": "845a5f5b-bce7-440d-adac-08c903ed003f",
+      "latency_ms": 240.549,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A13",
+      "group": "oracle",
+      "name": "Bob nhận danh sách đã lọc quyền",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 1783,
+        "item_ids": [
+          "B-C01",
+          "B-C02",
+          "B-C03",
+          "B-I01",
+          "B-I02",
+          "B-I03",
+          "B-I04",
+          "B-I05",
+          "B-R01",
+          "B-R02"
+        ]
+      },
+      "passed": false,
+      "request_id": "923205f8-b0bc-43fb-a2a4-7b068e6f21f6",
+      "latency_ms": 241.268,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents",
+        "username": "bob",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A14",
+      "group": "oracle",
+      "name": "Kiểm toán viên đọc audit",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 11253
+      },
+      "passed": true,
+      "request_id": "2619bab6-36b7-4d69-b439-9be28f430694",
+      "latency_ms": 98.256,
+      "evidence": {
+        "method": "GET",
+        "path": "/audit",
+        "username": "auditor",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A15",
+      "group": "oracle",
+      "name": "Quản trị an toàn đọc trạng thái vận hành",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 6932
+      },
+      "passed": true,
+      "request_id": "4b1cffca-0274-4bf0-baea-a05bf6342753",
+      "latency_ms": 105.096,
+      "evidence": {
+        "method": "GET",
+        "path": "/admin/state",
+        "username": "secadmin",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A16",
+      "group": "oracle",
+      "name": "Chủ thể đọc thông tin đăng nhập của mình",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 169
+      },
+      "passed": true,
+      "request_id": "915832e4-4faa-4dfd-aa5c-55abcce6582e",
+      "latency_ms": 33.829,
+      "evidence": {
+        "method": "GET",
+        "path": "/me",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A17",
+      "group": "oracle",
+      "name": "Trưởng phòng tải hạn chế với grant hợp lệ",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 31388,
+        "sha256": "e844a41626d6cf9e96483b0ef864cdc57f1a003def76aee63de2973e62930c95"
+      },
+      "passed": true,
+      "request_id": "4663c72f-566f-4d75-9f82-7d15fae87d87",
+      "latency_ms": 46.963,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/download",
+        "username": "adam",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A18",
+      "group": "oracle",
+      "name": "Trưởng phòng tải hạn chế với grant hợp lệ",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 28254,
+        "sha256": "ddaec10f58357ef92bdea30c477d074c5590a83ff46108d743c9e9526215acdd"
+      },
+      "passed": true,
+      "request_id": "bc4104dc-b096-499b-8546-8cb64f773815",
+      "latency_ms": 45.932,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R01/download",
+        "username": "brian",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A19",
+      "group": "oracle",
+      "name": "Tải lên hợp lệ với nhãn ban đầu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200,
+          201
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 186,
+        "owner_id": "alice"
+      },
+      "passed": true,
+      "request_id": "236ad114-8850-4bf0-a362-1187a2fc92ea",
+      "latency_ms": 55.43,
+      "evidence": {
+        "method": "POST",
+        "path": "/documents",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-A20",
+      "group": "oracle",
+      "name": "Tải lên hợp lệ với nhãn ban đầu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200,
+          201
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 188,
+        "owner_id": "bob"
+      },
+      "passed": true,
+      "request_id": "93e49d96-655b-494e-a6f9-761d890b6e86",
+      "latency_ms": 58.213,
+      "evidence": {
+        "method": "POST",
+        "path": "/documents",
+        "username": "bob",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D01",
+      "group": "oracle",
+      "name": "Nhân viên không sở hữu tài liệu mật",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "OWNER_OR_LABEL"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25625,
+        "sha256": "3e242b090307ed836b34b63f8a3d066a0c33556bfc7418791f2ec6243b7b0a47",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "96309277-2168-4925-9a8a-d2632ff860dc",
+      "latency_ms": 52.462,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C02/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D02",
+      "group": "oracle",
+      "name": "Sở hữu không vượt nhãn hạn chế",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "OWNER_OR_LABEL"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 31388,
+        "sha256": "e844a41626d6cf9e96483b0ef864cdc57f1a003def76aee63de2973e62930c95",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "a9eb4e66-a3bc-4467-8de2-af09478bdcdd",
+      "latency_ms": 59.465,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D03",
+      "group": "oracle",
+      "name": "Trưởng phòng thiếu grant hạn chế",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RESTRICTED_GRANT"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 31388,
+        "sha256": "e844a41626d6cf9e96483b0ef864cdc57f1a003def76aee63de2973e62930c95",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "8ffb9df7-4205-4e7b-a011-429ebfa81c15",
+      "latency_ms": 58.856,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/download",
+        "username": "adam",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D04",
+      "group": "oracle",
+      "name": "Trưởng phòng A không đọc phòng B",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEPARTMENT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEPARTMENT",
+        "body_length": 86,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "436bec45-d5a9-46b0-a633-dbbc95b648b5",
+      "latency_ms": 41.187,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-I01/download",
+        "username": "adam",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D05",
+      "group": "oracle",
+      "name": "Trưởng phòng B không đọc phòng A",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEPARTMENT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEPARTMENT",
+        "body_length": 86,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "bca68eff-ee60-460c-8f6f-0058e2aaf03a",
+      "latency_ms": 52.833,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "brian",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D06",
+      "group": "oracle",
+      "name": "Kiểm toán viên không đọc nội dung",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "af4b1317-701f-487b-b3de-2b257caa7805",
+      "latency_ms": 55.49,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "auditor",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D07",
+      "group": "oracle",
+      "name": "Quản trị an toàn không đọc nội dung",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "8eb55145-e03b-4953-8006-9831109f77bc",
+      "latency_ms": 45.885,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "secadmin",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D08",
+      "group": "oracle",
+      "name": "Nhân viên không đọc audit",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "d3f1902f-fb89-40d5-ab91-642b6f9419b4",
+      "latency_ms": 41.076,
+      "evidence": {
+        "method": "GET",
+        "path": "/audit",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D09",
+      "group": "oracle",
+      "name": "Nhân viên không đọc trạng thái quản trị",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "66814d7c-0985-4495-bfd6-81f701daa28e",
+      "latency_ms": 34.249,
+      "evidence": {
+        "method": "GET",
+        "path": "/admin/state",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D10",
+      "group": "oracle",
+      "name": "Chứng thư thuộc người khác",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEVICE_MISMATCH"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEVICE_MISMATCH",
+        "body_length": 91,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "fdf1408f-652f-409b-8845-e8c15dfdf740",
+      "latency_ms": 24.198,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D11",
+      "group": "oracle",
+      "name": "Thiết bị đã thu hồi",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEVICE_REVOKED"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "28635a75-8078-4646-86ea-2798b3e46cdd",
+      "latency_ms": 49.462,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D12",
+      "group": "oracle",
+      "name": "Thiết bị không tuân thủ",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "NONCOMPLIANT"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "5ec04e80-8fb2-49d3-857b-fecfb3ec747f",
+      "latency_ms": 61.871,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D13",
+      "group": "oracle",
+      "name": "Rủi ro cao",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RISK_HIGH"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "9a542d74-20f2-4391-843d-cf5024c47b61",
+      "latency_ms": 55.121,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D14",
+      "group": "oracle",
+      "name": "Tín hiệu đã hết thời hạn",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "MISSING_OR_STALE"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "6453262d-a094-43ee-a9ad-4469cb71c37f",
+      "latency_ms": 46.459,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D15",
+      "group": "oracle",
+      "name": "Tài khoản hiện tại bị vô hiệu",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "INACTIVE"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781",
+        "disclosed_resource_fields": [],
+        "structured_error": false
+      },
+      "passed": false,
+      "request_id": "198a7366-070c-43ec-a789-1a7e5dfe2724",
+      "latency_ms": 97.515,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D16",
+      "group": "oracle",
+      "name": "Hết thời hạn đọc nghiệp vụ",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RETENTION_EXPIRED"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RETENTION_EXPIRED",
+        "body_length": 93,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "b26b038b-b9c1-4def-a1ce-f95fe48ea831",
+      "latency_ms": 46.675,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D17",
+      "group": "oracle",
+      "name": "Legal hold chặn hủy sau thời hạn",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "LEGAL_HOLD"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "LEGAL_HOLD",
+        "body_length": 86,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "a8858889-0d32-4efd-97ff-2303fb4278d1",
+      "latency_ms": 43.113,
+      "evidence": {
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D18",
+      "group": "oracle",
+      "name": "Chưa hết thời hạn không được hủy",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RETENTION_ACTIVE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RETENTION_ACTIVE",
+        "body_length": 92,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "bb06d838-248a-4873-87ad-134ddec8e03b",
+      "latency_ms": 36.224,
+      "evidence": {
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D19",
+      "group": "oracle",
+      "name": "Tài liệu không tồn tại",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          404
+        ],
+        "reason": "NOT_FOUND"
+      },
+      "actual": {
+        "allow": false,
+        "status": 404,
+        "reason": "NOT_FOUND",
+        "body_length": 85,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "e7ea3350-332a-4804-985d-8e8a78547c32",
+      "latency_ms": 28.965,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/unknown-document/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B0-O-D20",
+      "group": "oracle",
+      "name": "Không có chứng thư client",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          400,
+          401,
+          403,
+          495,
+          496
+        ]
+      },
+      "actual": {
+        "allow": false,
+        "status": 400,
+        "reason": null,
+        "body_length": 230,
+        "disclosed_resource_fields": []
+      },
+      "passed": true,
+      "request_id": null,
+      "latency_ms": 6.17,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B0"
+      },
+      "configuration": "B0"
+    },
+    {
+      "id": "B1-O-A01",
+      "group": "oracle",
+      "name": "Nhân viên A tải nội bộ cùng phòng",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25914,
+        "sha256": "986a6f854cc9f48e82135c42a532cd9363df61072b8353379803f7bc89ff0781"
+      },
+      "passed": true,
+      "request_id": "92b1b605-d1cb-4181-890d-faa8bf9268c7",
+      "latency_ms": 57.661,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A02",
+      "group": "oracle",
+      "name": "Alice tải mật do mình sở hữu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 30985,
+        "sha256": "1916de5710a0168c8b5daef78edfba613227ea1f5501d605ef401e3d10ac62ba"
+      },
+      "passed": true,
+      "request_id": "929d01e2-e3d7-407f-9a60-8e1dd816f757",
+      "latency_ms": 47.88,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A03",
+      "group": "oracle",
+      "name": "Anna tải mật do mình sở hữu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25625,
+        "sha256": "3e242b090307ed836b34b63f8a3d066a0c33556bfc7418791f2ec6243b7b0a47"
+      },
+      "passed": true,
+      "request_id": "bfdf15a6-74b9-4c2c-bb86-482b9a2dabe4",
+      "latency_ms": 52.668,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C02/download",
+        "username": "anna",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A04",
+      "group": "oracle",
+      "name": "Trưởng phòng A tải mật của Alice",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 30985,
+        "sha256": "1916de5710a0168c8b5daef78edfba613227ea1f5501d605ef401e3d10ac62ba"
+      },
+      "passed": true,
+      "request_id": "98426e14-8002-47b1-a2a7-024f538e3ccb",
+      "latency_ms": 50.687,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C01/download",
+        "username": "adam",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A05",
+      "group": "oracle",
+      "name": "Trưởng phòng A tải mật của Anna",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 25625,
+        "sha256": "3e242b090307ed836b34b63f8a3d066a0c33556bfc7418791f2ec6243b7b0a47"
+      },
+      "passed": true,
+      "request_id": "640ad4f0-987b-492c-97ac-f29799be54b1",
+      "latency_ms": 54.277,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C02/download",
+        "username": "adam",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A06",
+      "group": "oracle",
+      "name": "Nhân viên B tải nội bộ cùng phòng",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 18623,
+        "sha256": "a6e9bf66a4e4cce096ccc7874bf974586664513eec74fe2a5eef6769a37fea78"
+      },
+      "passed": true,
+      "request_id": "1668d40a-d538-436c-9043-ad99a05f8a64",
+      "latency_ms": 54.908,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-I01/download",
+        "username": "bob",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A07",
+      "group": "oracle",
+      "name": "Bea tải mật do mình sở hữu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 26262,
+        "sha256": "f8086e13bdf0279f3410790864eb900e9006bba84e41e5347c3191b1e654fa76"
+      },
+      "passed": true,
+      "request_id": "d639517d-6d06-442a-8ce3-bf905b7419f0",
+      "latency_ms": 51.813,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-C02/download",
+        "username": "bea",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A08",
+      "group": "oracle",
+      "name": "Trưởng phòng B tải mật của Bob",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 17966,
+        "sha256": "84c6af6005b1d87e41a690ff08dfb8ccb08cbc0acfed1b28a32dcf7fe6d749c3"
+      },
+      "passed": true,
+      "request_id": "9a5ea5f9-d32b-475f-bdab-b08b7a3b7316",
+      "latency_ms": 49.652,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-C01/download",
+        "username": "brian",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A09",
+      "group": "oracle",
+      "name": "Trưởng phòng B tải mật của Bea",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 26262,
+        "sha256": "f8086e13bdf0279f3410790864eb900e9006bba84e41e5347c3191b1e654fa76"
+      },
+      "passed": true,
+      "request_id": "783f6a9e-d52f-4933-a17e-c56a4074a8d7",
+      "latency_ms": 45.145,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-C02/download",
+        "username": "brian",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A10",
+      "group": "oracle",
+      "name": "Trưởng phòng A xem metadata hạn chế",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 178
+      },
+      "passed": true,
+      "request_id": "c0c14921-2b1c-43ce-97b1-fa478ad99dbf",
+      "latency_ms": 32.655,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/metadata",
+        "username": "adam",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A11",
+      "group": "oracle",
+      "name": "Trưởng phòng B xem metadata hạn chế",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 176
+      },
+      "passed": true,
+      "request_id": "7057fa5e-04f3-4ad2-8d18-626d490343b9",
+      "latency_ms": 38.458,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R01/metadata",
+        "username": "brian",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A12",
+      "group": "oracle",
+      "name": "Alice nhận danh sách đã lọc quyền",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 1074,
+        "item_ids": [
+          "A-C01",
+          "A-I01",
+          "A-I02",
+          "A-I03",
+          "A-I04",
+          "A-I05"
+        ]
+      },
+      "passed": true,
+      "request_id": "8b9d3b91-c8ae-4427-89dd-3a54cc2c0f32",
+      "latency_ms": 249.382,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A13",
+      "group": "oracle",
+      "name": "Bob nhận danh sách đã lọc quyền",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 1067,
+        "item_ids": [
+          "B-C01",
+          "B-I01",
+          "B-I02",
+          "B-I03",
+          "B-I04",
+          "B-I05"
+        ]
+      },
+      "passed": true,
+      "request_id": "38990582-48e3-4973-8fe5-1a0e89bf39b3",
+      "latency_ms": 239.53,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents",
+        "username": "bob",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A14",
+      "group": "oracle",
+      "name": "Kiểm toán viên đọc audit",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 11253
+      },
+      "passed": true,
+      "request_id": "caef7716-58ec-49a4-a750-f9f1e1cd9dab",
+      "latency_ms": 36.861,
+      "evidence": {
+        "method": "GET",
+        "path": "/audit",
+        "username": "auditor",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A15",
+      "group": "oracle",
+      "name": "Quản trị an toàn đọc trạng thái vận hành",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 6932
+      },
+      "passed": true,
+      "request_id": "36b7c586-03be-4aca-a02f-ab1b862c1845",
+      "latency_ms": 39.995,
+      "evidence": {
+        "method": "GET",
+        "path": "/admin/state",
+        "username": "secadmin",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A16",
+      "group": "oracle",
+      "name": "Chủ thể đọc thông tin đăng nhập của mình",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 169
+      },
+      "passed": true,
+      "request_id": "ea76018b-5e70-46fa-940a-fe167bbdea06",
+      "latency_ms": 33.715,
+      "evidence": {
+        "method": "GET",
+        "path": "/me",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A17",
+      "group": "oracle",
+      "name": "Trưởng phòng tải hạn chế với grant hợp lệ",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 31388,
+        "sha256": "e844a41626d6cf9e96483b0ef864cdc57f1a003def76aee63de2973e62930c95"
+      },
+      "passed": true,
+      "request_id": "56f22b27-bed5-4756-b97d-529e87a96f05",
+      "latency_ms": 59.541,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/download",
+        "username": "adam",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A18",
+      "group": "oracle",
+      "name": "Trưởng phòng tải hạn chế với grant hợp lệ",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 28254,
+        "sha256": "ddaec10f58357ef92bdea30c477d074c5590a83ff46108d743c9e9526215acdd"
+      },
+      "passed": true,
+      "request_id": "8b62a29a-54c5-4301-b884-f44d7abf850e",
+      "latency_ms": 47.569,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R01/download",
+        "username": "brian",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A19",
+      "group": "oracle",
+      "name": "Tải lên hợp lệ với nhãn ban đầu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200,
+          201
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 186,
+        "owner_id": "alice"
+      },
+      "passed": true,
+      "request_id": "215a235e-aa4e-466b-a47f-cc2cda5f8323",
+      "latency_ms": 54.113,
+      "evidence": {
+        "method": "POST",
+        "path": "/documents",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-A20",
+      "group": "oracle",
+      "name": "Tải lên hợp lệ với nhãn ban đầu",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200,
+          201
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 188,
+        "owner_id": "bob"
+      },
+      "passed": true,
+      "request_id": "500657f1-e902-41dc-bdf6-e6e1c35ff9f1",
+      "latency_ms": 58.839,
+      "evidence": {
+        "method": "POST",
+        "path": "/documents",
+        "username": "bob",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D01",
+      "group": "oracle",
+      "name": "Nhân viên không sở hữu tài liệu mật",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "OWNER_OR_LABEL"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "OWNER_OR_LABEL",
+        "body_length": 90,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "ff386030-7885-4b26-b0f5-a5cdcddc91fb",
+      "latency_ms": 37.849,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-C02/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D02",
+      "group": "oracle",
+      "name": "Sở hữu không vượt nhãn hạn chế",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "OWNER_OR_LABEL"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "OWNER_OR_LABEL",
+        "body_length": 90,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "771d887c-d002-44ed-9e23-d4a44e23149d",
+      "latency_ms": 34.42,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D03",
+      "group": "oracle",
+      "name": "Trưởng phòng thiếu grant hạn chế",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RESTRICTED_GRANT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RESTRICTED_GRANT",
+        "body_length": 92,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "eaaa1cfd-1996-4e5f-ba6c-34966fdd3b5b",
+      "latency_ms": 43.806,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-R01/download",
+        "username": "adam",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D04",
+      "group": "oracle",
+      "name": "Trưởng phòng A không đọc phòng B",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEPARTMENT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEPARTMENT",
+        "body_length": 86,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "f47bdb4e-e20c-4694-9ef2-d67dc4ecd1d3",
+      "latency_ms": 48.826,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-I01/download",
+        "username": "adam",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D05",
+      "group": "oracle",
+      "name": "Trưởng phòng B không đọc phòng A",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEPARTMENT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEPARTMENT",
+        "body_length": 86,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "f1d6301d-f025-4f85-9fd5-214f3adddda8",
+      "latency_ms": 42.868,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "brian",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D06",
+      "group": "oracle",
+      "name": "Kiểm toán viên không đọc nội dung",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "2b4c498d-0a6f-4381-b92d-c22e5cc58f46",
+      "latency_ms": 42.065,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "auditor",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D07",
+      "group": "oracle",
+      "name": "Quản trị an toàn không đọc nội dung",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "8500c75a-8c03-49da-970b-031d9da957cd",
+      "latency_ms": 40.186,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "secadmin",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D08",
+      "group": "oracle",
+      "name": "Nhân viên không đọc audit",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "483954b0-a35f-4d77-a695-b4c33fc731c4",
+      "latency_ms": 32.644,
+      "evidence": {
+        "method": "GET",
+        "path": "/audit",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D09",
+      "group": "oracle",
+      "name": "Nhân viên không đọc trạng thái quản trị",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "ROLE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "ROLE",
+        "body_length": 80,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "c7057b81-2a9d-4fad-af03-928921dc1c47",
+      "latency_ms": 36.177,
+      "evidence": {
+        "method": "GET",
+        "path": "/admin/state",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D10",
+      "group": "oracle",
+      "name": "Chứng thư thuộc người khác",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEVICE_MISMATCH"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEVICE_MISMATCH",
+        "body_length": 91,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "34926d22-c970-45e9-8708-1c096546b9d3",
+      "latency_ms": 25.61,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D11",
+      "group": "oracle",
+      "name": "Thiết bị đã thu hồi",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEVICE_REVOKED"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEVICE_REVOKED",
+        "body_length": 90,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "f22b3d9f-8b78-4cc1-aaa3-eddaaf139b3a",
+      "latency_ms": 35.549,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D12",
+      "group": "oracle",
+      "name": "Thiết bị không tuân thủ",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "NONCOMPLIANT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "NONCOMPLIANT",
+        "body_length": 88,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "9b4f7e93-010d-43da-8ea1-2507d62ad431",
+      "latency_ms": 37.447,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D13",
+      "group": "oracle",
+      "name": "Rủi ro cao",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RISK_HIGH"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RISK_HIGH",
+        "body_length": 85,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "183b10de-c1af-400c-a3c1-bf80adda18b5",
+      "latency_ms": 37.175,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D14",
+      "group": "oracle",
+      "name": "Tín hiệu đã hết thời hạn",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "MISSING_OR_STALE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "MISSING_OR_STALE",
+        "body_length": 92,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "d6d07f6a-3275-42c2-b4d9-f40321d55708",
+      "latency_ms": 41.269,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D15",
+      "group": "oracle",
+      "name": "Tài khoản hiện tại bị vô hiệu",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "INACTIVE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "INACTIVE",
+        "body_length": 84,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "607110e6-11b8-4501-8d7a-62c89b0a1d6f",
+      "latency_ms": 38.174,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D16",
+      "group": "oracle",
+      "name": "Hết thời hạn đọc nghiệp vụ",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RETENTION_EXPIRED"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RETENTION_EXPIRED",
+        "body_length": 93,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "74a8d154-55bd-4d30-99a6-323e2bbe2d4c",
+      "latency_ms": 49.883,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D17",
+      "group": "oracle",
+      "name": "Legal hold chặn hủy sau thời hạn",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "LEGAL_HOLD"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "LEGAL_HOLD",
+        "body_length": 86,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "31e7d9b9-d2c1-44d1-a60d-863bf7e40a25",
+      "latency_ms": 43.698,
+      "evidence": {
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D18",
+      "group": "oracle",
+      "name": "Chưa hết thời hạn không được hủy",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RETENTION_ACTIVE"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RETENTION_ACTIVE",
+        "body_length": 92,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "9302f4fb-32b9-470a-aaa0-aed2a7633c2a",
+      "latency_ms": 37.847,
+      "evidence": {
+        "method": "DELETE",
+        "path": "/documents/A-I01",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D19",
+      "group": "oracle",
+      "name": "Tài liệu không tồn tại",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          404
+        ],
+        "reason": "NOT_FOUND"
+      },
+      "actual": {
+        "allow": false,
+        "status": 404,
+        "reason": "NOT_FOUND",
+        "body_length": 85,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "ecb73fa7-5ac6-4315-a808-5b085dc69b25",
+      "latency_ms": 30.862,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/unknown-document/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    },
+    {
+      "id": "B1-O-D20",
+      "group": "oracle",
+      "name": "Không có chứng thư client",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          400,
+          401,
+          403,
+          495,
+          496
+        ]
+      },
+      "actual": {
+        "allow": false,
+        "status": 400,
+        "reason": null,
+        "body_length": 230,
+        "disclosed_resource_fields": []
+      },
+      "passed": true,
+      "request_id": null,
+      "latency_ms": 4.833,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/download",
+        "username": "alice",
+        "mode": "B1"
+      },
+      "configuration": "B1"
+    }
+  ],
+  "summary": {
+    "run_id": "benchmark-20261015-072521-15829f",
+    "started_at": 1792049121.560535,
+    "finished_at": 1792049308.8461077,
+    "duration_seconds": 187.286,
+    "decision_metrics": {
+      "B0": {
+        "expected_allow": 20,
+        "expected_deny": 20,
+        "false_allow": 8,
+        "false_deny": 0,
+        "false_allow_rate": 0.4,
+        "false_deny_rate": 0.0,
+        "operational_errors": 0
+      },
+      "B1": {
+        "expected_allow": 20,
+        "expected_deny": 20,
+        "false_allow": 0,
+        "false_deny": 0,
+        "false_allow_rate": 0.0,
+        "false_deny_rate": 0.0,
+        "operational_errors": 0
+      }
+    },
+    "performance": [
+      {
+        "mode": "B0",
+        "action": "metadata",
+        "repetition": 1,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 37.73,
+        "p50_ms": 33.936,
+        "p95_ms": 48.804
+      },
+      {
+        "mode": "B0",
+        "action": "download",
+        "repetition": 1,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 49.015,
+        "p50_ms": 46.773,
+        "p95_ms": 58.803
+      },
+      {
+        "mode": "B1",
+        "action": "metadata",
+        "repetition": 1,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 37.204,
+        "p50_ms": 35.647,
+        "p95_ms": 46.912
+      },
+      {
+        "mode": "B1",
+        "action": "download",
+        "repetition": 1,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 46.947,
+        "p50_ms": 45.688,
+        "p95_ms": 52.978
+      },
+      {
+        "mode": "B1",
+        "action": "metadata",
+        "repetition": 2,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 33.235,
+        "p50_ms": 32.384,
+        "p95_ms": 38.845
+      },
+      {
+        "mode": "B1",
+        "action": "download",
+        "repetition": 2,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 53.096,
+        "p50_ms": 51.347,
+        "p95_ms": 66.659
+      },
+      {
+        "mode": "B0",
+        "action": "metadata",
+        "repetition": 2,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 37.034,
+        "p50_ms": 35.122,
+        "p95_ms": 47.505
+      },
+      {
+        "mode": "B0",
+        "action": "download",
+        "repetition": 2,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 50.515,
+        "p50_ms": 48.232,
+        "p95_ms": 60.792
+      },
+      {
+        "mode": "B0",
+        "action": "metadata",
+        "repetition": 3,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 34.181,
+        "p50_ms": 33.187,
+        "p95_ms": 40.301
+      },
+      {
+        "mode": "B0",
+        "action": "download",
+        "repetition": 3,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 50.094,
+        "p50_ms": 47.427,
+        "p95_ms": 58.166
+      },
+      {
+        "mode": "B1",
+        "action": "metadata",
+        "repetition": 3,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 33.762,
+        "p50_ms": 32.811,
+        "p95_ms": 40.4
+      },
+      {
+        "mode": "B1",
+        "action": "download",
+        "repetition": 3,
+        "n": 200,
+        "warmup": 20,
+        "errors": 0,
+        "mean_ms": 47.861,
+        "p50_ms": 46.763,
+        "p95_ms": 53.837
+      }
+    ],
+    "request_samples": 2400,
+    "method": {
+      "seed": 123,
+      "requests_per_action_configuration_repeat": 200,
+      "warmup": 20,
+      "repetitions": 3,
+      "concurrency": 1,
+      "percentile": "nearest rank",
+      "document": "A-I01",
+      "transport": "TLS verified + real client certificate",
+      "identity": "real Keycloak JWT cached after login",
+      "order": "alternate configuration order across repetitions",
+      "data_and_crypto": "same PostgreSQL ciphertext and OpenBao key for B0/B1"
+    },
+    "scope": "B0 is a deliberately weak local role/department snapshot baseline; not Google/Microsoft performance.",
+    "total_errors": 0
+  }
+}

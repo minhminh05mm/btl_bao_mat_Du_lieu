@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8"><title>Kết quả kiểm thử</title><style>body{font:14px system-ui;margin:30px}td,th{border:1px solid #cbd5e1;padding:8px;text-align:left;vertical-align:top}table{border-collapse:collapse}pre{white-space:pre-wrap}</style><h1>Kết quả kiểm thử Zero Trust</h1><pre>{
+  &quot;run_id&quot;: &quot;run-20261015-072100-26fac8&quot;,
+  &quot;started_at&quot;: 1792048860.2465613,
+  &quot;finished_at&quot;: 1792048868.2752345,
+  &quot;duration_seconds&quot;: 8.029,
+  &quot;total&quot;: 3,
+  &quot;passed&quot;: 3,
+  &quot;failed&quot;: 0,
+  &quot;expected_allow_count&quot;: 1,
+  &quot;expected_deny_count&quot;: 0,
+  &quot;false_allow&quot;: 0,
+  &quot;false_deny&quot;: 0,
+  &quot;false_allow_rate&quot;: null,
+  &quot;false_deny_rate&quot;: 0.0,
+  &quot;scope&quot;: &quot;Real gateway/JWT/mTLS/OPA/Transit/PostgreSQL; synthetic fixtures; unit tests reported separately&quot;,
+  &quot;output_dir&quot;: &quot;/project/results/run-20261015-072100-26fac8&quot;
+}</pre><table><tr><th>id</th><th>group</th><th>name</th><th>passed</th><th>expected</th><th>actual</th><th>request_id</th><th>latency_ms</th><th>evidence</th></tr><tr><td>UI-CUSTOM-01</td><td>oracle</td><td>UI tùy chỉnh: Anna xem nội bộ A</td><td>True</td><td>{&#x27;allow&#x27;: True, &#x27;statuses&#x27;: [200]}</td><td>{&#x27;allow&#x27;: True, &#x27;status&#x27;: 200, &#x27;reason&#x27;: &#x27;ALLOW&#x27;, &#x27;body_length&#x27;: 176}</td><td>fafd43ae-7c6a-4290-becc-d1200787d9b3</td><td>212.208</td><td>{&#x27;method&#x27;: &#x27;GET&#x27;, &#x27;path&#x27;: &#x27;/documents/A-I01/metadata&#x27;, &#x27;username&#x27;: &#x27;anna&#x27;, &#x27;mode&#x27;: &#x27;B1&#x27;}</td></tr><tr><td>OPA-native</td><td>unit-policy</td><td>Kiểm thử Rego bằng OPA thật</td><td>True</td><td>all pass</td><td>{&#x27;exit_code&#x27;: 0, &#x27;tests&#x27;: 31}</td><td>None</td><td>None</td><td></td></tr><tr><td>JWT-native</td><td>unit-identity</td><td>Xác minh chữ ký, issuer, audience, thời hạn token</td><td>True</td><td>all pass</td><td>{&#x27;exit_code&#x27;: 0}</td><td>None</td><td>None</td><td></td></tr></table>

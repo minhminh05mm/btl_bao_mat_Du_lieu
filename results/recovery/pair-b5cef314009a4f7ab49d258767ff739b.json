@@ -1,0 +1,29 @@
+{
+  "operation": "backup",
+  "status": "passed",
+  "snapshot_id": "27762185fadc52f4a08ca4fc5f4f52eddb5ef1af214da126f1e84a650ff48a50",
+  "restic_snapshot_id": "27762185fadc52f4a08ca4fc5f4f52eddb5ef1af214da126f1e84a650ff48a50",
+  "pair_id": "pair-b5cef314009a4f7ab49d258767ff739b",
+  "checkpoint": 1792573087.2528348,
+  "archive_path": "/runtime/backups/staging/pair-b5cef314009a4f7ab49d258767ff739b",
+  "hashes": {
+    "db.dump": "b197c61a6ed3eabc8c6c3d3e3b2e78734bfcb46b9fb7e6cfec7815a65b442164",
+    "bao.snap": "3bbea4958c1ff89dfd27a17727c27b8aaba8d13150b7961b37ca69f530d13c04"
+  },
+  "files": [
+    "db.dump",
+    "bao.snap",
+    "checkpoint.json"
+  ],
+  "recovery_material_external": true,
+  "recovery_keyset_reference": "local-operator-unseal-set-v1",
+  "recovery_keyset_fingerprint": "c6c80d9e0b99da5cf38f7739aea526edcab2f254513d9c4fe553173d2f5193c8",
+  "created_at": 1792573086.3315725,
+  "finished_at": 1792573092.9436638,
+  "business_writes_frozen": true,
+  "repository_verified": true,
+  "encrypted": true,
+  "db_format": "PostgreSQL custom archive",
+  "kms_format": "OpenBao integrated Raft snapshot",
+  "duration_seconds": 6.612
+}

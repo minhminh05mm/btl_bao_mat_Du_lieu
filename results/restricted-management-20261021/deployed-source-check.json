@@ -1,0 +1,38 @@
+[
+  {
+    "file": "app\\main.py",
+    "matches": true
+  },
+  {
+    "file": "app\\db.py",
+    "matches": true
+  },
+  {
+    "file": "policies\\bmdl.rego",
+    "matches": true
+  },
+  {
+    "file": "lab\\management.py",
+    "matches": true
+  },
+  {
+    "file": "lab\\web.py",
+    "matches": true
+  },
+  {
+    "file": "lab\\static\\management.js",
+    "matches": true
+  },
+  {
+    "file": "lab\\templates\\index.html",
+    "matches": true
+  },
+  {
+    "file": "lab\\static\\management.css",
+    "matches": true
+  },
+  {
+    "file": "lab\\recovery.py",
+    "matches": true
+  }
+]

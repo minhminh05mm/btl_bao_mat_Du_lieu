@@ -1,0 +1,72 @@
+{
+  "results": [
+    {
+      "id": "UI-CUSTOM-01",
+      "group": "oracle",
+      "name": "UI tùy chỉnh: Anna xem nội bộ A",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ]
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 176
+      },
+      "passed": true,
+      "request_id": "fafd43ae-7c6a-4290-becc-d1200787d9b3",
+      "latency_ms": 212.208,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/A-I01/metadata",
+        "username": "anna",
+        "mode": "B1"
+      }
+    },
+    {
+      "id": "OPA-native",
+      "group": "unit-policy",
+      "name": "Kiểm thử Rego bằng OPA thật",
+      "expected": "all pass",
+      "actual": {
+        "exit_code": 0,
+        "tests": 31
+      },
+      "passed": true,
+      "request_id": null,
+      "latency_ms": null
+    },
+    {
+      "id": "JWT-native",
+      "group": "unit-identity",
+      "name": "Xác minh chữ ký, issuer, audience, thời hạn token",
+      "expected": "all pass",
+      "actual": {
+        "exit_code": 0
+      },
+      "passed": true,
+      "request_id": null,
+      "latency_ms": null
+    }
+  ],
+  "summary": {
+    "run_id": "run-20261015-072100-26fac8",
+    "started_at": 1792048860.2465613,
+    "finished_at": 1792048868.2752345,
+    "duration_seconds": 8.029,
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "expected_allow_count": 1,
+    "expected_deny_count": 0,
+    "false_allow": 0,
+    "false_deny": 0,
+    "false_allow_rate": null,
+    "false_deny_rate": 0.0,
+    "scope": "Real gateway/JWT/mTLS/OPA/Transit/PostgreSQL; synthetic fixtures; unit tests reported separately",
+    "output_dir": "/project/results/run-20261015-072100-26fac8"
+  }
+}

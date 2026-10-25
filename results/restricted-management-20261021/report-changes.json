@@ -1,0 +1,66 @@
+[
+  {
+    "before": "Nghiên cứu xét bài toán bảo vệ kho tài liệu của doanh nghiệp giả định có hai phòng ban A và B, với chức năng tải lên, xem thông tin mô tả, tải nội dung và xóa. Kiến trúc kiểm soát từng hành động bằng danh tính, quyền hiện tại, thiết bị, ngữ cảnh và mức nhạy cảm. Thiết kế liên kết tài sản, luồng dữ liệu, chính sách và cơ chế kiểm soát với các bằng chứng cần thu để đánh giá yêu cầu bảo vệ.",
+    "after": "Nghiên cứu xét kho tài liệu của doanh nghiệp giả định có hai phòng ban A và B, với chức năng thêm, xem thông tin mô tả, tải nội dung, sửa thông tin và xóa. Kiến trúc kiểm soát từng hành động bằng danh tính, quyền hiện tại, thiết bị, ngữ cảnh và mức nhạy cảm. Phê duyệt tạo tài liệu hạn chế và quyền sử dụng tài liệu đã lưu được xác định riêng để duy trì trách nhiệm cấp quyền và kiểm tra tại điểm thực thi."
+  },
+  {
+    "before": "Quy chuẩn áp dụng từ nội dung và hậu quả tiết lộ, không suy ra từ đuôi file hoặc kích thước. Khi thỏa nhiều tiêu chí, hồ sơ được xếp theo mức nhạy cảm cao nhất. Chủ hồ sơ lựa chọn nội bộ hoặc mật khi tải lên; quản trị an toàn có quyền nâng nhãn và phải lưu audit. Hạn chế được hình thành qua thao tác nâng nhãn; nguyên mẫu không hỗ trợ hạ nhãn. Các mức là quy ước của bài toán nghiên cứu, không đại diện hệ phân loại pháp lý.",
+    "after": "Quy chuẩn áp dụng từ nội dung và hậu quả tiết lộ, không suy ra từ đuôi file hoặc kích thước. Khi thỏa nhiều tiêu chí, hồ sơ được xếp theo mức nhạy cảm cao nhất. Nhân viên và trưởng phòng được thêm nội bộ hoặc mật. Thêm trực tiếp hạn chế yêu cầu trưởng phòng và phê duyệt của quản trị an toàn; nâng lên hạn chế cũng phải có phê duyệt. Nguyên mẫu không cho hạ nhãn qua giao diện và API sửa thông tin. Các mức là quy ước nghiên cứu, không đại diện hệ phân loại pháp lý."
+  },
+  {
+    "before": "Mức nhạy cảm dẫn tới điều kiện sử dụng: nội bộ được đọc trong phòng; mật giới hạn nhân viên là chủ sở hữu hoặc trưởng phòng cùng đơn vị; hạn chế cần trưởng phòng và grant đúng người nhận, tài liệu, phiên bản, hành động, thời hạn. Grant có thể phục vụ nhiều yêu cầu trong thời hạn còn hiệu lực. Mọi mức vẫn chịu điều kiện danh tính, thiết bị, vòng đời và trạng thái quyền hiện tại.",
+    "after": "Mức nhạy cảm dẫn tới điều kiện sử dụng: nội bộ được đọc trong phòng; mật giới hạn nhân viên là chủ sở hữu hoặc trưởng phòng cùng đơn vị; hạn chế cần trưởng phòng cùng phòng và grant hợp lệ để tải nội dung. Trưởng phòng được xem metadata hạn chế trong phòng ngay cả khi chưa có grant tải. Quyền tải là điều kiện bắt buộc để sửa thông tin; chỉ xem được metadata chưa đủ để sửa. Mọi thao tác vẫn chịu kiểm tra danh tính, thiết bị, vòng đời và quyền hiện tại."
+  },
+  {
+    "before": "Luồng nghiệp vụ đi qua gateway xác minh chứng thư trước khi tới FastAPI. API điều phối nguồn thuộc tính, OPA, dữ liệu, mật mã và audit; quyết định chỉ có hiệu lực khi các điều kiện bắt buộc đều đáp ứng. Luồng nét đứt là quyền chuẩn bị và phục hồi của controller tin cậy, không thuộc quyền người dùng nghiệp vụ. Cách ánh xạ này mô tả chức năng của nguyên mẫu; chưa hiện thực đầy đủ mọi thành phần điều khiển phiên của kiến trúc NIST.",
+    "after": "Luồng nghiệp vụ đi qua gateway xác minh chứng thư trước khi tới FastAPI. API điều phối nguồn thuộc tính, OPA, dữ liệu, mật mã và audit; quyết định chỉ có hiệu lực khi các điều kiện bắt buộc đều đáp ứng. Thêm và sửa thông tin tài liệu trên giao diện được chuyển thành yêu cầu nghiệp vụ qua đường này. Luồng nét đứt thể hiện đặc quyền chuẩn bị và phục hồi của controller tin cậy. Sơ đồ không hiện thực đầy đủ mọi thành phần điều khiển phiên theo mô hình NIST."
+  },
+  {
+    "before": "Grant cho mức hạn chế gắn với người nhận, tài liệu, phiên bản, hành động tải xuống và thời điểm hết hạn. Người cấp phải khác người nhận, kể cả khi sau này cho phép một tài khoản có nhiều vai trò. Grant bị thu hồi hoặc tài liệu đổi phiên bản không còn tạo điều kiện truy cập. Sở hữu tài liệu không cho phép vượt mức nhãn. Quản trị an toàn không được tự đổi vai trò, phòng ban hay đặc quyền của mình, không được cấp vai trò quản trị cao nhất qua API và không quản trị credential Keycloak bằng quyền nghiệp vụ.",
+    "after": "Grant của tài liệu hạn chế gắn với người nhận, tài liệu, phiên bản, hành động tải xuống và thời điểm hết hạn. API sử dụng quyền tải hiện tại làm điều kiện sửa thông tin; grant không cho phép thay đổi thời hạn lưu giữ hoặc trạng thái bảo toàn. Người cấp phải khác người nhận. Thu hồi, hết hạn hoặc đổi phiên bản làm grant không còn đáp ứng điều kiện tải và sửa. B0 chỉ là đối chứng quyền đọc; chọn B0 không bỏ qua kiểm tra B1 đối với thao tác sửa. Quản trị an toàn không mặc nhiên được đọc hoặc sửa nội dung nghiệp vụ."
+  },
+  {
+    "insert_after": 205,
+    "after": "Khi tạo mới hạn chế, quản trị an toàn phê duyệt một yêu cầu gắn với trưởng phòng, phòng ban, định danh tài liệu dự kiến, phiên bản và thời hạn. Phê duyệt được phân biệt giữa tạo mới và nâng nhãn, chỉ được sử dụng thành công một lần. API kiểm tra phê duyệt trước mã hóa, rồi lưu tài liệu, grant ban đầu và trạng thái đã sử dụng trong cùng giao dịch PostgreSQL. Grant được tạo cho phép nhiều yêu cầu trong thời hạn còn hiệu lực. Lỗi làm giao dịch bị hủy không để lại tài liệu trung gian mang nhãn thấp hơn."
+  },
+  {
+    "before": "Quản trị vòng đời bắt đầu khi tải lên. Máy chủ gán chủ sở hữu và phòng ban theo registry, kiểm tra kích thước và nhãn được phép. Người dùng chọn nội bộ hoặc mật; tài liệu hạn chế hình thành qua thao tác tăng nhãn có audit. Nội dung được chuyển tới Transit để mã hóa rồi lưu cùng metadata và phiên bản. Nhật ký và hồ sơ kiểm chứng không chứa bản rõ, token hoặc khóa; phép kiểm tra lưu trữ và quyền dịch vụ bổ sung bằng chứng cho cơ chế này.",
+    "after": "Quản trị vòng đời bắt đầu khi tải lên. Máy chủ gán chủ sở hữu và phòng ban theo registry, kiểm tra kích thước và nhãn được phép. Nội bộ và mật được thêm theo quyền nghiệp vụ; hạn chế được thêm trực tiếp sau phê duyệt hoặc hình thành qua nâng nhãn. Nội dung được chuyển tới Transit để mã hóa rồi lưu cùng metadata. Cơ chế này giữ nguyên các thành phần gateway, API, OPA, PostgreSQL và OpenBao; phê duyệt là trạng thái bổ sung tại nguồn thuộc tính và được kiểm soát tại API."
+  },
+  {
+    "before": "Đổi nhãn và đổi quyền phải tạo phiên bản hoặc trạng thái được truy vết. Nguyên mẫu cho phép tăng nhãn và không hỗ trợ hạ nhãn nhằm giảm ngoại lệ chính sách. Thay đổi nhãn không tự chứng minh rằng tất cả bản sao ngoài hệ thống được cập nhật. Kiến trúc chỉ duy trì liên hệ và chính sách đối với bản hoạt động cùng các bản sao do mình quản lý. Thu hồi quyền và xoay vòng khóa là hai thao tác khác nhau: thu hồi chặn sử dụng tiếp theo, còn xoay khóa không thu hồi bản rõ đã được cấp.",
+    "after": "Đổi nhãn làm tăng phiên bản để quyền cũ không được áp dụng cho mức nhạy cảm mới; đổi tên giữ nguyên phiên bản nhãn. Nâng lên hạn chế tạo grant cho đúng phiên bản mới, đồng thời giới hạn thời hạn lưu giữ theo mức hạn chế. Không hỗ trợ hạ nhãn qua API sửa thông tin. Thời hạn và bảo toàn thuộc đặc quyền quản trị vòng đời, tách với quyền đọc và sửa thông tin. Chính sách chỉ bao phủ bản hoạt động và bản sao do hệ thống quản lý; thu hồi quyền không thu hồi bản rõ đã cấp."
+  },
+  {
+    "before": "Tách trách nhiệm giúp hạn chế ảnh hưởng của một quyền bị lạm dụng. Quản trị chính sách không mặc nhiên quản trị credential định danh; quản trị ứng dụng không mặc nhiên xuất khóa; người kiểm toán không mặc nhiên đọc tài liệu. Những danh tính vận hành cũng cần giới hạn kết nối và đối tượng quản lý. Trên một host, người quản trị cao nhất vẫn có khả năng ảnh hưởng nhiều vùng. Bởi vậy, việc phân tách trong lab chủ yếu kiểm chứng cấu hình quyền và quy trình, chưa chứng minh cô lập trước chủ thể chiếm toàn bộ host.",
+    "after": "Tách trách nhiệm hạn chế ảnh hưởng của một quyền bị lạm dụng. Quản trị chính sách không mặc nhiên quản trị credential định danh; kiểm toán và quản trị an toàn không mặc nhiên đọc nội dung. Console là công cụ của người vận hành tin cậy, có thể chọn danh tính để chuẩn bị và kiểm tra. Thao tác phê duyệt được gửi riêng bằng danh tính quản trị đã chọn; giao diện chưa phải cổng nhiều người dùng với hàng đợi duyệt độc lập. Phân tách trên một host chưa bảo đảm an toàn khi chủ thể chiếm toàn bộ host."
+  },
+  {
+    "before": "Một tình huống đạt khi mã trạng thái, lý do và dữ liệu trả về phù hợp kỳ vọng. Yêu cầu tải được phép phải trả bản rõ khớp hash fixture; metadata được đánh giá theo phạm vi dữ liệu trả về. Yêu cầu bị từ chối không được tiết lộ metadata tài nguyên. Các phép thử lỗi kiểm tra việc không cấp bản rõ khi thiếu PDP, KMS hoặc audit. Request ID liên kết phản hồi với nhật ký; phục hồi được đánh giá qua hash và trạng thái đối chiếu.",
+    "after": "Một tình huống đạt khi mã trạng thái, lý do và dữ liệu trả về phù hợp kỳ vọng. Tải được phép phải trả bản rõ khớp hash; metadata được đánh giá theo phạm vi trả về. Yêu cầu đọc bị từ chối không được tiết lộ metadata tài nguyên. Các phép thử bổ sung về tạo và sửa kiểm tra vai trò, phê duyệt còn hạn, ràng buộc phiên bản và việc không lưu thay đổi ngoài quyền. Request ID liên kết phản hồi với nhật ký; phục hồi được đánh giá qua hash và trạng thái đối chiếu."
+  },
+  {
+    "insert_after": 264,
+    "after": "Lượt kiểm tra bổ sung ngày 21 tháng 10 năm 2026 sử dụng cùng hạ tầng phần mềm đã mô tả, với tài liệu tổng hợp được tạo riêng để đánh giá chức năng thêm và sửa. Có 39 kiểm tra tích hợp đạt; kết quả này được ghi riêng, không cộng vào 127 mục của lượt ngày 19 tháng 10. Các trường hợp bao gồm thêm hạn chế có phê duyệt, tải ngay sau tạo, từ chối sai vai trò hoặc phòng ban, thu hồi và hết hạn quyền, tái sử dụng phê duyệt, nâng nhãn, cùng lỗi ghi audit gây hủy giao dịch. Ba mươi mốt kiểm thử Rego và 18 kiểm thử hồi quy Python được chạy riêng."
+  },
+  {
+    "insert_after": 262,
+    "after": "Đối với chức năng cập nhật, cùng một grant đang hiệu lực cho phép tải nội dung và sửa tên tài liệu. Sau thu hồi, cả hai yêu cầu mới đều bị từ chối; cấp lại grant khôi phục khả năng sử dụng. Quyền xem metadata không thay thế grant, và cấu hình B0 không tạo đường bỏ qua khi sửa. Thử thay đổi bảo toàn hoặc kéo dài lưu giữ bằng quyền tải bị chặn. Kết quả bổ sung xác nhận việc thực thi tại API đối với các trường hợp đã thử, không xác lập bảo đảm cho mọi trạng thái đồng thời."
+  },
+  {
+    "before": "Xem và tải nội bộ cùng phòng; xem và tải mật do mình sở hữu; tải lên nội bộ hoặc mật",
+    "after": "Đọc và sửa thông tin nội bộ cùng phòng, mật do mình sở hữu; thêm nội bộ hoặc mật"
+  },
+  {
+    "before": "Xem và tải nội bộ, mật cùng phòng; xem metadata hạn chế; tải lên nội bộ hoặc mật",
+    "after": "Đọc, sửa thông tin nội bộ và mật cùng phòng; thêm hạn chế khi được phê duyệt"
+  },
+  {
+    "before": "Tải hạn chế cần grant đúng tài liệu, phiên bản, hành động và còn hạn",
+    "after": "Xem metadata hạn chế trong phòng; tải và sửa cần grant đúng tài liệu, phiên bản và còn hạn"
+  },
+  {
+    "before": "Cập nhật registry, tăng nhãn, cấp grant, đọc sự kiện vận hành cần thiết",
+    "after": "Quản lý registry, nâng nhãn, phê duyệt tạo hạn chế, cấp hoặc thu hồi grant, đọc sự kiện vận hành"
+  }
+]

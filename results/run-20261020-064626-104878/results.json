@@ -1,0 +1,218 @@
+{
+  "results": [
+    {
+      "id": "X-GRANT-01",
+      "group": "custom-grant-risk",
+      "name": "B1: chưa có grant nên bị chặn",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RESTRICTED_GRANT"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RESTRICTED_GRANT",
+        "body_length": 92,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "64571e05-d943-4c26-8b4e-d8ddb0f3f43c",
+      "latency_ms": 260.104,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R02/download",
+        "username": "brian",
+        "mode": "B1"
+      }
+    },
+    {
+      "id": "X-GRANT-02",
+      "group": "custom-grant-risk",
+      "name": "B1: grant hợp lệ và thiết bị bình thường",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ],
+        "reason": "ALLOW"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 16055,
+        "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+      },
+      "passed": true,
+      "request_id": "51c0d8b9-5356-409f-a5eb-d6b06ff355d0",
+      "latency_ms": 58.802,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R02/download",
+        "username": "brian",
+        "mode": "B1"
+      }
+    },
+    {
+      "id": "X-GRANT-03",
+      "group": "custom-grant-risk",
+      "name": "B1: có grant nhưng thiết bị rủi ro cao",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "RISK_HIGH"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "RISK_HIGH",
+        "body_length": 85,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "77571aa3-d657-4638-a9db-d88b1327ba57",
+      "latency_ms": 42.251,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R02/download",
+        "username": "brian",
+        "mode": "B1"
+      }
+    },
+    {
+      "id": "X-GRANT-04",
+      "group": "custom-grant-risk",
+      "name": "B0: đối chứng bỏ qua rủi ro thiết bị",
+      "expected": {
+        "allow": true,
+        "statuses": [
+          200
+        ],
+        "reason": "ALLOW"
+      },
+      "actual": {
+        "allow": true,
+        "status": 200,
+        "reason": "ALLOW",
+        "body_length": 16055,
+        "sha256": "21c99e9590b29daa25c849a210ee08c488ae95b91d41f41af4f1f1e6567bf785"
+      },
+      "passed": true,
+      "request_id": "31711878-e7d4-4a4b-b3ab-89fe654fbc12",
+      "latency_ms": 89.438,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R02/download",
+        "username": "brian",
+        "mode": "B0"
+      }
+    },
+    {
+      "id": "X-GRANT-05",
+      "group": "custom-grant-risk",
+      "name": "B1: có grant nhưng dùng chứng thư bob",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEVICE_MISMATCH"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEVICE_MISMATCH",
+        "body_length": 91,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "4fb99655-6594-4506-bf89-00091e14ca67",
+      "latency_ms": 48.599,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R02/download",
+        "username": "brian",
+        "mode": "B1"
+      }
+    },
+    {
+      "id": "X-GRANT-06",
+      "group": "custom-grant-risk",
+      "name": "B0: vẫn chặn chứng thư sai chủ thể",
+      "expected": {
+        "allow": false,
+        "statuses": [
+          403
+        ],
+        "reason": "DEVICE_MISMATCH"
+      },
+      "actual": {
+        "allow": false,
+        "status": 403,
+        "reason": "DEVICE_MISMATCH",
+        "body_length": 91,
+        "disclosed_resource_fields": [],
+        "structured_error": true
+      },
+      "passed": true,
+      "request_id": "bf19d160-3108-40a3-9f83-83c866cf6b3e",
+      "latency_ms": 25.269,
+      "evidence": {
+        "method": "GET",
+        "path": "/documents/B-R02/download",
+        "username": "brian",
+        "mode": "B0"
+      }
+    },
+    {
+      "id": "OPA-native",
+      "group": "unit-policy",
+      "name": "Kiểm thử Rego bằng OPA thật",
+      "expected": "all pass",
+      "actual": {
+        "exit_code": 0,
+        "tests": 31
+      },
+      "passed": true,
+      "request_id": null,
+      "latency_ms": null
+    },
+    {
+      "id": "JWT-native",
+      "group": "unit-identity",
+      "name": "Xác minh token, hợp đồng kiểm thử và dữ liệu nghiệp vụ tổng hợp",
+      "expected": "all pass",
+      "actual": {
+        "exit_code": 0
+      },
+      "passed": true,
+      "request_id": null,
+      "latency_ms": null
+    }
+  ],
+  "summary": {
+    "run_id": "run-20261020-064626-104878",
+    "started_at": 1792478786.3504303,
+    "finished_at": 1792478805.4593837,
+    "duration_seconds": 19.109,
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "expected_allow_count": 2,
+    "expected_deny_count": 4,
+    "false_allow": 0,
+    "false_deny": 0,
+    "false_allow_rate": 0.0,
+    "false_deny_rate": 0.0,
+    "scope": "Real gateway/JWT/mTLS/OPA/Transit/PostgreSQL; synthetic fixtures; unit tests reported separately",
+    "output_dir": "/project/results/run-20261020-064626-104878"
+  }
+}

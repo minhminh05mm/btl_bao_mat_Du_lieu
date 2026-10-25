@@ -1,0 +1,90 @@
+{
+  "docker": {
+    "Platform": {
+      "Name": ""
+    },
+    "Version": "29.8.2",
+    "ApiVersion": "1.56",
+    "MinAPIVersion": "1.40",
+    "Os": "linux",
+    "Arch": "amd64",
+    "Components": [
+      {
+        "Name": "Engine",
+        "Version": "29.8.2",
+        "Details": {
+          "ApiVersion": "1.56",
+          "Arch": "amd64",
+          "BuildTime": "2026-10-01T00:47:56.000000000+00:00",
+          "Experimental": "false",
+          "GitCommit": "8af9fe3a36bab3e039862a2ab1cef1880c9b4d03",
+          "GoVersion": "go1.26.8",
+          "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+          "MinAPIVersion": "1.40",
+          "Module": "github.com/moby/moby/v2",
+          "ModuleVersion": "v2.0.0+unknown",
+          "Os": "linux"
+        }
+      },
+      {
+        "Name": "containerd",
+        "Version": "v2.3.6",
+        "Details": {
+          "GitCommit": "ee2735368117d2eb259779949d5e75cdafec9761"
+        }
+      },
+      {
+        "Name": "runc",
+        "Version": "1.4.3",
+        "Details": {
+          "GitCommit": "bb14dabeb7185bb72c8c86735d090dcb20f36587"
+        }
+      },
+      {
+        "Name": "docker-init",
+        "Version": "0.19.0",
+        "Details": {
+          "GitCommit": ""
+        }
+      }
+    ],
+    "GitCommit": "8af9fe3a36bab3e039862a2ab1cef1880c9b4d03",
+    "GoVersion": "go1.26.8",
+    "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+    "BuildTime": "2026-10-01T00:47:56.000000000+00:00"
+  },
+  "images": [
+    {
+      "Name": "/bmdl-api-baseline-1",
+      "Image": "sha256:f591e0e0da85d5e812532d0867122aa57bc7d928f96b6609ff5ee64027c83154"
+    },
+    {
+      "Name": "/bmdl-api-1",
+      "Image": "sha256:f591e0e0da85d5e812532d0867122aa57bc7d928f96b6609ff5ee64027c83154"
+    },
+    {
+      "Name": "/bmdl-openbao-1",
+      "Image": "sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf"
+    },
+    {
+      "Name": "/bmdl-gateway-1",
+      "Image": "sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea"
+    },
+    {
+      "Name": "/bmdl-lab-1",
+      "Image": "sha256:f591e0e0da85d5e812532d0867122aa57bc7d928f96b6609ff5ee64027c83154"
+    },
+    {
+      "Name": "/bmdl-postgres-1",
+      "Image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+    },
+    {
+      "Name": "/bmdl-keycloak-1",
+      "Image": "sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741"
+    },
+    {
+      "Name": "/bmdl-opa-1",
+      "Image": "sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5"
+    }
+  ]
+}
