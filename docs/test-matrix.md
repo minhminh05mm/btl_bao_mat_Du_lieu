@@ -1,67 +1,39 @@
-# Ma trận kiểm chứng theo chức năng hiện hành
+# Ma trận kiểm tra
 
-Cập nhật tài liệu: 25/10/2026. [Mục lục tài liệu](muc_luc.md) · [Tái lập](reproduction.md) · [Đánh giá bằng chứng](verification-review.md).
+## Nguyên tắc so sánh
 
-## 1. Các tầng kiểm tra
+Tất cả yêu cầu tài liệu dùng cùng quy tắc quyền tại kho. Ba cách kiểm tra chỉ khác cơ chế cập nhật trạng thái tài khoản, thiết bị. Khi so sánh, giữ nguyên người dùng, thiết bị, tài liệu và quyền tại kho.
 
-| Tầng | Nguồn | Phạm vi |
+Bộ kiểm tra đối chiếu phản hồi, lý do, mã yêu cầu, nội dung tải hợp lệ và mã băm. Lỗi kết nối không rõ nguyên nhân không được tính như một lần từ chối đúng chính sách.
+
+## Các tình huống
+
+Tên tình huống thống nhất với phần Kết quả kiểm tra trên web. Số thứ tự chỉ giúp tra bảng; mã trong tệp kết quả kỹ thuật được giữ để đối chiếu mã nguồn.
+
+| Thứ tự | Tình huống | Điều kiện đạt |
 |---|---|---|
-| Quy tắc | [bmdl_test.rego](../policies/bmdl_test.rego) | Hàm quyết định OPA thật: quyền, grant, biên TTL, B0/B1 |
-| Xác thực và hợp đồng kiểm thử | [tests/](../tests) | JWT verifier dùng RSA/JWKS thử nghiệm; cấu trúc oracle, runner, fixture và hash |
-| Bộ tích hợp chuẩn | [scenarios.py](../tests/scenarios.py), [cases.json](../fixtures/cases.json) | Yêu cầu qua JWT, mTLS, gateway, API, OPA, PostgreSQL và OpenBao thật |
-| Cập nhật thêm/sửa Hạn chế | [validate_restricted.py](../results/restricted-management-20261021/validate_restricted.py) | API nghiệp vụ và màn hình quản lý: phê duyệt tạo/nâng nhãn, quyền tải/sửa, cấp/thu hồi/hết hạn và giao dịch |
-| Thao tác theo từng bước | [lessons.py](../lab/lessons.py) | Bài hướng dẫn trên web; xuất bước và bằng chứng theo lượt |
+| 1 | Tải tài liệu khi mọi điều kiện đều hợp lệ | Cả ba cách kiểm tra trả đúng nội dung và mã băm |
+| 2 | Tải tài liệu ngoài phạm vi được cấp | Cả ba đều chặn yêu cầu ngoài phòng ban được cấp |
+| 3 | Khóa tài khoản khi phiên vẫn còn hạn | Cách chỉ kiểm tra khi đăng nhập còn dùng phiên; hai cách có nhận thông báo thu hồi phiên liên quan; ghi nhận thông tin đăng nhập và phiên chưa hết hạn |
+| 4 | Mở khóa tài khoản sau khi thu hồi phiên | Phiên đã thu hồi vẫn bị chặn; đăng nhập mới khi đủ điều kiện thì tải được |
+| 5 | Thu hồi thiết bị đã đăng ký | Hai cách có nhận thông báo thu hồi phiên gắn với đúng thiết bị; cách chỉ kiểm tra khi đăng nhập giữ phiên cũ |
+| 6 | Thông báo khóa tài khoản bị mất | Cách chỉ chờ thông báo còn giữ phiên; cách tự kiểm tra lại phát hiện tài khoản khóa và thu hồi |
+| 7 | Bên quản lý tài khoản không phản hồi | Cách tự kiểm tra lại dừng yêu cầu khi thông tin cũ hết hạn và chưa xác nhận lại được; không trả nội dung |
+| 8 | Thông báo giả, trùng hoặc đến sai thứ tự | Thông báo giả bị loại; thông báo trùng không gây xử lý sai; thông báo cũ không khôi phục phiên đã thu hồi |
+| 9 | Khôi phục cơ sở dữ liệu từ bản sao | Bản sao có phiên đang hoạt động; dịch vụ khởi động trên bản sao vô hiệu hóa phiên cũ và yêu cầu đăng nhập lại |
+| 10 | Thử dùng thông tin đăng nhập hoặc thiết bị không khớp | Không thể thay bí mật phiên bằng thông tin đăng nhập đơn thuần, dùng chứng thư khác hoặc đổi cách kiểm tra để vượt liên kết phiên |
+| 11 | Thử quản lý dữ liệu thuộc bên còn lại | Quản trị đối tác không tự quản trị kho; quản trị kho không tự quản trị tài khoản, thiết bị đối tác |
+| 12 | Thử đọc cơ sở dữ liệu của bên còn lại | Tài khoản dịch vụ không kết nối được cơ sở dữ liệu ngoài phạm vi được cấp |
+| 13 | Thử dùng thông tin thiết bị đã quá hạn | Ký lại thông tin không biến quan sát thiết bị cũ thành mới; không tạo phiên bằng quan sát quá hạn |
+| 14 | Khóa rồi mở tài khoản giữa hai lần kiểm tra | Bộ đếm thay đổi giúp cách tự kiểm tra lại phát hiện và thu hồi phiên cũ dù tài khoản đã hoạt động trở lại |
+| 15 | Kiểm tra thông tin có thuộc đúng yêu cầu hay không | Phản hồi phải khớp đúng người, bên quản lý, thiết bị và lượt hỏi trạng thái |
+| 16 | Gặp lỗi khi kiểm tra quyền, ghi nhật ký hoặc giải mã | Dừng trước khi trả nội dung; phân biệt dịch vụ lỗi với từ chối do quyền nghiệp vụ |
+| 17 | Thông tin trạng thái bị sửa trái phép | Không tạo phiên khi chữ ký không hợp lệ |
+| 18 | Quản lý tài liệu Hạn chế, nhật ký và cảnh báo | Tạo, sửa, tải Hạn chế và đọc nhật ký, cảnh báo hoạt động bằng người có quyền phù hợp |
+| 19 | Thêm nhân viên kho và đổi quyền đang dùng | Nhân viên kho không được thêm vào cơ sở dữ liệu đối tác; đổi phòng ban tác động đến yêu cầu tiếp theo bằng cùng phiên |
 
-Kỳ vọng phải được chốt từ chính sách trước khi chạy; không lấy phản hồi quan sát làm đáp án. Một lỗi dịch vụ HTTP 503 không thay cho denial 403 được kỳ vọng. Kiểm thử đơn vị không thay bằng chứng đầu cuối; một mục tổng hợp chứa nhiều test không được cộng hai lần.
+## Phạm vi kết luận
 
-## 2. Oracle và case tự soạn
+Các tình huống kiểm tra tính đúng đắn trong môi trường cục bộ với dữ liệu tổng hợp. Tình huống khôi phục chỉ kiểm tra cơ sở dữ liệu phiên và hành vi sau khởi động, không phải phục hồi đầy đủ hạ tầng của hai bên. Đây không phải bộ kiểm tra chịu tải doanh nghiệp hoặc phép đánh giá dịch vụ đám mây thật.
 
-Oracle chuẩn có 40 case, gồm 20 allow và 20 deny. Tệp có `schema_version` và mảng `cases`; mỗi case gồm `id`, `group`, `name`, `username`, `method`, `path`, `mode`, `expected`, cùng `device`, `json`, `headers`, `checks`, `setup` khi cần.
-
-`expected.allow`, `expected.statuses` và `expected.reason` xác định kết quả cần đối chiếu. `checks` có thể kiểm tra tập ID hoặc SHA-256; `setup` chuẩn bị principal/device/document/grant. Trình sửa JSON nằm tại Kiểm chứng tự động. Không chạy lại `tests/make_oracle.py` sau khi sửa case vì công cụ này tái tạo bộ gốc.
-
-B0 chạy cùng kỳ vọng bảo vệ B1 để quan sát chênh lệch; không sửa expected thành allow cho các phép đối chứng cố ý yếu. Sai tập metadata phải được báo riêng với false allow/deny boolean. B0 chỉ đối chứng quyền đọc; không được bỏ qua quyền B1 khi sửa tài liệu.
-
-## 3. Ma trận bộ chuẩn
-
-| Nhóm | Phạm vi và bằng chứng chính |
-|---|---|
-| O-A01–O-A20, O-D01–O-D20 | Quyền tài liệu, danh sách, grant, vai trò, thiết bị, vòng đời và upload Nội bộ/Mật |
-| T01–T06 | Nội bộ/mật, owner, trưởng phòng, sai phòng; sở hữu không vượt nhãn Hạn chế; tải đúng hash |
-| T07–T09 | Grant đúng người/tài liệu/phiên bản/hành động/thời hạn, không tự cấp; tách nghiệp vụ/kiểm toán/quản trị |
-| T10–T12 | JWT bị sửa/thiếu, mTLS sai/thiếu, giả header, tự nâng quyền; claim có chữ ký hợp lệ được kiểm tra riêng bằng verifier |
-| T13–T16 | Thiết bị/risk/TTL, thu hồi khi JWT còn hạn, nâng nhãn và đối chứng B0 |
-| T17–T18 | OPA dừng thật, lỗi phản hồi/registry mô phỏng, audit lỗi; không trả bản rõ hoặc commit upload khi audit thất bại |
-| T19–T20 | Retention, legal hold, xóa logic/tombstone; năm deny trong 60 giây, cảnh báo và phản ứng vận hành |
-| T21–T22 | Bản mã, quyền KMS, vật liệu khóa, hash độc lập; sửa ciphertext gây lỗi toàn vẹn |
-| T23 | Backup DB/KMS thật, restore cô lập và đối chiếu ledger; primary không được thay thế; kiểm tra mode sau restart |
-| T24 | TCP thật từ mạng client tới dịch vụ nội bộ, KMS dừng/khôi phục, giả mode header không đổi B1 thành B0 |
-
-Các nhóm chuẩn có reset và thao tác lỗi; lỗi setup/cleanup phải được ghi fail. T15-time là cửa sổ quan sát từ yêu cầu đổi quyền đến phản hồi từ chối, không phải SLA hay thời điểm commit chính xác. T23c–e gọi primary, không phải HTTP của bản phục hồi cô lập.
-
-## 4. Ma trận bổ sung cho web mới
-
-Nguồn và kết quả: [script ngày 21/10](../results/restricted-management-20261021/validate_restricted.py), [validation.json](../results/restricted-management-20261021/validation.json). Các tên trong cột đầu là nhóm diễn giải, không phải mã T mới.
-
-| Nhóm kiểm tra | Điều kiện và kết quả cần quan sát |
-|---|---|
-| Thêm Hạn chế | Nhân viên bị chặn tại Chủ sở hữu; trưởng phòng thiếu người duyệt bị chặn; API không có approval từ chối; không lưu tài liệu khi yêu cầu bị từ chối |
-| Phê duyệt hợp lệ | secadmin xác thực tạo approval đúng trưởng phòng/phòng/tài liệu dự kiến/phiên bản/mục đích/thời hạn; lưu trực tiếp Hạn chế và grant ban đầu, người tạo tải đúng nội dung ngay sau lưu |
-| Sửa theo quyền tải | Trưởng phòng có grant sửa được; nhân viên, sai phòng, kiểm toán và quản trị an toàn không được sửa nội dung nghiệp vụ; xem metadata không tạo quyền tải/sửa |
-| Thu hồi và hết hạn | Khi không còn grant hợp lệ khác, thu hồi chặn GET download và PUT sửa; cấp lại khôi phục sử dụng; hết hạn trả lỗi ở Người thực hiện; gọi PUT qua B0 vẫn không vượt quyền |
-| Ràng buộc approval | Sai người, hết hạn, đã sử dụng thành công hoặc sai mục đích create/upgrade đều bị chặn; approval dùng một lần khác grant tải nhiều yêu cầu |
-| Giao dịch | Lỗi audit làm upload thất bại, không để tài liệu dở dang; approval chưa commit được dùng lại cho lần thử thành công; sau thành công không replay được |
-| Nhãn và vòng đời | Không hạ nhãn; quyền tải không đổi hold hoặc kéo dài lưu giữ; nâng nhãn tạo phiên bản/grant mới và rút thời hạn theo mức Hạn chế |
-| Dữ liệu nền | Upload thường còn dùng được; tài liệu đã có không bị reset bởi bộ bổ sung |
-
-Bộ bổ sung được chạy riêng, chưa tự tích hợp vào `lab.runner`. Nó có thay đổi dữ liệu và lỗi audit, ghi đè `validation.json` khi chạy lại; không gọi đây là kiểm tra chỉ đọc hoặc bản cập nhật tự động của bằng chứng cũ.
-
-Một người có thể có nhiều grant cho cùng tài liệu/phiên bản. Trước ca thu hồi hoặc hết hạn trên web, kiểm tra mọi dòng quyền của người đó: thu hồi tất cả grant còn hợp lệ, hoặc dùng tài liệu mới chỉ có một grant. API vẫn cho phép khi còn một grant khác đúng điều kiện; đó không phải lỗi thu hồi.
-
-## 5. Bài hướng dẫn và đọc kết quả
-
-Bắt đầu có hướng dẫn gồm quyền tài liệu của Anna, thu hồi, thiết bị và grant, mã hóa, audit/cảnh báo, vòng đời, phục hồi. Bài chuẩn bị thuộc tính bằng quyền operator rồi gửi yêu cầu nghiệp vụ thật; xem từng bước để phân biệt hai loại thao tác. Việc hoàn tác thuộc tính không xóa toàn bộ audit/snapshot hoặc reset lab.
-
-Lượt runner chuẩn xuất record có `expected`, `actual`, `passed`, Request ID và bằng chứng, cùng JSON/CSV/HTML. Bằng chứng tải nên ghi hash/độ dài thay cho bản rõ; không ghi token hoặc khóa. Lượt 19/10 đạt 127 mục tổng hợp; cập nhật 21/10 đạt 39 kiểm tra tích hợp riêng. Xem [đánh giá bằng chứng](verification-review.md) để tránh cộng sai số lượng.
-
-Lệnh chạy an toàn theo phạm vi và cảnh báo reset nằm tại [quy trình tái lập](reproduction.md). Không chạy đồng thời hai phép thử có trạng thái.
+Xem [kết quả đã lưu](ket_qua_kiem_chung.md), [cách tái lập](reproduction.md) và [rà soát bằng chứng](verification-review.md).

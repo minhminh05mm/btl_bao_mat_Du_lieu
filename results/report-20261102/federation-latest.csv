@@ -1,0 +1,20 @@
+﻿case,name,pass,duration_seconds,summary
+K01,"Cùng quyền tài liệu, ba chế độ đều tải đúng nội dung",True,0.418,Đúng điều kiện và phản hồi yêu cầu.
+K02,Quyền tài liệu tại R vẫn được kiểm tra trong mọi chế độ,True,0.754,Đúng điều kiện và phản hồi yêu cầu.
+K03,Khóa nguồn thu hồi F1/F2 dù JWT và phiên còn hạn,True,1.86,Đúng điều kiện và phản hồi yêu cầu.
+K03b,Mở khóa không phục hồi phiên cũ; đăng nhập mới được phép,True,0.831,Đúng điều kiện và phản hồi yêu cầu.
+K04,Thu hồi thiết bị làm mất hiệu lực phiên đúng người,True,1.625,Đúng điều kiện và phản hồi yêu cầu.
+K05,"Mất sự kiện: F1 giữ phiên, F2 đối soát và chặn",True,2.376,Đúng điều kiện và phản hồi yêu cầu.
+K06,Nguồn không phản hồi: F2 dừng khi trạng thái hết độ mới,True,2.695,Đúng điều kiện và phản hồi yêu cầu.
+K07,Sự kiện giả bị loại; trùng và sai thứ tự không hồi sinh phiên,True,1.369,Đúng điều kiện và phản hồi yêu cầu.
+K08,Phục hồi cơ sở dữ liệu thật vào môi trường riêng không phục hồi phiên cũ,True,3.093,Đúng điều kiện và phản hồi yêu cầu.
+S01,"Không vượt qua bằng JWT thô, chứng thư khác hoặc cổng khác chế độ",True,0.856,Đúng điều kiện và phản hồi yêu cầu.
+S02,Tách quyền quản trị nguồn P và tài nguyên R,True,0.66,Đúng điều kiện và phản hồi yêu cầu.
+S03,Tài khoản dịch vụ không được đọc cơ sở dữ liệu của miền kia,True,0.045,Đúng điều kiện và phản hồi yêu cầu.
+S04,Ký trạng thái mới không làm mới một quan sát thiết bị đã cũ,True,1.049,Đúng điều kiện và phản hồi yêu cầu.
+S05,Khóa rồi mở nhanh giữa hai lần đối soát vẫn thu hồi phiên cũ,True,2.772,Đúng điều kiện và phản hồi yêu cầu.
+S06,"Kiểm tra nonce, đúng người, đúng miền và đúng chứng thư",True,0.656,Đúng điều kiện và phản hồi yêu cầu.
+S07,"Lỗi chính sách, nhật ký hoặc mã hóa đều dừng yêu cầu và không trả nội dung",True,6.071,Đúng điều kiện và phản hồi yêu cầu.
+S08,Bằng chứng trạng thái bị sửa chữ ký không tạo được phiên,True,0.71,Đúng điều kiện và phản hồi yêu cầu.
+R01,"Tạo, sửa, tải tài liệu Hạn chế và đọc audit/cảnh báo vẫn hoạt động",True,2.976,Đúng điều kiện và phản hồi yêu cầu.
+R02,Thêm nhân viên R và đổi quyền hiện tại có hiệu lực với phiên đang dùng,True,0.595,Đúng điều kiện và phản hồi yêu cầu.

@@ -15,6 +15,7 @@ POLICY_MODE = os.getenv("POLICY_MODE", "B1")
 if POLICY_MODE not in {"B0", "B1"}:
     raise RuntimeError("Unsupported deployment policy mode")
 POLICY_VERSION = "bmdl-v1"
+FEDERATION_REQUIRED = os.getenv("FEDERATION_REQUIRED", "false").lower() == "true"
 SIGNAL_TTL = 60
 LABEL_DAYS = {"internal": 180, "confidential": 90, "restricted": 30}
 LABEL_RANK = {"internal": 0, "confidential": 1, "restricted": 2}

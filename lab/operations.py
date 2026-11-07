@@ -8,7 +8,7 @@ from psycopg.rows import dict_row
 from psycopg import sql
 
 ROOT=Path('/project');RT=Path('/runtime');LOCK=threading.RLock()
-SERVICES={'api','api-baseline','opa','openbao','postgres','keycloak','gateway'}
+SERVICES={'api','api-baseline','opa','openbao','postgres','keycloak','gateway','partner','coordinator'}
 def config():return json.loads((RT/'secrets/config.json').read_text())
 def engine():return docker.from_env(timeout=120)
 def container(service):

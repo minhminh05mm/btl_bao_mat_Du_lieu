@@ -1,109 +1,126 @@
-# Hướng dẫn nhanh web demo
+# Hướng dẫn nhanh
 
-Cập nhật tài liệu ngày 25/10/2026. Dữ liệu và tài khoản đều dùng cho nguyên mẫu cục bộ.
+Web dùng để thử quyền với tài liệu và quan sát kho xử lý thế nào khi tài khoản hoặc thiết bị thay đổi. Điểm chính cần xem là gửi lại yêu cầu bằng phiên đang dùng sau khi tài khoản đã bị khóa.
 
-## 1. Bật và tắt
+## Bật và tắt web
 
-Chạy trong PowerShell:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File "E:\btl_bao_mat_Du_lieu\Start-Demo.ps1" -OpenBrowser
-```
-
-Mở [web demo](http://localhost:8088/#guide); nhấn **Ctrl + F5** nếu giao diện chưa cập nhật. Tắt toàn bộ container và WSL để giải phóng RAM:
+Mở PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "E:\btl_bao_mat_Du_lieu\Stop-Demo.ps1"
+Set-Location -LiteralPath 'E:\btl_bao_mat_Du_lieu'
+powershell -ExecutionPolicy Bypass -File .\Start-Demo.ps1 -OpenBrowser
 ```
 
-Tắt/bật không xóa dữ liệu. **Đặt lại dữ liệu lab** và bộ kiểm chứng chuẩn là thao tác khác, có thể thay tài liệu/grant/lịch sử bằng dữ liệu mẫu; tài khoản tự thêm được giữ lại.
+Mở [localhost:8088](http://localhost:8088). Lần đầu cần WSL 2, Internet, tối thiểu 10 GB trống trên ổ C và 8 GB trên ổ E. Chương trình tự kiểm tra dung lượng. Các công cụ sử dụng miễn phí, không cần tài khoản dịch vụ đám mây.
 
-## 2. Chọn đúng màn hình
+Khi không sử dụng:
 
-| Mục trên thanh bên | Dùng khi nào? |
+```powershell
+.\Stop-Demo.ps1
+```
+
+Lệnh dừng giữ tài liệu, tài khoản và kết quả. Lần khởi động sau cần tạo phiên truy cập mới.
+
+## Các mục trên web
+
+| Mục | Dùng để làm gì? |
 |---|---|
-| Bắt đầu có hướng dẫn | Muốn hiểu hệ thống qua từng bài thử có sẵn |
-| Tài liệu | Thêm tệp, sửa tên/nâng nhãn, cấp hoặc thu hồi quyền Hạn chế |
-| Nhân viên | Tạo tài khoản, chọn vai trò/phòng ban, khóa/mở truy cập |
-| Tự thử yêu cầu | Tự chọn người, việc cần làm, tài liệu rồi kiểm tra phản hồi |
-| Nhật ký và cảnh báo | Xem lịch sử yêu cầu và sự kiện cần xử lý |
-| Kiểm chứng tự động | Chạy bộ chuẩn hoặc bộ tình huống JSON tự soạn |
-| Công cụ nâng cao → Điều khiển lab | Chuẩn bị thiết bị, lưu giữ/bảo toàn, mô phỏng lỗi, sao lưu và phục hồi |
+| Thử truy cập | Chọn người, thiết bị, cách kiểm tra và tài liệu; tạo phiên rồi gửi yêu cầu |
+| Tài khoản và thiết bị | Khóa, mở khóa tài khoản đối tác hoặc thay đổi tình trạng thiết bị |
+| Kết quả kiểm tra | Xem kết quả đã lưu hoặc chạy các tình huống tự động |
+| Quản lý tài liệu | Thêm tài liệu, chọn nhãn, sửa thông tin và cấp quyền tài liệu Hạn chế |
+| Nhân viên và quyền | Thêm nhân viên, đặt vai trò, phòng ban và quyền tham gia kho |
 
-## 3. Tạo nhân viên để thử
+Tự động làm mới chỉ cập nhật màn hình. Bỏ chọn mục này không dừng việc kiểm tra lại trạng thái ở máy chủ. Làm mới trạng thái lấy thông tin hiện tại để hiển thị.
 
-Vào **Nhân viên → Thêm nhân viên**, nhập họ tên, tên đăng nhập, mật khẩu, vai trò và phòng ban, rồi **Tạo nhân viên**.
+## Tải một tài liệu
 
-- Tên đăng nhập: 3–32 ký tự thường, số hoặc `_`, bắt đầu bằng chữ. Mật khẩu: 8–128 ký tự.
-- Nhân viên/Trưởng phòng thuộc Kinh doanh hoặc Vận hành; Kiểm toán/Quản trị an toàn thuộc An toàn thông tin.
-- Tài khoản Keycloak và chứng thư được tạo thật, xuất hiện trong các ô chọn trên web.
-- Bấm **Chỉnh sửa → Lưu quyền** để đổi vai trò/phòng ban hoặc bật/tắt **Cho phép truy cập hệ thống**. **Thử bằng tài khoản này** chuyển sang gửi yêu cầu.
+1. Trong Thử truy cập, chọn Nhân viên đối tác · Kinh doanh.
+2. Giữ Thiết bị đã đăng ký của tài khoản đang chọn.
+3. Chọn Thu hồi theo thông báo và tự kiểm tra lại.
+4. Nhấn Đăng nhập và tạo phiên, chờ thông báo thành công.
+5. Chọn Quy trình tiếp nhận yêu cầu báo giá · Nội bộ và thao tác Tải tài liệu.
+6. Nhấn Gửi yêu cầu bằng phiên hiện tại.
+7. Nếu kết quả là Được tải tài liệu, nhấn Lưu tài liệu về máy để nhận tệp.
 
-Tài khoản mới đăng nhập bằng mật khẩu đã nhập. Tài khoản mẫu gồm alice, anna, adam, bob, bea, brian, auditor, secadmin; xem mật khẩu mẫu bằng `Show-Credentials.ps1 -ShowPassword`. adam/brian là trưởng phòng; auditor đọc audit/cảnh báo; secadmin quản lý phê duyệt và trạng thái, không mặc nhiên đọc nội dung.
+Mỗi cách kiểm tra có phiên riêng. Đổi cách kiểm tra không tự tạo phiên mới. Hệ thống cần cả trạng thái tài khoản, thiết bị và quyền với tài liệu phù hợp.
 
-## 4. Thêm tài liệu và chọn nhãn
+## Ba cách kiểm tra khác nhau thế nào?
 
-Vào **Tài liệu → Thêm tài liệu**. Chọn TXT/CSV/PDF có nội dung, tối đa **1 MiB**, nhập tên hoặc để trống để lấy tên tệp; không cần gõ đuôi tệp. Chọn chủ sở hữu, nhãn rồi lưu.
-
-| Nhãn | Người được tải trong B1, khi các điều kiện chung hợp lệ |
+| Cách kiểm tra | Khi nào kho biết tài khoản đã bị khóa? |
 |---|---|
-| Nội bộ | Nhân viên hoặc trưởng phòng cùng phòng |
-| Mật | Nhân viên sở hữu tài liệu; trưởng phòng cùng phòng |
-| Hạn chế | Trưởng phòng cùng phòng có grant đúng người, tài liệu, phiên bản và còn hạn |
+| Kiểm tra khi đăng nhập | Kiểm tra lúc tạo phiên; phiên cũ có thể còn dùng được đến khi hết hạn |
+| Thu hồi theo thông báo | Nhận thông báo khóa thì thu hồi phiên; có thể bỏ lỡ thay đổi nếu thông báo bị mất |
+| Thu hồi theo thông báo và tự kiểm tra lại | Nhận thông báo và chủ động hỏi lại; nếu thông tin cũ hết hạn mà chưa xác nhận lại được thì dừng yêu cầu |
 
-**Thêm Hạn chế:** chọn **adam → Hạn chế → người phê duyệt secadmin → 15 phút → Thêm tài liệu**. Người tạo nhận quyền tải và sửa có thời hạn ngay khi lưu. Nhân viên như alice không được thêm Hạn chế. Lỗi chỉ rõ ô cần sửa và giữ dữ liệu đã nhập.
+Cả ba dùng cùng quy tắc truy cập tài liệu. Giữ nguyên người, thiết bị và tài liệu khi so sánh.
 
-Phê duyệt tạo/nâng nhãn được sử dụng thành công một lần. Grant tải được dùng cho nhiều yêu cầu trong thời hạn, nếu các điều kiện khác vẫn đúng. Đây là hai loại hiệu lực khác nhau.
+## Thử khóa tài khoản khi phiên còn hạn
 
-Ở **Tự thử yêu cầu**, biểu mẫu thêm nhanh chỉ có Nội bộ/Mật. Muốn thêm Hạn chế và chọn người phê duyệt, dùng mục **Tài liệu**.
+1. Khi tài khoản còn hoạt động, tạo phiên và tải thành công ở cả ba cách kiểm tra.
+2. Mở Tài khoản và thiết bị. Chọn Người thực hiện là Quản trị đối tác · An toàn thông tin và Tài khoản cần thay đổi là Nhân viên đối tác.
+3. Nhấn Khóa tài khoản; chờ kho ghi nhận thu hồi.
+4. Quay lại Thử truy cập, lần lượt chọn từng cách rồi nhấn Gửi yêu cầu bằng phiên hiện tại. Giữ nguyên phiên, không đăng nhập lại.
+5. Cách chỉ kiểm tra khi đăng nhập vẫn có thể tải. Hai cách nhận thông báo dừng yêu cầu.
+6. Mở khóa tài khoản. Với phiên đã thu hồi, gửi lại vẫn bị chặn. Đăng nhập mới để tiếp tục.
 
-## 5. Sửa và cấp quyền Hạn chế
+Khóa tài khoản không xóa tài liệu. Tài khoản đối tác bị khóa và quyền tham gia kho bị tắt là hai trạng thái khác nhau, được chỉnh ở hai mục tương ứng.
 
-1. Tìm tài liệu, bấm **Chỉnh sửa**, chọn **Người thực hiện**.
-2. Sửa tên hoặc nâng nhãn rồi **Lưu thay đổi**. Người sửa phải có quyền tải tài liệu hiện tại. Nâng lên Hạn chế cần trưởng phòng và phê duyệt mới.
-3. Ở tài liệu Hạn chế, xuống **Quyền tải và sửa tài liệu Hạn chế**; chọn người nhận, người phê duyệt và thời hạn, rồi **Cấp quyền tải và sửa**.
-4. Chọn người phê duyệt và bấm **Thu hồi** ở các dòng grant còn hiệu lực của người cần kiểm tra cho tài liệu đó. Khi không còn grant hợp lệ, tải/sửa ở yêu cầu tiếp theo sẽ bị chặn; cấp lại quyền thì thử lại được.
-5. Bấm **Thử truy cập** để chuyển sang tải bằng người thực hiện đang chọn.
+## Thử mất thông báo
 
-Một người có thể có nhiều grant cho cùng tài liệu. Thu hồi một dòng chưa chặn được nếu còn dòng hợp lệ khác. Xem metadata chưa đủ để tải/sửa. Chức danh trưởng phòng chưa đủ khi sai phòng hoặc thiếu grant. Tài khoản, chứng thư, tuân thủ, rủi ro và độ mới tín hiệu vẫn được kiểm tra.
+1. Giữ tài khoản hoạt động, thiết bị dùng được và khôi phục thiết lập mặc định.
+2. Tạo phiên mới ở Thu hồi theo thông báo và Thu hồi theo thông báo và tự kiểm tra lại.
+3. Trong phần Thử khi mất thông báo hoặc mất kết nối, bật Làm mất các thông báo mới, nhấn Áp dụng tình huống thử.
+4. Khóa tài khoản. Chờ kho hỏi lại trạng thái rồi gửi bằng hai phiên cũ.
+5. Cách chỉ chờ thông báo có thể tiếp tục tải; cách tự kiểm tra lại phát hiện tài khoản đã khóa và thu hồi phiên.
+6. Nhấn Khôi phục mặc định và mở khóa tài khoản khi kết thúc.
 
-Không hạ nhãn tại màn hình này. Đổi nhãn tăng phiên bản, làm grant cũ không còn dùng được; đổi tên giữ phiên bản kiểm soát tài liệu. Sửa là sửa thông tin, chưa thay nội dung tệp. Hạn lưu giữ và bảo toàn chỉ để xem; chuẩn bị hai thuộc tính này trong Điều khiển lab bằng quyền người vận hành.
+## Thử bên quản lý tài khoản không phản hồi
 
-## 6. Tự thử yêu cầu và đọc kết quả
+1. Tạo phiên có tự kiểm tra lại khi mọi dịch vụ hoạt động bình thường.
+2. Bật Giả lập bên quản lý tài khoản không phản hồi và nhấn Áp dụng tình huống thử.
+3. Chờ quá thời gian ở ô Thông tin đã kiểm tra dùng được bao lâu (giây), sau đó gửi bằng phiên hiện tại.
+4. Kho tạm dừng yêu cầu vì chưa xác nhận lại được trạng thái.
+5. Nhấn Khôi phục mặc định. Tạo phiên mới nếu phiên trước đã bị thu hồi hoặc hết hạn.
 
-| Trường | Cách hiểu/cách chọn |
+Mặc định thông tin đã kiểm tra được dùng tối đa 5 giây, kho hỏi lại mỗi 5 giây. Đây là cấu hình thử nghiệm, không phải cam kết chặn trong đúng 5 giây dưới mọi điều kiện.
+
+## Thêm nhân viên và tài liệu để tự thử
+
+Trong Nhân viên và quyền, chọn Thêm nhân viên. Nhập họ tên, tên đăng nhập chưa dùng, mật khẩu, bên quản lý tài khoản, vai trò trong kho và phòng ban. Tài khoản đối tác được đăng ký thêm ở dịch vụ quản lý tài khoản; nhân viên do kho tự quản lý không được thêm vào cơ sở dữ liệu của đối tác. Ô Cho phép truy cập kho tài liệu điều khiển quyền tham gia kho.
+
+Trong Quản lý tài liệu, chọn Thêm tài liệu. Dùng tệp TXT, CSV hoặc PDF tối đa 1 MiB; chọn chủ sở hữu và nhãn. Tên để trống sẽ dùng tên tệp. Với Hạn chế, chọn trưởng phòng làm người thực hiện, quản trị an toàn làm người phê duyệt và thời hạn quyền tải, sửa. Phê duyệt và quyền ban đầu được lưu cùng tài liệu.
+
+Sửa thông tin tài liệu cần quyền tải nội dung hiện tại. Với Hạn chế, quyền phải còn hạn và đúng phiên bản. Chỉ xem được thông tin tài liệu chưa đủ để sửa hoặc tải. Nếu có nhiều quyền còn hạn phù hợp, thu hồi một dòng chưa làm mất quyền từ các dòng khác.
+
+## Đọc nhật ký, cảnh báo và yêu cầu tùy chỉnh
+
+- Chọn Kiểm toán kho hoặc vai trò kiểm toán phù hợp để Đọc nhật ký.
+- Chọn Quản trị kho hoặc vai trò quản trị an toàn phù hợp để Đọc cảnh báo; kiểm toán cũng có quyền đọc cảnh báo theo quy tắc hiện tại.
+- Tạo phiên trước khi gửi yêu cầu. Chức năng này không yêu cầu chọn một tài liệu cụ thể.
+- Gửi yêu cầu kỹ thuật tùy chỉnh dùng cùng tài khoản, thiết bị, cách kiểm tra và phiên hiện tại. Chỉ dùng khi cần gọi một địa chỉ API cụ thể.
+
+Nếu cần đăng nhập Keycloak thủ công, dùng tài khoản thực trong danh sách và mật khẩu đã tạo trên máy; có thể xem qua `Show-Credentials.ps1`. Tài khoản quản trị dịch vụ đăng nhập khác với các tài khoản nghiệp vụ của kho.
+
+## Kiểm tra tự động
+
+Chọn Kết quả kiểm tra rồi nhấn Chạy tất cả tình huống. Giữ nguyên môi trường trong lúc chạy. Bộ kiểm tra gửi yêu cầu thật, thay đổi trạng thái mẫu, thử lỗi dịch vụ và khôi phục thiết lập khi kết thúc. Các tài liệu thử được giữ lại; các phiên do bộ kiểm tra tạo được thu hồi.
+
+Tải bằng chứng kỹ thuật hoặc mở `results/federation-latest.html`. JSON và CSV tương ứng nằm cùng thư mục. [Kết quả đã lưu](ket_qua_kiem_chung.md) giải thích số liệu dùng trong báo cáo.
+
+## Nếu gặp lỗi, sửa ở đâu?
+
+| Thông báo hoặc hiện tượng | Cần kiểm tra |
 |---|---|
-| Dùng danh tính nào? | Chọn tài khoản để thử nhiều người, hoặc dùng phiên Keycloak đã đăng nhập |
-| Ai thực hiện? | Tài khoản gửi yêu cầu |
-| Muốn làm gì? | Xem danh sách, xem metadata, tải, thêm, xóa logic, đọc audit/cảnh báo hoặc gọi API tùy chỉnh |
-| Tài liệu nào? | Tài nguyên cụ thể; metadata là thông tin mô tả, download là nội dung đầy đủ |
-| Chính sách áp dụng | Mặc định B1; B0 chỉ dùng đối chứng quyền đọc tĩnh |
-| Thiết bị gửi yêu cầu — chứng thư | Mặc định đúng người; đổi khi muốn thử sai chứng thư hoặc không có chứng thư |
-| Header bổ sung | Thường giữ `{}`; không nhập token/cookie |
+| Chưa có phiên, hết hạn hoặc dịch vụ vừa khởi động lại | Đăng nhập và tạo phiên mới |
+| Tài khoản đã bị khóa | Mở khóa ở Tài khoản và thiết bị, sau đó tạo phiên mới |
+| Phiên cũ đã bị thu hồi | Giữ tài khoản, thiết bị hợp lệ rồi đăng nhập lại |
+| Thiết bị không khớp hoặc không đủ điều kiện | Chọn đúng thiết bị; khôi phục tình trạng thiết bị ở Tài khoản và thiết bị |
+| Chưa có quyền với phòng ban, vai trò hoặc tài liệu | Kiểm tra Nhân viên và quyền, nhãn, chủ sở hữu và quyền Hạn chế |
+| Thêm Hạn chế bị chặn | Kiểm tra trưởng phòng, phòng ban, người phê duyệt và thời hạn |
+| Tệp hoặc tên không hợp lệ | Sửa trường được đánh dấu trong biểu mẫu |
+| Chưa xác nhận được trạng thái hoặc dịch vụ chưa sẵn sàng | Khôi phục thiết lập thử; kiểm tra các dịch vụ đã chạy |
+| Tài khoản mới chưa đăng ký xong | Chạy lại `Start-Demo.ps1` để hoàn tất đăng ký |
+| Lỗi sau khi lưu thay đổi | Làm mới danh sách và đối chiếu trước khi gửi lại, vì một phần ghi nhận có thể đã hoàn tất |
 
-Bấm **Gửi yêu cầu và xem kết quả**. Đọc kết quả tiếng Việt; mở **Xem HTTP, Request ID và JSON** khi cần bằng chứng. Nếu được tải, bấm **Lưu nội dung đã được cấp**. Tùy chỉnh đơn giản: GET `/me`, body `{}`, không thêm `/api` vào đường dẫn.
-
-**B1** dùng chính sách đề xuất và trạng thái hiện tại. **B0** dùng thuộc tính đối chứng `b0_role`/`b0_department` trong JWT cho quyền đọc; chọn B0 không bỏ qua kiểm tra B1 khi sửa. Đổi quyền ở Nhân viên không tự đồng bộ các thuộc tính đối chứng trong Keycloak; đăng nhập lại không bảo đảm cập nhật B0. Giải thích mã và thuật ngữ: [giai_thich_ky_hieu.md](giai_thich_ky_hieu.md).
-
-## 7. Đăng nhập và xử lý lỗi
-
-Console là công cụ người vận hành cục bộ, cho phép chọn danh tính để thử. Đăng nhập Keycloak dùng tài khoản thật của demo. Khi có phiên, thêm/sửa tại mục Tài liệu dùng người đang đăng nhập. Ở Tự thử yêu cầu, chọn nguồn danh tính theo việc cần kiểm tra. Phê duyệt là yêu cầu riêng bằng tài khoản quản trị đã chọn; chưa có hàng đợi duyệt nhiều người độc lập.
-
-| Thông báo | Cách xử lý |
-|---|---|
-| Chưa có quyền tải và sửa | Cấp lại grant đúng người/tài liệu/phiên bản ở phần quyền, kiểm tra hạn và thu hồi |
-| Tài khoản bị khóa | Kích hoạt tại Nhân viên hoặc chọn người khác |
-| Thiết bị sai người/không phù hợp/quá hạn | Chọn đúng chứng thư; kiểm tra thiết bị và tín hiệu tại Điều khiển lab |
-| Thiếu người phê duyệt | Chọn quản trị an toàn đang hoạt động |
-| Phiên hết hạn | Tải lại trang hoặc đăng nhập Keycloak lại |
-| Dịch vụ chưa sẵn sàng | Kiểm tra Tổng quan trong Công cụ nâng cao và khởi động/khôi phục dịch vụ |
-
-Audit/cảnh báo qua quyền người dùng cần auditor hoặc secadmin; trưởng phòng không tự có quyền này. HTTP 200 với danh sách rỗng nghĩa là chưa có bản ghi phù hợp. Màn hình nhật ký của console dùng quyền người vận hành. Sau lỗi ghi nhận thay đổi, làm mới danh sách trước khi gửi lại để tránh tạo trùng.
-
-## 8. Trình diễn và kiểm chứng
-
-Xem [các ca trình diễn và mục báo cáo tương ứng](huong-dan-trinh-dien-va-doi-chieu-bao-cao.md). Có thể bắt đầu với: thêm Hạn chế bằng adam/secadmin → tải/sửa thành công → thu hồi mọi grant còn hiệu lực của adam cho tài liệu → tải/sửa bị chặn → cấp lại. Muốn thử hết hạn, thu hồi các grant còn hạn khác trước, cấp 1 phút, rồi làm mới dữ liệu sau khi thời hạn kết thúc.
-
-Các bài có hướng dẫn có thể dừng dịch vụ thật hoặc xóa logic rồi hoàn tác. Đọc phần thay đổi trước khi chạy. Xóa logic tạo tombstone, không xóa ngay snapshot. Phục hồi dùng DB/KMS cô lập, không thay hệ thống chính.
-
-[Chỉ mục kết quả](ket_qua_kiem_chung.md) phân biệt lượt chuẩn ngày 19/10 với kiểm tra chức năng mới ngày 21/10; không cộng số mục hoặc coi bằng chứng cũ là kết quả của mọi lần chạy. [Mục lục](muc_luc.md) hướng dẫn thứ tự đọc toàn bộ tài liệu.
+Mở Xem chi tiết kỹ thuật và mã yêu cầu khi cần đối chiếu phản hồi với nhật ký. Trang điều khiển dành cho người vận hành tin cậy trên máy cá nhân; danh mục nhìn thấy tại đây không chứng minh mọi tài khoản đều có quyền đọc nội dung.

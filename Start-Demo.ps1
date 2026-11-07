@@ -37,8 +37,11 @@ Invoke-DemoLinux docker run --rm --user 0 --entrypoint sh --mount 'source=bmdl_b
 Invoke-DemoLinux docker @demoCompose start openbao
 Invoke-DemoLinux docker @demoCompose run --rm --no-deps lab python -m lab.operations init
 Invoke-DemoLinux docker exec bmdl-opa-1 /opa check /policies
-Invoke-DemoLinux docker @demoCompose up -d api api-baseline gateway lab
+Invoke-DemoLinux docker @demoCompose run --rm --no-deps lab python -m federation.bootstrap prepare
+Invoke-DemoLinux docker @demoCompose up -d --force-recreate api partner coordinator gateway lab
+Invoke-DemoLinux docker @demoCompose run --rm --no-deps lab python -m federation.bootstrap seed
 Invoke-DemoLinux docker exec bmdl-lab-1 python -m lab.wait_ready
+Invoke-DemoLinux docker exec bmdl-lab-1 python -m federation.inventory
 & (Join-Path $demoRoot 'scripts\Assert-Space.ps1')
 Write-Host 'Demo sẵn sàng: http://localhost:8088'
 if ($OpenBrowser) { Start-Process 'http://localhost:8088' }

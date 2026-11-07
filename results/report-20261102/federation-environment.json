@@ -1,0 +1,237 @@
+{
+  "captured_at": 1793580363.4068751,
+  "python": "3.12.15",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "libraries": {
+    "fastapi": "0.143.1",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1",
+    "PyJWT": "2.15.1",
+    "psycopg": "3.3.6",
+    "cryptography": "50.0.2"
+  },
+  "containers": [
+    {
+      "service": "postgres",
+      "status": "running",
+      "image_id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "image_reference": "postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "repo_digests": [
+        "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+      ],
+      "memory_limit_bytes": 536870912,
+      "networks": [
+        "bmdl_data"
+      ],
+      "mount_destinations": [
+        "/docker-entrypoint-initdb.d/01-bmdl.sql",
+        "/var/lib/postgresql/data"
+      ]
+    },
+    {
+      "service": "keycloak",
+      "status": "running",
+      "image_id": "sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+      "image_reference": "quay.io/keycloak/keycloak:26.8.0@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+      "repo_digests": [
+        "quay.io/keycloak/keycloak@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741"
+      ],
+      "memory_limit_bytes": 1073741824,
+      "networks": [
+        "bmdl_control"
+      ],
+      "mount_destinations": [
+        "/opt/keycloak/data",
+        "/opt/keycloak/data/import/bmdl.json"
+      ]
+    },
+    {
+      "service": "opa",
+      "status": "running",
+      "image_id": "sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+      "image_reference": "openpolicyagent/opa:1.21.2@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5",
+      "repo_digests": [
+        "openpolicyagent/opa@sha256:7459fa69661242c8983d6e4116779550cbb17608f1110ddcd4e9e24da4dcb0e5"
+      ],
+      "memory_limit_bytes": 268435456,
+      "networks": [
+        "bmdl_control"
+      ],
+      "mount_destinations": [
+        "/policies"
+      ]
+    },
+    {
+      "service": "openbao",
+      "status": "running",
+      "image_id": "sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+      "image_reference": "ghcr.io/openbao/openbao:2.7.1@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf",
+      "repo_digests": [
+        "ghcr.io/openbao/openbao@sha256:6d2b93856e3fcf7b18ad855a0b51eaba474dc8b79cf554379ea32034797d2acf"
+      ],
+      "memory_limit_bytes": 536870912,
+      "networks": [
+        "bmdl_data"
+      ],
+      "mount_destinations": [
+        "/bao/config/openbao.hcl",
+        "/bao/data"
+      ]
+    },
+    {
+      "service": "api",
+      "status": "running",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "image_reference": "bmdl-app:local",
+      "repo_digests": [
+        "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+      ],
+      "memory_limit_bytes": 805306368,
+      "networks": [
+        "bmdl_control",
+        "bmdl_data"
+      ],
+      "mount_destinations": [
+        "/project/app",
+        "/project/federation",
+        "/runtime",
+        "/runtime/federation",
+        "/runtime/pki",
+        "/runtime/secrets"
+      ]
+    },
+    {
+      "service": "gateway",
+      "status": "running",
+      "image_id": "sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+      "image_reference": "nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea",
+      "repo_digests": [
+        "nginx@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea"
+      ],
+      "memory_limit_bytes": 134217728,
+      "networks": [
+        "bmdl_control",
+        "bmdl_edge"
+      ],
+      "mount_destinations": [
+        "/etc/nginx/nginx.conf",
+        "/runtime/pki/ca.crt",
+        "/runtime/pki/server.crt",
+        "/runtime/pki/server.key"
+      ]
+    },
+    {
+      "service": "partner",
+      "status": "running",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "image_reference": "bmdl-app:local",
+      "repo_digests": [
+        "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+      ],
+      "memory_limit_bytes": 268435456,
+      "networks": [
+        "bmdl_control",
+        "bmdl_data"
+      ],
+      "mount_destinations": [
+        "/project/federation",
+        "/runtime/pki/ca.crt",
+        "/runtime/service",
+        "/runtime/source-public"
+      ]
+    },
+    {
+      "service": "coordinator",
+      "status": "running",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "image_reference": "bmdl-app:local",
+      "repo_digests": [
+        "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+      ],
+      "memory_limit_bytes": 268435456,
+      "networks": [
+        "bmdl_control",
+        "bmdl_data"
+      ],
+      "mount_destinations": [
+        "/project/federation",
+        "/runtime/pki/ca.crt",
+        "/runtime/service",
+        "/runtime/source-public"
+      ]
+    },
+    {
+      "service": "lab",
+      "status": "running",
+      "image_id": "sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42",
+      "image_reference": "bmdl-app:local",
+      "repo_digests": [
+        "bmdl-app@sha256:5e5de2d546bfdbeed4f287d509aa92cc981091a1dfc9f69955f859a15d45ed42"
+      ],
+      "memory_limit_bytes": 1073741824,
+      "networks": [
+        "bmdl_control",
+        "bmdl_data",
+        "bmdl_edge"
+      ],
+      "mount_destinations": [
+        "/project",
+        "/runtime",
+        "/var/run/docker.sock"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "app/bootstrap.py": "c7166f4a1bb5b9aed81a2767bf816b27329748d3d7c93531403d1ff0589bf294",
+    "app/config.py": "9cc465fab8fe0de7c3ebd6e11a37c60efa813e4651ca9f409bd9df1e3828c172",
+    "app/db.py": "e45ed4efb249e62a1d9b400a9c3b2b132f2f84c4477daafbb6aa0d1473b1871f",
+    "app/federated.py": "361a5ed867f938be41b560387c70413267a0c57948c11d8a18461775233c4805",
+    "app/fixture_data.py": "d270bf44636a7e4e629be985a63207c21a271abbc8650f4b216473a9fa209622",
+    "app/ledger.py": "e7e7df81591d78815f643f682dba7dba1664b07b518429116d4e156c36309bfe",
+    "app/main.py": "fae3886ebf31db6f5df0e28fb92a0f046bef8cbce7752a64c51b8f19ecd538cd",
+    "app/security.py": "cf38fb48dd74ceb6d11e2dd489d8aadd013eff84c36da0028b7cd43553565ff3",
+    "app/__init__.py": "c9cec0217262b7f109790981e941ec48850dd61a4217fccbf828847696b83364",
+    "federation/bootstrap.py": "fae6da4f776b9a8f2e316d257a2a02db56c90889da064aa830d9af322a6c2ccb",
+    "federation/common.py": "39c8d08b475e33c001e1eb2f5fcb1f6604b0a3f6733f4d1754c532af5583bc28",
+    "federation/coordinator.py": "a99e2b98b91d3e900e818898e4cacca7a9a11d34800841fb51a10c83c2b1965c",
+    "federation/inventory.py": "35cca2c7a9c1df2a2992cb6c12eb37b395b61004e130f3706dc27e66e1dd29f6",
+    "federation/partner.py": "860d6dd227ef5e374f21e5a67f3dc16f6b4606919840950c12eff60d5657ab3f",
+    "federation/smoke.py": "863505f1c05b68e3d3af3d3103b904206222ea15377aa9262808612e379fb4b4",
+    "federation/verify.py": "dd59f89772519d33cacc7bb785dd6c3fb27f2d12160b83d58e85e61b08b9459a",
+    "federation/__init__.py": "ce9a05d3d3bc2139a9c8fd85ff0733d2be7dc7ffc89b7c5e6f569ee923df0af0",
+    "lab/benchmark.py": "9e637bd04feb2850abea6f57f9ff41f16105a616f6815bf57870e9c48ae5da14",
+    "lab/client.py": "e5e0ef888dca94d639371621b15be8cd1f220857a1ae9517c56540c8e04c9e34",
+    "lab/federation_console.py": "2540ec82e7ba33e71ab17753626bcab1c4beaaf6034e469d88c823dea95b4bf7",
+    "lab/lessons.py": "e7051de6c3d5b5c680368ae79ee33fc55ccd13f0dd65e7bf516bc1f2022ded72",
+    "lab/management.py": "7d520210ad7a86a3b34a69f3742dca3f7cecbb15bc564e6cfa0fce6a92dea64b",
+    "lab/operations.py": "8d5639e8d12fd3db99610af0c59e1131b561e5bc5f2adaf8aa697685204f2870",
+    "lab/recovery.py": "14b5732b2cb96b552fd470b9dd3cf24ed7d9bf886bb4d78d2b117068c87b5dc8",
+    "lab/runner.py": "3c55ef7faeab18b68431d5977ae6654fd1bd0080cbdd53e8da552c6b6fa0bc9c",
+    "lab/wait_ready.py": "b10e10afc729b7b59055cfdac24914516b551f05ba0811b115233d478f7c9c8d",
+    "lab/web.py": "39e2e7fc1ef5bc9bfa42c901c02b8b5c69f0deb1e6c491adcf487c7f1eba0e86",
+    "lab/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lab/static/app.css": "6afddf30db88eda9d3742d4cf0e8c14f79ad4b2279a43f506635c11e5409ffe3",
+    "lab/static/app.js": "671dc7d51128429a7d98cf825e74269fb446ed6902913bb30660f296f7c9b647",
+    "lab/static/federation.css": "8a7d270d7d8c2c142d3e12d053b159b80dbf2e631d230c7cdccc18ef917f5244",
+    "lab/static/federation.js": "229b31fd520b333f1b0537381ade5debcb2139337bc4e6bba95e852b3d3473fa",
+    "lab/static/guide.js": "032d8d660d29d02bb458d1b00b828d252b182b09206556c597d2ca47c8f0b1d1",
+    "lab/static/guided.css": "5cf56e916ef98e5360a79381a263e3017173026a1dd502fd5096ebe2b963bdbc",
+    "lab/static/management.css": "8f893d51851a17a8569a098bc578884df751c7f3ebee1e90874560d30c0f7afa",
+    "lab/static/management.js": "c85f740082d0f2eeb73922b5e642921958c6c90ebeb597f2d99348985a561af7",
+    "lab/static/workspace-federation.css": "8c12722b5c921dd65b213d4248bede688ffe9b595542d65531fae1729549a60e",
+    "lab/templates/federation.html": "52014d1089dc68986865112cb529bcb6a560485b17a7e2c008b60c9e87026a60",
+    "lab/templates/index.html": "ae7e767a2645b21f983fe306a3525ae5c55b1533e7c379cfae0a0ac882a0aaff",
+    "policies/bmdl.rego": "4f5bfb128680045e0138bd0573fe04cc662d7480278f709a1ce83adb867c1372",
+    "policies/bmdl_test.rego": "8e7747d6a00fe753b04069f9a8f9753517c703ae374f0a665c635ba4163de374",
+    "compose.yaml": "2ec22a749741b62da8a9d836ad4baedb1cf764de4ce09bda6ec2fd4c72a821fd",
+    "compose.lock.yaml": "0c51d174b807fb2f00070068fe55450855e9065b98bdfbd0197c8d1a07115c86",
+    "requirements.lock.txt": "0627a1cade108dcf8e0512ec27f129e48442f013c3a23d9991d598bf0c62b55e"
+  },
+  "service_versions": {
+    "postgres": "postgres (PostgreSQL) 17.11",
+    "gateway": "nginx version: nginx/1.30.6",
+    "opa": "Version: 1.21.2\nBuild Commit: 3f7474e6b3c631821d8aac25ca444f7e75a56483-dirty\nBuild Timestamp: 2026-10-12T13:42:18Z\nBuild Hostname: \nGo Version: go1.27.2\nPlatform: linux/amd64\nRego Version: v1\nWebAssembly: available",
+    "openbao": "OpenBao v2.7.1 (a5db72cef75c24b920ade02065b18dd8eb666bac), committed 2026-10-01T15:32:54Z",
+    "keycloak": "JAVA_OPTS_KC_HEAP already set in environment; overriding default settings\nKeycloak 26.8.0\nJVM: 21.0.12.1 (Red Hat, Inc. OpenJDK 64-Bit Server VM 21.0.12.1+1-LTS)\nOS: Linux 6.18.54.1-microsoft-standard-WSL2 amd64"
+  }
+}

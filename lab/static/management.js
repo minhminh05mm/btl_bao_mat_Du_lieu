@@ -1,13 +1,11 @@
 "use strict";
 const management={document:null,employee:null,documentDirty:false,employeeDirty:false};
-const roleNames={staff:"Nhân viên",manager:"Trưởng phòng",auditor:"Kiểm toán",security_admin:"Quản trị an toàn"};
-const departmentNames={A:"Kinh doanh",B:"Vận hành",OPS:"An toàn thông tin"};
 const labelHelp={internal:"Nội bộ: nhân viên và trưởng phòng cùng phòng được đọc.",confidential:"Mật: chủ sở hữu và trưởng phòng cùng phòng được đọc.",restricted:"Hạn chế: trưởng phòng cùng phòng cần quyền còn hạn để tải và sửa; thêm mới cần quản trị an toàn phê duyệt."};
 const roleHelp={staff:"Đọc tài liệu Nội bộ cùng phòng; đọc tài liệu Mật do mình sở hữu. Được thêm tài liệu Nội bộ hoặc Mật.",manager:"Đọc tài liệu Nội bộ và Mật cùng phòng. Tải và sửa tài liệu Hạn chế khi được cấp quyền còn hạn. Thêm tài liệu Hạn chế cần quản trị an toàn phê duyệt; người tạo nhận quyền tải và sửa có thời hạn.",auditor:"Đọc nhật ký kiểm toán và cảnh báo. Không được đọc nội dung hoặc thêm tài liệu nghiệp vụ.",security_admin:"Quản lý trạng thái quyền, thiết bị, nhãn và phê duyệt. Đọc cảnh báo và nhật ký vận hành. Không được thêm hoặc đọc nội dung tài liệu nghiệp vụ."};
 
 function friendlyFailure(r){
-  const reasons={INVALID_INPUT:"Thông tin tài liệu chưa hợp lệ. Kiểm tra tên, định dạng tệp và nhãn.",INVALID_SIZE:"Tệp phải có nội dung và không vượt quá 1 MiB.",INACTIVE:"Tài khoản đang bị khóa. Mở Nhân viên để kích hoạt lại hoặc chọn tài khoản khác.",ROLE:"Vai trò hiện tại không được thực hiện thao tác này. Chọn tài khoản có quyền phù hợp.",UNKNOWN_SUBJECT:"Không tìm thấy tài khoản trong hệ thống. Chọn lại tài khoản tại Nhân viên.",TRANSPORT_ERROR:"Không kết nối được dịch vụ. Kiểm tra trạng thái hệ thống rồi thử lại.",SERVICE_UNAVAILABLE:"Dịch vụ chưa sẵn sàng. Thử lại sau khi kiểm tra trạng thái hệ thống.",LEDGER_UNAVAILABLE:"Chưa hoàn tất ghi nhận thay đổi. Làm mới danh sách để kiểm tra trước khi gửi lại.",ALLOW:"Thao tác đã hoàn tất."};
-  return reasons[r.reason]||(typeof reasonText!=="undefined"&&reasonText[r.reason])||(r.status===413?"Tệp quá lớn. Chọn tệp không vượt quá 1 MiB.":"Không thể hoàn tất yêu cầu. Kiểm tra thông tin và thử lại.");
+  const reasons={INVALID_INPUT:"Thông tin tài liệu chưa hợp lệ. Kiểm tra tên, định dạng tệp và nhãn.",INVALID_SIZE:"Tệp phải có nội dung và không vượt quá 1 MB.",INACTIVE:"Tài khoản đang bị khóa. Mở Nhân viên để kích hoạt lại hoặc chọn tài khoản khác.",ROLE:"Vai trò hiện tại không được thực hiện thao tác này. Chọn tài khoản có quyền phù hợp.",UNKNOWN_SUBJECT:"Không tìm thấy tài khoản trong hệ thống. Chọn lại tài khoản tại Nhân viên.",TRANSPORT_ERROR:"Không kết nối được dịch vụ. Kiểm tra trạng thái hệ thống rồi thử lại.",SERVICE_UNAVAILABLE:"Dịch vụ chưa sẵn sàng. Thử lại sau khi kiểm tra trạng thái hệ thống.",LEDGER_UNAVAILABLE:"Chưa hoàn tất ghi nhận thay đổi. Làm mới danh sách để kiểm tra trước khi gửi lại.",ALLOW:"Thao tác đã hoàn tất."};
+  return reasons[r.reason]||(typeof reasonText!=="undefined"&&reasonText[r.reason])||(r.status===413?"Tệp quá lớn. Chọn tệp không vượt quá 1 MB.":"Không thể hoàn tất yêu cầu. Kiểm tra thông tin và thử lại.");
 }
 
 function clearFormErrors(form){
@@ -45,13 +43,13 @@ function renderManagement(){
   const approvers=[{value:'',label:'Chọn quản trị an toàn'},...toArray(state.data.principals).filter(x=>x.role==='security_admin'&&x.active).map(x=>({value:x.id,label:userLabel(x.id)}))];
   ['new-document-approver','document-edit-approver','document-grant-approver'].forEach(id=>setOptions($('#'+id),approvers));
   const term=$('#document-search').value.trim().toLowerCase();
-  const docs=toArray(state.data.documents).filter(x=>!x.deleted&&`${x.title} ${x.id} ${x.owner_id}`.toLowerCase().includes(term)).sort((a,b)=>Number(b.created_at)-Number(a.created_at));
+  const docs=toArray(state.data.documents).filter(x=>!x.deleted&&`${x.title} ${x.id} ${personById(x.owner_id)}`.toLowerCase().includes(term)).sort((a,b)=>Number(b.created_at)-Number(a.created_at));
   $('#document-count').textContent=`(${docs.length})`;
-  $('#managed-documents').innerHTML=docs.length?docs.map(x=>`<tr><td><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.id)}</small></td><td>${escapeHTML(selectedRecord('principals',x.owner_id)?.display_name||x.owner_id)}<small>${escapeHTML(departmentNames[x.department]||x.department)}</small></td><td><span class="label-badge ${escapeHTML(x.label)}">${escapeHTML(labels[x.label]||x.label)}</span></td><td><button class="button small" data-edit-doc="${escapeHTML(x.id)}">Chỉnh sửa</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty-cell">Chưa có tài liệu phù hợp.</td></tr>';
+  $('#managed-documents').innerHTML=docs.length?docs.map(x=>`<tr><td><strong>${escapeHTML(DemoLanguage.documentName(x))}</strong></td><td>${escapeHTML(personById(x.owner_id))}<small>${escapeHTML(DemoLanguage.department(x.department))}</small></td><td><span class="label-badge ${escapeHTML(x.label)}">${escapeHTML(labels[x.label]||x.label)}</span></td><td><button class="button small" data-edit-doc="${escapeHTML(x.id)}">Chỉnh sửa</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty-cell">Chưa có tài liệu phù hợp.</td></tr>';
   $$('[data-edit-doc]').forEach(b=>b.addEventListener('click',()=>openDocumentEditor(b.dataset.editDoc)));
   const query=$('#employee-search').value.trim().toLowerCase();
   const employees=toArray(state.data.principals).filter(x=>`${x.display_name} ${x.username}`.toLowerCase().includes(query));
-  $('#managed-employees').innerHTML=employees.length?employees.map(x=>`<tr><td><strong>${escapeHTML(x.display_name||x.username)}</strong><small>${escapeHTML(x.username)}</small></td><td>${escapeHTML(roleNames[x.role]||x.role)}<small>${escapeHTML(departmentNames[x.department]||x.department)}</small></td><td><span class="account-status ${x.active?'active':'locked'}">${x.active?'Hoạt động':'Đã khóa'}</span></td><td><button class="button small" data-edit-employee="${escapeHTML(x.id)}">Chỉnh sửa</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty-cell">Chưa có nhân viên phù hợp.</td></tr>';
+  $('#managed-employees').innerHTML=employees.length?employees.map(x=>`<tr><td><strong>${escapeHTML(DemoLanguage.person(x))}</strong><small>${escapeHTML(DemoLanguage.organization(x.organization))}</small></td><td>${escapeHTML(DemoLanguage.role(x.role))}<small>${escapeHTML(DemoLanguage.department(x.department))}</small></td><td><span class="account-status ${x.active?'active':'locked'}">${x.active?'Được truy cập kho':'Đã ngừng quyền truy cập kho'}</span></td><td><button class="button small" data-edit-employee="${escapeHTML(x.id)}">Chỉnh sửa</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty-cell">Chưa có nhân viên phù hợp.</td></tr>';
   $$('[data-edit-employee]').forEach(b=>b.addEventListener('click',()=>openEmployeeEditor(b.dataset.editEmployee)));
   if(management.document&&!management.documentDirty)fillDocumentEditor();
   if(management.employee&&!management.employeeDirty)fillEmployeeEditor();
@@ -62,7 +60,7 @@ function openDocumentEditor(id){management.document=id;management.documentDirty=
 function fillDocumentEditor(){
   const row=selectedRecord('documents',management.document);if(!row)return;
   $('#document-editor-empty').classList.add('hidden');$('#document-editor').classList.remove('hidden');
-  $('#document-editor-meta').textContent=`${row.id} · ${row.owner_id} · ${departmentNames[row.department]||row.department}`;
+  $('#document-editor-meta').textContent=`${DemoLanguage.documentName(row)} · ${personById(row.owner_id)} · ${DemoLanguage.department(row.department)}`;
   $('#document-edit-title').value=withoutExtension(row.title);$('#document-edit-label').value=row.label;
   $('#document-edit-retention').value=datetimeValue(row.retention_until);$('#document-edit-hold').checked=Boolean(row.legal_hold);
   $('#document-edit-label-help').textContent=labelHelp[row.label];syncDocumentApproval();renderDocumentGrants();updateDocumentAccess();
@@ -71,7 +69,7 @@ function openEmployeeEditor(id){management.employee=id;management.employeeDirty=
 function fillEmployeeEditor(){
   const row=selectedRecord('principals',management.employee);if(!row)return;
   $('#employee-editor-empty').classList.add('hidden');$('#employee-editor').classList.remove('hidden');
-  $('#employee-editor-meta').textContent=`Tài khoản: ${row.username}`;
+  $('#employee-editor-meta').textContent=`${DemoLanguage.person(row)} · ${DemoLanguage.organization(row.organization)}`;
   $('#employee-edit-name').value=row.display_name||row.username;$('#employee-edit-role').value=row.role;
   $('#employee-edit-department').value=row.department;$('#employee-edit-active').checked=Boolean(row.active);syncRole('employee-edit',false);
 }
@@ -109,11 +107,11 @@ function showRequestUploadError(response){
 function tryDocument(){
   const row=selectedRecord('documents',management.document);if(!row)return;
   const actor=$('#document-edit-actor').value||row.owner_id;navigate('playground');$('#identity-source').value=state.auth?'interactive':'operator';$('#request-user').value=state.auth?.username||actor;
-  $('#request-action').value='download';$('#request-document').value=row.id;$('#request-mode').value='B1';$('#request-device').value='';renderAuth();updateRequestForm();
+  $('#request-action').value='download';$('#request-document').value=row.id;$('#request-mode').value='F2';$('#request-device').value='';renderAuth();updateRequestForm();
 }
 function tryEmployee(){
   if(!management.employee)return;navigate('playground');$('#identity-source').value='operator';$('#request-user').value=management.employee;
-  $('#request-action').value='list';$('#request-mode').value='B1';$('#request-device').value='';renderAuth();updateRequestForm();
+  $('#request-action').value='list';$('#request-mode').value='F2';$('#request-device').value='';renderAuth();updateRequestForm();
 }
 
 async function submitManagement(form,button,work){
@@ -147,8 +145,8 @@ function wireManagement(){
     await refreshState(true);$('#document-grant-notice').textContent=`Đã cấp quyền đến ${new Date(result.expires_at*1000).toLocaleString('vi-VN')}.`;
   });});
   $('#new-employee-form').addEventListener('submit',event=>{event.preventDefault();const form=event.currentTarget;submitManagement(form,form.querySelector('[type="submit"]'),async()=>{
-    const body={username:$('#new-employee-username').value.trim(),display_name:$('#new-employee-name').value.trim(),password:$('#new-employee-password').value,role:$('#new-employee-role').value,department:$('#new-employee-department').value,active:$('#new-employee-active').checked};
-    const result=await api('/lab/employees',{method:'POST',body:JSON.stringify(body)});$('#new-employee-dialog').close();form.reset();$('#new-employee-active').checked=true;management.employee=result.id;management.employeeDirty=false;await refreshState(true);notice('#employees-notice',`Đã tạo ${result.display_name}. Tài khoản ${result.username} có thể sử dụng ngay.`);
+    const body={organization:$('#new-employee-organization').value,username:$('#new-employee-username').value.trim(),display_name:$('#new-employee-name').value.trim(),password:$('#new-employee-password').value,role:$('#new-employee-role').value,department:$('#new-employee-department').value,active:$('#new-employee-active').checked};
+    const result=await api('/lab/employees',{method:'POST',body:JSON.stringify(body)});$('#new-employee-dialog').close();form.reset();$('#new-employee-active').checked=true;management.employee=result.id;management.employeeDirty=false;await refreshState(true);notice('#employees-notice',`Đã tạo ${result.display_name}. ${result.registration_pending?'Đã lưu tài khoản. Chạy lại Start-Demo.ps1 để hoàn tất thiết lập.':'Tài khoản đã sẵn sàng để sử dụng.'}`);
   });});
   $('#document-editor').addEventListener('submit',event=>{event.preventDefault();const form=event.currentTarget;submitManagement(form,form.querySelector('[type="submit"]'),async()=>{
     const retention=new Date($('#document-edit-retention').value).getTime()/1000;

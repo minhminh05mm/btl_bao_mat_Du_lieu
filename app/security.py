@@ -27,6 +27,8 @@ class Context:
     request_id: str
     mode: str = config.POLICY_MODE
     deadlines: list = field(default_factory=list)
+    federation: dict = field(default_factory=dict)
+    resource_token: str = field(default="", repr=False)
 
     @property
     def id(self):
@@ -87,7 +89,7 @@ def validate_jwt(token):
         raise Problem("INVALID_TOKEN", 401)
 
 
-def authenticate(request, conn):
+def authenticate(request, conn, *, login=False):
     try:
         trusted = config.secret(config.PROXY_SECRET_FILE)
     except OSError:
@@ -102,7 +104,18 @@ def authenticate(request, conn):
     authorization = request.headers.get("authorization", "")
     if not authorization.startswith("Bearer "):
         raise Problem("INVALID_TOKEN", 401)
-    claims = validate_jwt(authorization[7:])
+    token = authorization[7:]
+    federation = {}
+    if config.FEDERATION_REQUIRED and not login:
+        from .federated import call, request_data
+        from federation.common import FederationError
+        try:
+            federation = call('/introspect', request_data(request, token))
+            claims = federation['identity']
+        except FederationError as exc:
+            raise Problem(exc.reason, exc.status) from None
+    else:
+        claims = validate_jwt(token)
     if config.faults().get("registry_unavailable"):
         raise Problem("REGISTRY_UNAVAILABLE", 503)
     subject = conn.execute(
@@ -116,7 +129,13 @@ def authenticate(request, conn):
     ).fetchone()
     if not device or device["principal_id"] != subject["id"]:
         raise Problem("DEVICE_MISMATCH")
-    return Context(subject, device, claims, request.state.request_id)
+    if federation:
+        state = federation['device']
+        if state['id'] != device['id'] or state['principal_id'] != subject['id']:
+            raise Problem('DEVICE_MISMATCH')
+        device = {**device, **state}
+    return Context(subject, device, claims, request.state.request_id,
+                   federation=federation, resource_token=token if federation else '')
 
 
 def decide(ctx, action, resource=None, grant=None, *, force_b1=False):
@@ -138,6 +157,7 @@ def decide(ctx, action, resource=None, grant=None, *, force_b1=False):
         "grant": grant,
         "mode": mode,
         "snapshot": snapshot,
+        "federation_verified": bool(ctx.federation),
     }}
     if config.faults().get("opa_response_invalid"):
         raise Problem("PDP_INVALID", 503)

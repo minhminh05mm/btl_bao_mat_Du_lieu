@@ -6,7 +6,7 @@ RUNTIME=Path(os.getenv('LAB_RUNTIME_DIR','/runtime'))
 class LabClient:
     def __init__(self):
         self.config=json.loads((RUNTIME/'secrets/config.json').read_text())
-        self._tokens={};self._clients={}
+        self._tokens={};self._clients={};self._resource_sessions={}
     def token(self,username,force=False):
         cached=self._tokens.get(username)
         if not force and cached and cached[1]>time.time():return cached[0]
@@ -26,9 +26,28 @@ class LabClient:
             context=ssl.create_default_context(cafile=str(RUNTIME/'pki/ca.crt'))
             if identity!='none':context.load_cert_chain(str(RUNTIME/f'pki/{identity}.crt'),str(RUNTIME/f'pki/{identity}.key'))
             self._clients[identity]=httpx.Client(verify=context,timeout=15,trust_env=False)
-        auth=token if token is not None else self.token(username)
+        mode={'B0':'F0','B1':'F2'}.get(mode,mode)
+        port={'F0':8444,'F1':8445,'F2':8443}.get(mode,8443)
+        key=(username,identity,mode)
+        raw=kwargs.pop('raw_token',False)
+        cached=self._resource_sessions.get(key)
+        # A held resource session is independent of the IdP token lifetime.
+        if path.rstrip('/')!='/sessions' and not raw and cached is not None:
+            auth=cached['resource_token']
+        else:
+            try:
+                auth=token if token is not None else self.token(username)
+            except httpx.HTTPStatusError:
+                return httpx.Response(401,json={'detail':{'reason':'IDENTITY_LOGIN_FAILED'}},request=httpx.Request(method,'https://gateway/api/'+path.lstrip('/')))
+            except httpx.HTTPError:
+                return httpx.Response(503,json={'detail':{'reason':'IDENTITY_UNAVAILABLE'}},request=httpx.Request(method,'https://gateway/api/'+path.lstrip('/')))
+            if path.rstrip('/')!='/sessions' and not raw:
+                login=self.request(username,'POST','/sessions',device=device,mode=mode,token=auth)
+                if not login.is_success:return login
+                cached=login.json();self._resource_sessions[key]=cached
+                auth=cached['resource_token']
         h=httpx.Headers({'Authorization':'Bearer '+auth});h.update(headers or {})
-        url=f"https://gateway:{8444 if mode=='B0' else 8443}/api/"+path.lstrip('/')
+        url=f"https://gateway:{port}/api/"+path.lstrip('/')
         started=time.perf_counter()
         try:
             response=self._clients[identity].request(method,url,json=json,headers=h,**kwargs)
@@ -36,6 +55,14 @@ class LabClient:
             response=httpx.Response(495 if isinstance(exc,httpx.ConnectError) and 'CERTIFICATE' in str(exc).upper() else 503,
                 json={'detail':{'reason':'TRANSPORT_BLOCKED','transport_error':True,'error_type':type(exc).__name__}},request=httpx.Request(method,url))
         response.extensions['lab_latency_ms']=(time.perf_counter()-started)*1000
+        if path.rstrip('/')=='/sessions' and response.is_success:
+            self._resource_sessions[key]=response.json()
         return response
+    def session(self,username,device=None,mode='F2'):
+        identity=(device or username).removeprefix('dev-')
+        return self._resource_sessions.get((username,identity,mode),{}).get('session')
+    def forget(self,username,device=None,mode='F2'):
+        identity=(device or username).removeprefix('dev-')
+        return self._resource_sessions.pop((username,identity,mode),None)
     def close(self):
         for c in self._clients.values():c.close()

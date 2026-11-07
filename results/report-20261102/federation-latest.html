@@ -1,0 +1,468 @@
+<!doctype html><meta charset="utf-8"><title>Kiểm chứng truy cập liên miền</title><style>body{font:15px Segoe UI;max-width:1100px;margin:35px auto;line-height:1.6}article{border:1px solid #ddd;padding:16px;margin:14px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.pass{color:#17804e}.fail{color:#ac3838}</style><h1>Kết quả kiểm chứng liên miền</h1><p>19/19 ca đạt. Cùng chính sách tài liệu B1.</p><p>{&quot;python&quot;: &quot;3.12.15&quot;, &quot;fastapi&quot;: &quot;0.143.1&quot;, &quot;uvicorn&quot;: &quot;0.54.0&quot;, &quot;httpx&quot;: &quot;0.28.1&quot;, &quot;PyJWT&quot;: &quot;2.15.1&quot;, &quot;psycopg&quot;: &quot;3.3.6&quot;, &quot;cryptography&quot;: &quot;50.0.2&quot;}</p><article><h2 class="pass">K01 · Cùng quyền tài liệu, ba chế độ đều tải đúng nội dung · Đạt</h2><pre>{
+  &quot;requests&quot;: {
+    &quot;F0&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;83a93c3a-02b7-4187-8487-949f4330134e&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 140.902,
+      &quot;at&quot;: 1793575507.9439366
+    },
+    &quot;F1&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;8622c7fb-0961-44d1-8d48-9ac66cc68c8a&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 142.207,
+      &quot;at&quot;: 1793575508.0862117
+    },
+    &quot;F2&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;090a73e7-dc16-474f-99d0-ee9b26863515&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 134.722,
+      &quot;at&quot;: 1793575508.221002
+    }
+  },
+  &quot;same_policy&quot;: &quot;B1&quot;,
+  &quot;expected_sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;
+}</pre></article><article><h2 class="pass">K02 · Quyền tài liệu tại R vẫn được kiểm tra trong mọi chế độ · Đạt</h2><pre>{
+  &quot;F0&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;DEPARTMENT&quot;,
+    &quot;request_id&quot;: &quot;3bf1bc35-0560-4ca5-bc01-d1bccbe52a52&quot;,
+    &quot;bytes&quot;: 86,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 82.1,
+    &quot;at&quot;: 1793575508.7975945
+  },
+  &quot;F1&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;DEPARTMENT&quot;,
+    &quot;request_id&quot;: &quot;7c7251c3-6c58-4472-a5ef-9811b6ca2bb5&quot;,
+    &quot;bytes&quot;: 86,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 87.406,
+    &quot;at&quot;: 1793575508.885086
+  },
+  &quot;F2&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;DEPARTMENT&quot;,
+    &quot;request_id&quot;: &quot;c650bfb2-af49-4335-963f-e8fbbb456264&quot;,
+    &quot;bytes&quot;: 86,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 89.894,
+    &quot;at&quot;: 1793575508.9750478
+  }
+}</pre></article><article><h2 class="pass">K03 · Khóa nguồn thu hồi F1/F2 dù JWT và phiên còn hạn · Đạt</h2><pre>{
+  &quot;source_changed_at&quot;: 1793575510.0396187,
+  &quot;jwt_still_unexpired&quot;: true,
+  &quot;jwt_expires_at&quot;: 1793575807,
+  &quot;sessions&quot;: {
+    &quot;F0&quot;: &quot;6e90a5b5-aeca-4461-b4db-3fc67dc8569d&quot;,
+    &quot;F1&quot;: &quot;b63bf9a5-7305-4538-beb0-68f8d508c651&quot;,
+    &quot;F2&quot;: &quot;a77a69a6-2418-441b-ad20-c391a1e9ce99&quot;
+  },
+  &quot;requests&quot;: {
+    &quot;F0&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;57739ca3-d7c7-4018-94e4-d2c75ae87bf5&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 187.192,
+      &quot;at&quot;: 1793575510.83466
+    },
+    &quot;F1&quot;: {
+      &quot;status&quot;: 403,
+      &quot;reason&quot;: &quot;SOURCE_ACCOUNT_DISABLED&quot;,
+      &quot;request_id&quot;: &quot;ec36bfad-6431-4e8a-bf69-b690b8a3bf4a&quot;,
+      &quot;bytes&quot;: 99,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 91.399,
+      &quot;at&quot;: 1793575510.8346689
+    },
+    &quot;F2&quot;: {
+      &quot;status&quot;: 403,
+      &quot;reason&quot;: &quot;SOURCE_ACCOUNT_DISABLED&quot;,
+      &quot;request_id&quot;: &quot;29213fff-a8dd-491d-8f36-cd75d3f8209d&quot;,
+      &quot;bytes&quot;: 99,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 62.54,
+      &quot;at&quot;: 1793575510.8346746
+    }
+  }
+}</pre></article><article><h2 class="pass">K03b · Mở khóa không phục hồi phiên cũ; đăng nhập mới được phép · Đạt</h2><pre>{
+  &quot;old_session&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;SOURCE_ACCOUNT_DISABLED&quot;,
+    &quot;request_id&quot;: &quot;72236568-d757-4c82-b515-cba112d79ad7&quot;,
+    &quot;bytes&quot;: 99,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 62.473,
+    &quot;at&quot;: 1793575511.3647783
+  },
+  &quot;new_session&quot;: {
+    &quot;status&quot;: 200,
+    &quot;reason&quot;: &quot;ALLOW&quot;,
+    &quot;request_id&quot;: &quot;7d18a5eb-fbbf-4598-98f5-531b8563233c&quot;,
+    &quot;bytes&quot;: 45,
+    &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+    &quot;latency_ms&quot;: 140.5,
+    &quot;at&quot;: 1793575511.6660798
+  }
+}</pre></article><article><h2 class="pass">K04 · Thu hồi thiết bị làm mất hiệu lực phiên đúng người · Đạt</h2><pre>{
+  &quot;source_changed_at&quot;: 1793575512.7337732,
+  &quot;requests&quot;: {
+    &quot;F0&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;5a8fe3f5-9a42-4c2d-aee6-f649f9475c22&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 140.518,
+      &quot;at&quot;: 1793575513.2911932
+    },
+    &quot;F1&quot;: {
+      &quot;status&quot;: 403,
+      &quot;reason&quot;: &quot;SOURCE_DEVICE_REVOKED&quot;,
+      &quot;request_id&quot;: &quot;5f99b15b-603b-499a-a722-953f78f1dafc&quot;,
+      &quot;bytes&quot;: 97,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 60.565,
+      &quot;at&quot;: 1793575513.2912
+    },
+    &quot;F2&quot;: {
+      &quot;status&quot;: 403,
+      &quot;reason&quot;: &quot;SOURCE_DEVICE_REVOKED&quot;,
+      &quot;request_id&quot;: &quot;84ec256c-74a5-48dc-b88f-94f5dc74f5af&quot;,
+      &quot;bytes&quot;: 97,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 68.461,
+      &quot;at&quot;: 1793575513.2912052
+    }
+  }
+}</pre></article><article><h2 class="pass">K05 · Mất sự kiện: F1 giữ phiên, F2 đối soát và chặn · Đạt</h2><pre>{
+  &quot;source_changed_at&quot;: 1793575514.4152296,
+  &quot;event_lost&quot;: true,
+  &quot;requests&quot;: {
+    &quot;F0&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;a1872237-4937-468f-939b-416702620a26&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 133.546,
+      &quot;at&quot;: 1793575515.6668677
+    },
+    &quot;F1&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;9fd5a0d2-db2e-43f4-b381-97f121f361bb&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 137.929,
+      &quot;at&quot;: 1793575515.66688
+    },
+    &quot;F2&quot;: {
+      &quot;status&quot;: 403,
+      &quot;reason&quot;: &quot;SOURCE_ACCOUNT_DISABLED&quot;,
+      &quot;request_id&quot;: &quot;eeed97d8-2103-43d5-89b6-286794e703ed&quot;,
+      &quot;bytes&quot;: 99,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 60.137,
+      &quot;at&quot;: 1793575515.6668868
+    }
+  }
+}</pre></article><article><h2 class="pass">K06 · Nguồn không phản hồi: F2 dừng khi trạng thái hết độ mới · Đạt</h2><pre>{
+  &quot;cache_seconds&quot;: 1,
+  &quot;poll_disabled&quot;: true,
+  &quot;requests&quot;: {
+    &quot;F0&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;d9a72324-a24a-494d-ba22-d7880fea88b1&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 138.108,
+      &quot;at&quot;: 1793575518.3614948
+    },
+    &quot;F1&quot;: {
+      &quot;status&quot;: 200,
+      &quot;reason&quot;: &quot;ALLOW&quot;,
+      &quot;request_id&quot;: &quot;df5190e7-7512-48b7-8efe-945950716f82&quot;,
+      &quot;bytes&quot;: 45,
+      &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+      &quot;latency_ms&quot;: 132.083,
+      &quot;at&quot;: 1793575518.3615062
+    },
+    &quot;F2&quot;: {
+      &quot;status&quot;: 503,
+      &quot;reason&quot;: &quot;SOURCE_UNAVAILABLE&quot;,
+      &quot;request_id&quot;: &quot;f25deb4d-c492-4204-94c1-c8d92b697a80&quot;,
+      &quot;bytes&quot;: 94,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 84.977,
+      &quot;at&quot;: 1793575518.3615127
+    }
+  }
+}</pre></article><article><h2 class="pass">K07 · Sự kiện giả bị loại; trùng và sai thứ tự không hồi sinh phiên · Đạt</h2><pre>{
+  &quot;newer&quot;: {
+    &quot;outcome&quot;: &quot;applied&quot;,
+    &quot;affected&quot;: 0,
+    &quot;received_at&quot;: 1793575519.1715472,
+    &quot;applied_at&quot;: 1793575519.1841266
+  },
+  &quot;duplicate&quot;: {
+    &quot;outcome&quot;: &quot;duplicate&quot;,
+    &quot;affected&quot;: 0
+  },
+  &quot;older&quot;: {
+    &quot;outcome&quot;: &quot;stale&quot;,
+    &quot;affected&quot;: 0,
+    &quot;received_at&quot;: 1793575519.2286236,
+    &quot;applied_at&quot;: 1793575519.2399697
+  },
+  &quot;forged&quot;: {
+    &quot;status&quot;: 401,
+    &quot;reason&quot;: &quot;SOURCE_PROOF_INVALID&quot;,
+    &quot;request_id&quot;: null,
+    &quot;bytes&quot;: 44,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 0,
+    &quot;at&quot;: 1793575519.7310476
+  }
+}</pre></article><article><h2 class="pass">K08 · Phục hồi cơ sở dữ liệu thật vào môi trường riêng không phục hồi phiên cũ · Đạt</h2><pre>{
+  &quot;dump_bytes&quot;: 138504,
+  &quot;dump_sha256&quot;: &quot;054c1cb1737bb3a93878aa499154d6f0d120e6b3497f0b82710b36a7db80ba73&quot;,
+  &quot;scratch_database&quot;: &quot;bmdl_restore_d13e1c7e9a&quot;,
+  &quot;before_restore_boot&quot;: {
+    &quot;revoked&quot;: false
+  },
+  &quot;after_boot&quot;: {
+    &quot;revoked&quot;: true,
+    &quot;reason&quot;: &quot;SESSION_SERVICE_RESTARTED&quot;
+  },
+  &quot;introspection&quot;: {
+    &quot;status&quot;: 401,
+    &quot;reason&quot;: &quot;SESSION_SERVICE_RESTARTED&quot;,
+    &quot;request_id&quot;: null,
+    &quot;bytes&quot;: 49,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 0,
+    &quot;at&quot;: 1793575522.4455028
+  },
+  &quot;isolated&quot;: true
+}</pre></article><article><h2 class="pass">S01 · Không vượt qua bằng JWT thô, chứng thư khác hoặc cổng khác chế độ · Đạt</h2><pre>{
+  &quot;jwt_without_resource_session&quot;: {
+    &quot;status&quot;: 401,
+    &quot;reason&quot;: &quot;RESOURCE_SESSION_REQUIRED&quot;,
+    &quot;request_id&quot;: &quot;cc693bd2-1939-42f6-a27c-ae4178a72420&quot;,
+    &quot;bytes&quot;: 101,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 46.378,
+    &quot;at&quot;: 1793575523.5883052
+  },
+  &quot;wrong_device&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;DEVICE_MISMATCH&quot;,
+    &quot;request_id&quot;: &quot;0333d549-bf2b-4f93-b045-5a8b96e933fb&quot;,
+    &quot;bytes&quot;: 91,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 20.53,
+    &quot;at&quot;: 1793575523.6145756
+  },
+  &quot;wrong_gateway_mode&quot;: {
+    &quot;status&quot;: 401,
+    &quot;reason&quot;: &quot;SESSION_MODE_MISMATCH&quot;,
+    &quot;request_id&quot;: &quot;7b95b9fb-83a7-4655-9a1a-8b26ce42af79&quot;,
+    &quot;bytes&quot;: 97,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 65.279,
+    &quot;at&quot;: 1793575523.6799147
+  }
+}</pre></article><article><h2 class="pass">S02 · Tách quyền quản trị nguồn P và tài nguyên R · Đạt</h2><pre>{
+  &quot;resource_admin_cannot_manage_source&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;PARTNER_ADMIN_REQUIRED&quot;,
+    &quot;request_id&quot;: null,
+    &quot;bytes&quot;: 46,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 0,
+    &quot;at&quot;: 1793575524.3397236
+  },
+  &quot;source_cannot_manage_R&quot;: {
+    &quot;status&quot;: 404,
+    &quot;reason&quot;: &quot;PARTNER_OBJECT_NOT_FOUND&quot;,
+    &quot;request_id&quot;: null,
+    &quot;bytes&quot;: 48,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 0,
+    &quot;at&quot;: 1793575524.33973
+  },
+  &quot;source_admin_has_no_resource_admin&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;ROLE&quot;,
+    &quot;request_id&quot;: &quot;0a2c39e6-1a5e-41c4-83bb-ce16992fda16&quot;,
+    &quot;bytes&quot;: 80,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 85.433,
+    &quot;at&quot;: 1793575524.3397381
+  },
+  &quot;resource_cannot_change_P_device&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;PARTNER_DEVICE_AUTHORITY_REQUIRED&quot;,
+    &quot;request_id&quot;: &quot;53fadca7-26e9-4587-88b0-e251e82c9ea3&quot;,
+    &quot;bytes&quot;: 109,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 83.041,
+    &quot;at&quot;: 1793575524.3397439
+  }
+}</pre></article><article><h2 class="pass">S03 · Tài khoản dịch vụ không được đọc cơ sở dữ liệu của miền kia · Đạt</h2><pre>[
+  {
+    &quot;role&quot;: &quot;bmdl_app&quot;,
+    &quot;database&quot;: &quot;bmdl_partner&quot;,
+    &quot;blocked&quot;: true,
+    &quot;sqlstate&quot;: null,
+    &quot;reason&quot;: &quot;CONNECT_PRIVILEGE_DENIED&quot;,
+    &quot;own_database_connection_verified&quot;: true,
+    &quot;own_database&quot;: &quot;bmdl&quot;
+  },
+  {
+    &quot;role&quot;: &quot;bmdl_app&quot;,
+    &quot;database&quot;: &quot;bmdl_coordinator&quot;,
+    &quot;blocked&quot;: true,
+    &quot;sqlstate&quot;: null,
+    &quot;reason&quot;: &quot;CONNECT_PRIVILEGE_DENIED&quot;,
+    &quot;own_database_connection_verified&quot;: true,
+    &quot;own_database&quot;: &quot;bmdl&quot;
+  },
+  {
+    &quot;role&quot;: &quot;bmdl_partner&quot;,
+    &quot;database&quot;: &quot;bmdl&quot;,
+    &quot;blocked&quot;: true,
+    &quot;sqlstate&quot;: null,
+    &quot;reason&quot;: &quot;CONNECT_PRIVILEGE_DENIED&quot;,
+    &quot;own_database_connection_verified&quot;: true,
+    &quot;own_database&quot;: &quot;bmdl_partner&quot;
+  }
+]</pre></article><article><h2 class="pass">S04 · Ký trạng thái mới không làm mới một quan sát thiết bị đã cũ · Đạt</h2><pre>{
+  &quot;status&quot;: 403,
+  &quot;reason&quot;: &quot;SOURCE_OBSERVATION_STALE&quot;,
+  &quot;request_id&quot;: &quot;bf896d5e-8b1b-48cd-99aa-e8fd1d750bf0&quot;,
+  &quot;bytes&quot;: 100,
+  &quot;sha256&quot;: null,
+  &quot;latency_ms&quot;: 136.511,
+  &quot;at&quot;: 1793575525.4332938
+}</pre></article><article><h2 class="pass">S05 · Khóa rồi mở nhanh giữa hai lần đối soát vẫn thu hồi phiên cũ · Đạt</h2><pre>{
+  &quot;status&quot;: 403,
+  &quot;reason&quot;: &quot;SOURCE_STATE_CHANGED&quot;,
+  &quot;request_id&quot;: &quot;8823cd56-053e-405a-9058-97dc43e8ae1e&quot;,
+  &quot;bytes&quot;: 96,
+  &quot;sha256&quot;: null,
+  &quot;latency_ms&quot;: 172.735,
+  &quot;at&quot;: 1793575528.2051914
+}</pre></article><article><h2 class="pass">S06 · Kiểm tra nonce, đúng người, đúng miền và đúng chứng thư · Đạt</h2><pre>{
+  &quot;validation_rejections&quot;: [
+    &quot;SOURCE_NONCE_MISMATCH&quot;,
+    &quot;SOURCE_BINDING_MISMATCH&quot;,
+    &quot;SOURCE_BINDING_MISMATCH&quot;,
+    &quot;DEVICE_MISMATCH&quot;
+  ],
+  &quot;signed_state_observed_at&quot;: 1793575528.2792656,
+  &quot;signed_state_issued_at&quot;: 1793575528.8196166
+}</pre></article><article><h2 class="pass">S07 · Lỗi chính sách, nhật ký hoặc mã hóa đều dừng yêu cầu và không trả nội dung · Đạt</h2><pre>{
+  &quot;dependency_failures&quot;: {
+    &quot;opa_response_invalid&quot;: {
+      &quot;status&quot;: 503,
+      &quot;reason&quot;: &quot;PDP_INVALID&quot;,
+      &quot;request_id&quot;: &quot;c55a8b6e-6cc2-4e48-b337-11a3cc7b70a1&quot;,
+      &quot;bytes&quot;: 87,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 73.114,
+      &quot;at&quot;: 1793575529.6855452
+    },
+    &quot;audit_write_failure&quot;: {
+      &quot;status&quot;: 503,
+      &quot;reason&quot;: &quot;AUDIT_UNAVAILABLE&quot;,
+      &quot;request_id&quot;: &quot;71793aa8-9c23-4c8b-ae3f-4ffb3a4a4494&quot;,
+      &quot;bytes&quot;: 93,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 90.14,
+      &quot;at&quot;: 1793575529.7852411
+    },
+    &quot;kms_paused&quot;: {
+      &quot;status&quot;: 503,
+      &quot;reason&quot;: &quot;KMS_UNAVAILABLE&quot;,
+      &quot;request_id&quot;: &quot;691340fc-eace-4718-8038-ff33ebe23109&quot;,
+      &quot;bytes&quot;: 91,
+      &quot;sha256&quot;: null,
+      &quot;latency_ms&quot;: 5096.223,
+      &quot;at&quot;: 1793575534.9195838
+    }
+  },
+  &quot;not_counted_as_policy_denials&quot;: true
+}</pre></article><article><h2 class="pass">S08 · Bằng chứng trạng thái bị sửa chữ ký không tạo được phiên · Đạt</h2><pre>{
+  &quot;status&quot;: 401,
+  &quot;reason&quot;: &quot;SOURCE_PROOF_INVALID&quot;,
+  &quot;request_id&quot;: &quot;e5ba7a44-ada1-4965-b765-fa97dc177d1f&quot;,
+  &quot;bytes&quot;: 96,
+  &quot;sha256&quot;: null,
+  &quot;latency_ms&quot;: 117.178,
+  &quot;at&quot;: 1793575535.6217723
+}</pre></article><article><h2 class="pass">R01 · Tạo, sửa, tải tài liệu Hạn chế và đọc audit/cảnh báo vẫn hoạt động · Đạt</h2><pre>{
+  &quot;audit&quot;: {
+    &quot;status&quot;: 200,
+    &quot;reason&quot;: &quot;ALLOW&quot;,
+    &quot;request_id&quot;: &quot;1d2d8f40-53a7-458c-b223-a39a7ed0e763&quot;,
+    &quot;bytes&quot;: 190404,
+    &quot;sha256&quot;: &quot;0415293e1e48066645d92a6f82a0c5b871784177d373849034351b3739fdefae&quot;,
+    &quot;latency_ms&quot;: 146.477,
+    &quot;at&quot;: 1793575538.6189275
+  },
+  &quot;alerts&quot;: {
+    &quot;status&quot;: 200,
+    &quot;reason&quot;: &quot;ALLOW&quot;,
+    &quot;request_id&quot;: &quot;dad3d2d1-d945-406f-8957-c34cfaeb9fb4&quot;,
+    &quot;bytes&quot;: 686,
+    &quot;sha256&quot;: &quot;7a7b9ac56c3589125a9685df98443f4a57bff78f7ff5fe15c6f3b5efddf41592&quot;,
+    &quot;latency_ms&quot;: 130.159,
+    &quot;at&quot;: 1793575538.6189682
+  },
+  &quot;restricted_document_created&quot;: &quot;U-abef9906929b427ab82786d77b02fc98&quot;,
+  &quot;edit_success&quot;: &quot;U-abef9906929b427ab82786d77b02fc98&quot;,
+  &quot;download&quot;: {
+    &quot;status&quot;: 200,
+    &quot;reason&quot;: &quot;ALLOW&quot;,
+    &quot;request_id&quot;: &quot;ab660ee9-4b89-46a8-958f-b73df7b47a5b&quot;,
+    &quot;bytes&quot;: 45,
+    &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+    &quot;latency_ms&quot;: 140.649,
+    &quot;at&quot;: 1793575538.6190221
+  }
+}</pre></article><article><h2 class="pass">R02 · Thêm nhân viên R và đổi quyền hiện tại có hiệu lực với phiên đang dùng · Đạt</h2><pre>{
+  &quot;new_resource_member&quot;: &quot;case_resource_user&quot;,
+  &quot;absent_from_partner_database&quot;: true,
+  &quot;before_role_change&quot;: {
+    &quot;status&quot;: 200,
+    &quot;reason&quot;: &quot;ALLOW&quot;,
+    &quot;request_id&quot;: &quot;558ec239-88b5-4e91-9054-fc0e3c65b12c&quot;,
+    &quot;bytes&quot;: 45,
+    &quot;sha256&quot;: &quot;c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5&quot;,
+    &quot;latency_ms&quot;: 135.717,
+    &quot;at&quot;: 1793575539.2140014
+  },
+  &quot;after_role_change&quot;: {
+    &quot;status&quot;: 403,
+    &quot;reason&quot;: &quot;DEPARTMENT&quot;,
+    &quot;request_id&quot;: &quot;5b74e94f-77ab-48ef-af9b-763843b2624e&quot;,
+    &quot;bytes&quot;: 86,
+    &quot;sha256&quot;: null,
+    &quot;latency_ms&quot;: 83.824,
+    &quot;at&quot;: 1793575539.2140167
+  }
+}</pre></article>

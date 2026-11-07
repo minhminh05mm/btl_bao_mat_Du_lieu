@@ -53,6 +53,7 @@ def _clean(value):
         return {str(k): ("[redacted]" if str(k).lower() in {
             "access_token", "refresh_token", "id_token", "password", "client_secret",
             "authorization", "bao_token", "proxy_secret", "private_key", "verifier",
+            "resource_token", "session_token", "proof", "bearer_hash",
         } else _clean(v)) for k, v in value.items()}
     if isinstance(value, (list, tuple)):
         return [_clean(v) for v in value]
@@ -110,6 +111,8 @@ async def local_security(request: Request, call_next):
     host = request.headers.get("host", "").split(":")[0].lower()
     if host not in {"localhost", "127.0.0.1", "lab", "testserver"}:
         return JSONResponse({"error": "Console chỉ nhận truy cập cục bộ."}, status_code=400)
+    if request.method == 'POST' and (request.url.path in {'/lab/reset','/lab/runs'} or (request.url.path.startswith('/lab/lessons/') and request.url.path.endswith('/run'))):
+        return JSONResponse({'detail':'Bộ thử đơn miền cũ đã ngừng dùng. Mở trang chính và chọn Kiểm chứng kiến trúc.'},status_code=410)
     if request.method in {"POST", "PUT", "DELETE", "PATCH"}:
         origin = request.headers.get("origin")
         if origin and origin not in {"http://localhost:8088", "http://127.0.0.1:8088"}:
@@ -139,7 +142,7 @@ async def uncaught_error(request, exception):
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     sid, _ = _session(request, create=True)
-    response = HTMLResponse((HERE / "templates" / "index.html").read_text(encoding="utf-8"))
+    response = HTMLResponse((HERE / "templates" / "federation.html").read_text(encoding="utf-8"))
     _set_cookie(response, sid)
     return response
 
@@ -375,8 +378,8 @@ async def business_request(request: Request):
     if method not in {"GET", "POST", "PUT", "DELETE"} or not path.startswith("/") or "://" in path or path.startswith("//"):
         raise HTTPException(422, "Phương thức hoặc đường dẫn API không hợp lệ.")
     mode = body.get("mode", "B1")
-    if mode not in {"B0", "B1"}:
-        raise HTTPException(422, "Chọn B0 hoặc B1.")
+    if mode not in {"B0", "B1", "F0", "F1", "F2"}:
+        raise HTTPException(422, "Chọn F0, F1 hoặc F2.")
     headers = body.get("headers") or {}
     if not isinstance(headers, dict) or any(str(k).lower() in {"authorization", "host", "cookie"} for k in headers):
         raise HTTPException(422, "Không được nhập token, cookie hoặc host qua trình thử nghiệm.")
@@ -559,7 +562,7 @@ async def callback(request: Request, state: str = "", code: str = "", error: str
                            "expires_at": time.time() + int(tokens.get("expires_in", 300))}
     except Exception:
         raise HTTPException(400, "Không xác minh được chữ ký, nonce hoặc danh tính phiên đăng nhập.")
-    return RedirectResponse("/?auth=success", status_code=303)
+    return RedirectResponse("/workspace?auth=success#playground", status_code=303)
 
 
 @app.post("/auth/logout")
@@ -568,3 +571,82 @@ async def logout(request: Request):
     if session:
         session.pop("auth", None)
     return {"logged_out": True}
+
+
+@app.get('/workspace',response_class=HTMLResponse)
+async def original_workspace(request:Request):
+    sid,_=_session(request,create=True)
+    response=HTMLResponse((HERE/'templates/index.html').read_text(encoding='utf-8'))
+    _set_cookie(response,sid)
+    return response
+
+@app.get('/lab/federation/state')
+async def federation_state():
+    from .federation_console import state
+    return _clean(await asyncio.to_thread(state))
+
+@app.post('/lab/federation/login')
+async def federation_login(request:Request):
+    _ensure_idle()
+    from .federation_console import result
+    body=await request.json();user=body.get('username','p_alice');mode=body.get('mode','F2')
+    if user not in _known_users()or mode not in {'F0','F1','F2'}:raise HTTPException(422,'Chọn tài khoản và chế độ hợp lệ.')
+    client=_lab_client()
+    response=await asyncio.to_thread(client.request,user,'POST','/sessions',mode=mode,device=body.get('device')or user)
+    return _clean(result(response))
+
+@app.post('/lab/federation/request')
+async def federation_request(request:Request):
+    _ensure_idle()
+    from .federation_console import result
+    body=await request.json();user=body.get('username','p_alice');mode=body.get('mode','F2');device=body.get('device')or user
+    if user not in _known_users()or mode not in {'F0','F1','F2'}:raise HTTPException(422,'Chọn tài khoản và chế độ hợp lệ.')
+    client=_lab_client()
+    if not client.session(user,device,mode):return {'ok':False,'status':401,'reason':'RESOURCE_SESSION_REQUIRED'}
+    path=body.get('path','/documents');method=body.get('method','GET')
+    if method not in {'GET','POST','PUT','DELETE'}or not isinstance(path,str)or not path.startswith('/')or path.startswith('//')or'://'in path or path.startswith('/sessions')or path.startswith('/internal'):
+        raise HTTPException(422,'Đường dẫn hoặc phương thức không hợp lệ.')
+    response=await asyncio.to_thread(client.request,user,method,path,mode=mode,device=device,json=body.get('json'))
+    return _clean(result(response))
+
+@app.post('/lab/federation/source')
+async def federation_source(request:Request):
+    _ensure_idle()
+    from .federation_console import source_change
+    return _clean(await asyncio.to_thread(source_change,await request.json()))
+
+@app.put('/lab/federation/settings')
+async def federation_settings(request:Request):
+    _ensure_idle()
+    from federation.bootstrap import private
+    body=await request.json();service=body.get('service')
+    if service not in {'partner','coordinator'}:raise HTTPException(422,'Dịch vụ không hợp lệ.')
+    try:return await asyncio.to_thread(private,service,'/ops/faults'if service=='partner'else'/ops/config',body.get('value',{}),'PUT')
+    except Exception:raise HTTPException(422,'Không lưu được cấu hình. Kiểm tra giá trị và trạng thái dịch vụ.')from None
+
+@app.post('/lab/federation/revoke')
+async def federation_revoke(request:Request):
+    _ensure_idle()
+    from federation.bootstrap import private
+    body=await request.json()
+    if not isinstance(body.get('session_id'),str):raise HTTPException(422,'Chọn phiên cần thu hồi.')
+    return await asyncio.to_thread(private,'coordinator','/ops/invalidate',{'session_id':body['session_id']})
+
+@app.post('/lab/federation/verify')
+async def federation_verify():
+    _ensure_idle()
+    from .federation_console import run_suite
+    return _start_job('federation',run_suite)
+
+@app.get('/lab/federation/results')
+async def federation_results():
+    path=PROJECT/'results/federation-latest.json'
+    return json.loads(path.read_text())if path.exists()else {'cases':[]}
+
+@app.get('/lab/federation/export/{kind}')
+async def federation_export(kind:str):
+    if kind not in {'json','csv','html'}:raise HTTPException(404)
+    path=PROJECT/('results/federation-latest.'+kind)
+    if not path.exists():raise HTTPException(404,'Chưa có kết quả. Chạy kiểm chứng trước.')
+    return Response(path.read_bytes(),media_type={'json':'application/json','csv':'text/csv','html':'text/html'}[kind],
+        headers={'Content-Disposition':'attachment; filename="federation-results.'+kind+'"'})

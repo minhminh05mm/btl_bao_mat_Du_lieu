@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "check": "/documents",
+      "username": "p_alice",
+      "status": 200,
+      "reason": "ALLOW",
+      "bytes": 3083
+    },
+    {
+      "check": "/documents/A-I01/metadata",
+      "username": "p_alice",
+      "status": 200,
+      "reason": "ALLOW",
+      "bytes": 196
+    },
+    {
+      "check": "/documents/A-I01/download",
+      "username": "p_alice",
+      "status": 200,
+      "reason": "ALLOW",
+      "bytes": 15713
+    },
+    {
+      "check": "/audit",
+      "username": "r_auditor",
+      "status": 200,
+      "reason": "ALLOW",
+      "bytes": 190507
+    },
+    {
+      "check": "/alerts",
+      "username": "r_secadmin",
+      "status": 200,
+      "reason": "ALLOW",
+      "bytes": 686
+    },
+    {
+      "check": "wrong-device",
+      "username": "p_alice",
+      "status": 403,
+      "reason": "DEVICE_MISMATCH"
+    }
+  ],
+  "passed": 6,
+  "total": 6
+}

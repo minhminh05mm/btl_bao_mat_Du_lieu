@@ -64,11 +64,18 @@ function timeLabel(value) {
   return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString("vi-VN", {hour12:false});
 }
 
+function principalById(id) {
+  return toArray(state.data.principals).find(row => row.id === id || row.username === id);
+}
+
+function personById(id) {
+  return id?DemoLanguage.person(principalById(id)||{username:id}):"Hệ thống";
+}
+
 function userLabel(user) {
-  const principal = toArray(state.data.principals).find(row => row.id === user || row.username === user);
-  const role = {staff:"Nhân viên",manager:"Trưởng phòng",auditor:"Kiểm toán",security_admin:"Quản trị an toàn"}[principal?.role];
-  const department={A:"Kinh doanh",B:"Vận hành",OPS:"Vận hành an toàn"}[principal?.department]||principal?.department||"";
-  return `${principal?.display_name&&principal.display_name!==user?principal.display_name+" ("+user+")":user}${role ? ` · ${role} · ${department}` : ""}${principal?.active===false?" · quyền đang bị thu hồi":""}`;
+  const principal=principalById(user);
+  const name=personById(user), role=principal?DemoLanguage.role(principal.role):"";
+  return [name,name===role||name.startsWith(role+" ")?"":role,DemoLanguage.department(principal?.department),principal?.active===false?"Đã ngừng quyền truy cập kho":""].filter(Boolean).join(" · ");
 }
 
 function setOptions(select, options, selected) {
@@ -105,12 +112,12 @@ function renderOverview() {
 
 function renderAuth() {
   const auth = state.auth;
-  $("#auth-user").textContent = auth ? auth.username : "Chưa đăng nhập";
-  $("#auth-caption").textContent = auth ? "Authorization Code + PKCE" : "Phiên người dùng Keycloak";
+  $("#auth-user").textContent = auth ? personById(auth.username) : "Chưa đăng nhập";
+  $("#auth-caption").textContent = auth ? "Đang dùng tài khoản đã đăng nhập" : "Đăng nhập để sử dụng tài khoản của bạn";
   $("#identity-light").classList.toggle("authenticated", Boolean(auth));
   $("#login-button").classList.toggle("hidden", Boolean(auth));
   $("#logout-button").classList.toggle("hidden", !auth);
-  $("#mobile-auth").textContent=auth ? `${auth.username} · Đăng xuất` : "Đăng nhập";
+  $("#mobile-auth").textContent=auth ? `${personById(auth.username)} · Đăng xuất` : "Đăng nhập";
   if ($("#identity-source").value === "interactive") {
     $("#request-user").disabled = true;
     if (auth) $("#request-user").value = auth.username;
@@ -118,16 +125,17 @@ function renderAuth() {
 }
 
 function renderDocumentOptions() {
+  DemoLanguage.modeOptions($("#request-mode"));
   const documents = toArray(state.data.documents);
   users.splice(0,users.length,...toArray(state.data.principals).map(x=>x.username||x.id));
-  setOptions($("#request-document"), documents.map(doc => ({value:doc.id || doc.doc_id, label:`${doc.title?.replace(/\.txt$/i,"") || doc.id} · ${labels[doc.label] || doc.label || "—"}${doc.deleted ? " · đã xóa" : ""} (${doc.id || doc.doc_id})`})));
+  setOptions($("#request-document"), documents.map(doc => ({value:doc.id || doc.doc_id, label:`${DemoLanguage.documentName(doc)} · ${DemoLanguage.label(doc.label)}${doc.deleted ? " · Đã xóa" : ""}`})));
   setOptions($("#request-user"), users.map(user => ({value:user,label:userLabel(user)})));
   setOptions($("#request-device"),[
-    {value:"",label:"Thiết bị của người đang thử"},
-    ...users.map(user=>({value:user,label:`Thiết bị mẫu của ${user} (dev-${user})`})),
-    {value:"rogue",label:"Chứng thư hợp lệ chưa đăng ký"},
-    {value:"bad",label:"Chứng thư từ CA không tin cậy"},
-    {value:"none",label:"Không gửi chứng thư"}
+    {value:"",label:"Thiết bị đã đăng ký của tài khoản đang chọn"},
+    ...users.map(user=>({value:user,label:`Thiết bị của ${personById(user)}`})),
+    {value:"rogue",label:"Thiết bị chưa đăng ký"},
+    {value:"bad",label:"Thiết bị có thông tin xác minh không đáng tin cậy"},
+    {value:"none",label:"Không gửi thông tin xác minh thiết bị"}
   ]);
   renderAuth();
   updateRequestForm();
@@ -187,19 +195,19 @@ function renderActionExplanation() {
     audit: {
       title: "Đọc nhật ký kiểm toán",
       purpose: "Xem các sự kiện truy cập và thay đổi trạng thái đã được ghi nhận; không cần chọn một tài liệu cụ thể.",
-      access: "auditor hoặc secadmin. Auditor đọc nhật ký kiểm toán; secadmin nhận phần nhật ký phục vụ vận hành an toàn. Nhân viên và trưởng phòng không có quyền đọc mục này.",
+      access: "Kiểm toán đọc nhật ký kiểm toán. Quản trị an toàn đọc nhật ký phục vụ vận hành. Mục này dành cho hai vai trò đó.",
       result: "Bấm Gửi yêu cầu và xem kết quả để nhận danh sách sự kiện trong phần Kết quả thực tế."
     },
     alerts: {
       title: "Đọc cảnh báo an toàn",
       purpose: "Xem các cảnh báo đã phát sinh. Lab tạo cảnh báo khi cùng chủ thể có ít nhất 5 yêu cầu bị từ chối trong 60 giây.",
-      access: "auditor hoặc secadmin. Nhân viên và trưởng phòng không có quyền đọc mục này.",
-      result: "HTTP 200 với items: [] nghĩa là đã đọc thành công nhưng hiện chưa có cảnh báo. Bấm Gửi yêu cầu và xem kết quả để kiểm tra."
+      access: "Mục này dành cho vai trò Kiểm toán hoặc Quản trị an toàn.",
+      result: "Kết quả sẽ cho biết số cảnh báo. Nếu danh sách trống, trang hiển thị Hiện chưa có cảnh báo."
     },
     custom: {
       title: "Yêu cầu API tùy chỉnh",
       purpose: "Tự chọn phương thức, đường dẫn và JSON body để gửi yêu cầu qua gateway bằng tài khoản và chứng thư đang chọn.",
-      access: "Phụ thuộc endpoint đang gọi. Ví dụ GET /me dành cho tài khoản hợp lệ; GET /audit cần auditor hoặc secadmin. Các thao tác thay đổi dữ liệu vẫn chịu đầy đủ kiểm soát của API.",
+      access: "Phụ thuộc endpoint đang gọi. Ví dụ GET /me dành cho tài khoản hợp lệ; GET /audit cần vai trò Kiểm toán hoặc Quản trị an toàn. Các thao tác thay đổi dữ liệu vẫn chịu đầy đủ kiểm soát của API.",
       result: "Ví dụ đọc an toàn: Method GET, đường dẫn /me, JSON body {}. Đường dẫn dùng /me hoặc /audit, không thêm tiền tố /api."
     }
   };
@@ -212,7 +220,7 @@ function renderActionExplanation() {
     <p>${escapeHTML(description.purpose)}</p>
     <p><span>Quyền cần có:</span> ${escapeHTML(description.access)}</p>
     <p><span>Yêu cầu:</span> ${escapeHTML(method)} ${escapeHTML(path)}</p>
-    <small>${escapeHTML(description.result)} Chứng thư phải thuộc tài khoản đang gửi; giữ Thiết bị của người đang thử nếu không tạo ca sai chứng thư.</small>`;
+    <small>${escapeHTML(description.result)} Chọn thiết bị đã đăng ký của tài khoản để gửi yêu cầu thông thường.</small>`;
 }
 
 function renderDocumentExplanation() {
@@ -226,23 +234,23 @@ function renderDocumentExplanation() {
   const changed = baseline && current.label !== baseline.baseline_label;
   const reason = baseline?.classification_reason || "Tài liệu do người dùng tải lên; nhãn ban đầu được chọn theo thẩm quyền, máy chủ không tự suy ra từ nội dung.";
   element.innerHTML = `<h3>${escapeHTML(current.title || baseline?.title || id)}</h3>
-    <p>${escapeHTML(baseline?.document_type || "Tài liệu tải lên")} · ${escapeHTML(baseline?.department_name || current.department)} · chủ hồ sơ ${escapeHTML(current.owner_id)}</p>
+    <p>${escapeHTML(baseline?.document_type || "Tài liệu tải lên")} · ${escapeHTML(baseline?.department_name || DemoLanguage.department(current.department))} · chủ hồ sơ ${escapeHTML(personById(current.owner_id))}</p>
     <p><span>Nhãn hiện tại:</span> ${escapeHTML(labels[current.label] || current.label)}${current.deleted ? " · đã hủy" : ""}</p>
     <p><span>${baseline ? `Căn cứ nhãn ban đầu ${labels[baseline.baseline_label] || baseline.baseline_label}` : "Căn cứ nhãn"}:</span> ${escapeHTML(reason)}</p>
-    ${changed ? '<p class="classification-change">Nhãn đã thay đổi sau khi khởi tạo. Quyết định sử dụng trạng thái hiện tại trong registry.</p>' : ""}
+    ${changed ? '<p class="classification-change">Nhãn đã thay đổi sau khi khởi tạo. Kho kiểm tra theo nhãn hiện tại.</p>' : ""}
     <small>Mô tả dữ liệu mẫu dành cho người vận hành. Nội dung đầy đủ chỉ được trả qua yêu cầu tải xuống được cấp quyền.</small>`;
 }
 
 async function sendRequest(event) {
   event.preventDefault();
   await action($("#send-request"), async()=>{
-    if ($("#identity-source").value === "interactive" && !state.auth) throw new Error("Đăng nhập bằng Keycloak ở thanh bên trước khi dùng phiên người dùng.");
+    if ($("#identity-source").value === "interactive" && !state.auth) throw new Error("Bấm Đăng nhập ở thanh bên để dùng tài khoản của bạn.");
     const config = requestConfiguration();
     if (["metadata","download","delete"].includes($("#request-action").value) && !$("#request-document").value) throw new Error("Chưa có tài liệu được chọn.");
-    if ($("#request-action").value === "delete" && !(await confirmDialog("Đánh dấu xóa tài liệu trong demo?", "Thành công sẽ đặt trạng thái đã xóa trong cơ sở dữ liệu demo và ghi tombstone; API không cho đọc lại tài liệu đó. File nguồn trên máy không bị xóa, bản mã và backup vẫn được giữ. Yêu cầu phải đáp ứng quyền, thời hạn lưu giữ và điều kiện legal hold."))) return;
+    if ($("#request-action").value === "delete" && !(await confirmDialog("Đánh dấu xóa tài liệu trong demo?", "Nếu đủ quyền và hết hạn lưu giữ, kho sẽ đánh dấu tài liệu là đã xóa. Tệp gốc trên máy và bản sao lưu vẫn có thể dùng. Tài liệu đang được giữ để bảo toàn chưa thể xóa."))) return;
     clearFormErrors($("#request-form"));
     if ($("#request-action").value === "upload" && !(await prepareRequestUpload(config))) return;
-    $("#send-request").textContent="Đang gửi qua gateway…";
+    $("#send-request").textContent="Đang gửi yêu cầu…";
     state.response = await api("/lab/request",{method:"POST",body:JSON.stringify(config)});
     renderResponse();
     if($("#request-action").value==="upload"&&!state.response.ok)showRequestUploadError(state.response);
@@ -342,14 +350,22 @@ function renderSnapshots() {
 function showDetails(value) {$("#detail-json").textContent=pretty(value);$("#detail-dialog").showModal();}
 
 function renderAudit() {
-  const term=$("#audit-search").value.toLowerCase();
-  const events=toArray(state.data.audit).filter(row=>JSON.stringify(row).toLowerCase().includes(term)).slice().reverse();
+  const term=$("#audit-search").value.trim().toLowerCase();
+  const records=toArray(state.data.documents);
+  const events=toArray(state.data.audit).map(raw=>({
+    raw,
+    person:personById(raw.principal_id||raw.username||raw.actor),
+    action:DemoLanguage.action(raw.action),
+    title:raw.doc_id?DemoLanguage.documentName(records.find(doc=>doc.id===raw.doc_id)):"",
+    decision:DemoLanguage.reason(raw.reason,raw.decision==="deny"?"Yêu cầu bị từ chối.":"Đã ghi nhận thao tác."),
+  })).filter(event=>`${event.person} ${event.action} ${event.title} ${event.decision} ${JSON.stringify(event.raw)}`.toLowerCase().includes(term)).reverse();
   state.details=events;
-  $("#audit-body").innerHTML=events.length ? events.map((row,i)=>`<tr data-audit-detail="${i}"><td>${escapeHTML(timeLabel(row.created_at||row.timestamp||row.ts||row.time))}</td><td>${escapeHTML(row.principal_id||row.subject_id||row.subject||row.username||row.actor||"—")}</td><td>${escapeHTML(row.action||row.event_type||row.event||"—")}<span class="result-title">${escapeHTML(row.doc_id||row.resource_id||row.resource||row.target||"")}</span></td><td>${escapeHTML(row.reason||row.decision||row.outcome||"—")}</td><td><span class="result-title">${escapeHTML(row.request_id||"—")}</span></td></tr>`).join("") : '<tr><td colspan="5" class="empty-cell">Không có sự kiện phù hợp.</td></tr>';
-  $$("[data-audit-detail]").forEach(row=>row.addEventListener("click",()=>showDetails(events[Number(row.dataset.auditDetail)])));
+  $("#audit-body").innerHTML=events.length ? events.map((event,i)=>`<tr><td>${escapeHTML(timeLabel(event.raw.created_at))}</td><td>${escapeHTML(event.person)}</td><td>${escapeHTML(event.action)}<span class="result-title">${escapeHTML(event.title)}</span></td><td>${escapeHTML(event.decision)}</td><td><button type="button" class="button small" data-audit-detail="${i}">Xem chi tiết</button></td></tr>`).join("") : '<tr><td colspan="5" class="empty-cell">Không có lượt truy cập phù hợp.</td></tr>';
+  $$("[data-audit-detail]").forEach(button=>button.addEventListener("click",()=>showDetails(events[Number(button.dataset.auditDetail)].raw)));
   const alerts=toArray(state.data.alerts).slice().reverse();
   $("#alerts-count").textContent=alerts.length;
-  $("#alerts-list").innerHTML=alerts.length ? alerts.map(alert=>`<div class="alert-row"><span class="alert-icon">!</span><div><strong>${escapeHTML(alert.title||alert.reason||alert.type||alert.message||"Cảnh báo truy cập")}</strong><p>${escapeHTML(alert.principal_id||alert.subject_id||alert.subject||"")} · ${escapeHTML(timeLabel(alert.created_at||alert.timestamp||alert.ts))}${alert.acknowledged ? " · Đã xác nhận" : ""}</p><p>${escapeHTML(alert.message||alert.details||"")}</p></div></div>`).join("") : '<div class="empty compact">Chưa có cảnh báo thực tế. Ngưỡng lab: 5 lần từ chối trong 60 giây.</div>';
+  $("#alerts-list").innerHTML=alerts.length ? alerts.map((alert,i)=>`<div class="alert-row"><span class="alert-icon">!</span><div><strong>Nhiều yêu cầu bị từ chối</strong><p>${escapeHTML(personById(alert.principal_id))} · ${escapeHTML(timeLabel(alert.created_at))}${alert.acknowledged ? " · Đã xác nhận" : ""}</p><p>${escapeHTML(alert.count)} lần trong ${escapeHTML(alert.window_seconds)} giây.</p><button type="button" class="button small" data-alert-detail="${i}">Xem chi tiết</button></div></div>`).join("") : '<div class="empty compact">Hiện chưa có cảnh báo.</div>';
+  $$("[data-alert-detail]").forEach(button=>button.addEventListener("click",()=>showDetails(alerts[Number(button.dataset.alertDetail)])));
 }
 
 function normalizeResult(row) {
@@ -448,9 +464,9 @@ function wireEvents(){
   $$("[data-go]").forEach(el=>el.addEventListener("click",()=>navigate(el.dataset.go)));
   $("#refresh").addEventListener("click",()=>action($("#refresh"),()=>refreshState()));
   $("#refresh-audit").addEventListener("click",()=>action($("#refresh-audit"),()=>refreshState()));
-  $("#logout-button").addEventListener("click",async()=>{try{await api("/auth/logout",{method:"POST"});state.auth=null;renderAuth();toast("Đã xóa phiên người dùng tại console.");}catch(error){toast(error.message,true);}});
-  $("#mobile-auth").addEventListener("click",async()=>{if(!state.auth){window.location.href="/auth/login";return;}try{await api("/auth/logout",{method:"POST"});state.auth=null;renderAuth();toast("Đã xóa phiên người dùng tại console.");}catch(error){toast(error.message,true);}});
-  $("#identity-source").addEventListener("change",()=>{renderAuth();updateRequestForm();if($("#identity-source").value==="interactive"&&!state.auth)toast("Dùng nút đăng nhập Keycloak ở thanh bên để xác thực người dùng.");});
+  $("#logout-button").addEventListener("click",async()=>{try{await api("/auth/logout",{method:"POST"});state.auth=null;renderAuth();toast("Đã đăng xuất.");}catch(error){toast(error.message,true);}});
+  $("#mobile-auth").addEventListener("click",async()=>{if(!state.auth){window.location.href="/auth/login";return;}try{await api("/auth/logout",{method:"POST"});state.auth=null;renderAuth();toast("Đã đăng xuất.");}catch(error){toast(error.message,true);}});
+  $("#identity-source").addEventListener("change",()=>{renderAuth();updateRequestForm();if($("#identity-source").value==="interactive"&&!state.auth)toast("Dùng nút Đăng nhập ở thanh bên để tiếp tục.");});
   $$("#request-form select, #request-form input, #request-form textarea").forEach(el=>el.addEventListener("change",updateRequestForm));
   $("#request-form").addEventListener("submit",sendRequest);
   $("#copy-response").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("#response-json").textContent);toast("Đã sao chép bằng chứng phản hồi.");}catch{toast("Trình duyệt không cho phép sao chép tự động.",true);}});
@@ -479,8 +495,9 @@ function wireEvents(){
 async function boot(){
   wireEvents();wireGuidedEvents();wireManagement();renderFaults();
   setOptions($("#request-user"),users.map(user=>({value:user,label:user})));
-  navigate(location.hash.slice(1)||"guide");
-  try{const bootstrap=await api("/lab/bootstrap");state.csrf=bootstrap.csrf;state.auth=bootstrap.auth;renderAuth();if(new URLSearchParams(location.search).get("auth")==="success")toast(`Đã đăng nhập Keycloak: ${state.auth?.username||"người dùng"}.`);}
+  DemoLanguage.modeOptions($("#request-mode"));
+  navigate(location.hash.slice(1)||"documents");
+  try{const bootstrap=await api("/lab/bootstrap");state.csrf=bootstrap.csrf;state.auth=bootstrap.auth;renderAuth();if(new URLSearchParams(location.search).get("auth")==="success")toast("Đã đăng nhập.");}
   catch(error){toast(`Không khởi tạo được console: ${error.message}`,true);}
   try{state.catalog=await api("/lab/dataset");renderClassificationRules();}
   catch(error){$("#classification-rules").textContent="Chưa đọc được mô tả tập dữ liệu mẫu.";}

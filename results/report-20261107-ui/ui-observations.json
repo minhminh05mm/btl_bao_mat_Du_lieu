@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-07",
+  "saved_suite_date": "2026-11-02",
+  "observations": [
+    {
+      "case": "Tải hợp lệ",
+      "response": "Kết quả truy cập\nĐược tải tài liệu\n\nBấm Lưu tài liệu về máy để mở nội dung.\n\n1. Xác minh thiết bị tại cổng\n2. Kiểm tra tài khoản và thiết bị\n3. Kiểm tra phiên và trạng thái tài khoản\n4. Kiểm tra quyền và mức bảo vệ tài liệu\n5. Giải mã nội dung để tải\n6. Ghi nhật ký và kiểm tra trước khi trả kết quả\nLưu tài liệu về máy\nXem chi tiết kỹ thuật và mã yêu cầu"
+    },
+    {
+      "case": "Chỉ kiểm tra khi đăng nhập, tài khoản đã khóa",
+      "response": "Kết quả truy cập\nĐược tải tài liệu\n\nBấm Lưu tài liệu về máy để mở nội dung.\n\n1. Xác minh thiết bị tại cổng\n2. Kiểm tra tài khoản và thiết bị\n3. Kiểm tra phiên và trạng thái tài khoản\n4. Kiểm tra quyền và mức bảo vệ tài liệu\n5. Giải mã nội dung để tải\n6. Ghi nhật ký và kiểm tra trước khi trả kết quả\nLưu tài liệu về máy\nXem chi tiết kỹ thuật và mã yêu cầu"
+    },
+    {
+      "case": "Thu hồi và tự kiểm tra lại, tài khoản đã khóa",
+      "response": "Kết quả truy cập\nTài khoản đã bị khóa\n\nPhiên truy cập đã bị thu hồi. Đăng nhập lại sau khi tài khoản được mở khóa.\n\n1. Xác minh thiết bị tại cổng\n2. Kiểm tra tài khoản và thiết bị\n3. Kiểm tra phiên và trạng thái tài khoản · Dừng ở đây\n4. Kiểm tra quyền và mức bảo vệ tài liệu\n5. Giải mã nội dung để tải\n6. Ghi nhật ký và kiểm tra trước khi trả kết quả\nXem chi tiết kỹ thuật và mã yêu cầu"
+    },
+    {
+      "case": "Thiết bị không khớp",
+      "response": "Kết quả truy cập\nYêu cầu bị từ chối\n\nThiết bị không khớp với tài khoản hoặc phiên đang dùng. Chọn đúng thiết bị đã đăng ký.\n\n1. Xác minh thiết bị tại cổng\n2. Kiểm tra tài khoản và thiết bị · Dừng ở đây\n3. Kiểm tra phiên và trạng thái tài khoản\nXem chi tiết kỹ thuật và mã yêu cầu"
+    }
+  ],
+  "restoredAccount": "Nhân viên đối tác · Đang hoạt động"
+}

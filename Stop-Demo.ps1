@@ -1,7 +1,7 @@
 ﻿$ErrorActionPreference='Stop'
 $demoRoot=$PSScriptRoot
 $demoLinuxRoot='/mnt/'+$demoRoot.Substring(0,1).ToLower()+$demoRoot.Substring(2).Replace('\','/')
-& wsl.exe -d bmdl-demo -u root -- docker compose --project-directory "$demoLinuxRoot" --env-file "$demoLinuxRoot/.env" -f "$demoLinuxRoot/compose.yaml" stop
+& wsl.exe -d bmdl-demo -u root -- docker compose --project-directory "$demoLinuxRoot" --env-file "$demoLinuxRoot/.env" -f "$demoLinuxRoot/compose.yaml" --profile legacy stop
 if ($LASTEXITCODE -ne 0) { throw 'Không dừng được dịch vụ demo.' }
 & wsl.exe --terminate bmdl-demo
 if ($LASTEXITCODE -ne 0) { throw 'Không dừng được môi trường WSL riêng.' }

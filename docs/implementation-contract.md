@@ -1,122 +1,75 @@
-# Hợp đồng API và điều kiện thực thi
+# Quy tắc phối hợp giữa các thành phần
 
-Cập nhật tài liệu ngày 25/10/2026, đối chiếu `app/main.py`, `policies/bmdl.rego`, `lab/web.py` và `lab/management.py`. [Mục lục](muc_luc.md) · [Kiến trúc](architecture.md) · [Hướng dẫn web](huong_dan_nhanh.md)
+Tài liệu này dành cho việc đối chiếu mã nguồn và giải thích ranh giới tin cậy. [Kiến trúc](architecture.md) mô tả cùng luồng bằng ngôn ngữ sử dụng thông thường.
 
-## 1. Hai lớp giao diện
+## Quyền quản lý dữ liệu
 
-- API nghiệp vụ: qua gateway B1 `https://localhost:8443/api/` hoặc B0 `https://localhost:8444/api/`. Gateway yêu cầu mTLS; các route nghiệp vụ xác thực JWT. `/health` chỉ kiểm tra sẵn sàng, không thực hiện logic xác thực JWT của route nghiệp vụ. Các đường dưới đây được ghi tương đối với `/api/`.
-- API console: `/lab/...` trên `http://localhost:8088`, chỉ dành cho người vận hành cục bộ. Thay đổi cần cookie phiên/CSRF và nguồn hợp lệ; quyền operator không phải quyền của tài khoản nghiệp vụ.
-
-B0 chỉ nới một số điều kiện đọc theo snapshot vai trò/phòng ban. Thêm, sửa và quản trị vẫn kiểm tra điều kiện B1 tương ứng. Client không đổi B1 thành B0 bằng header gửi vào đường B1.
-
-## 2. API tài liệu và định danh
-
-| Phương thức và đường | Body hoặc kết quả chính | Điều kiện |
-|---|---|---|
-| `GET /health` | Trạng thái dịch vụ, mode | Endpoint kiểm tra sẵn sàng |
-| `GET /me` | Danh tính, vai trò/phòng ban hiện tại, thiết bị và mode | Xác thực và điều kiện truy cập |
-| `GET /documents` | `{items: [...]}` metadata được phép | Lọc từng tài liệu theo quyền metadata |
-| `GET /documents/{id}/metadata` | Metadata của một tài liệu | Quyền xem thông tin mô tả |
-| `GET /documents/{id}/download` | Nội dung nhị phân đã giải mã | Quyền tải, hash hợp lệ, audit thành công |
-| `POST /documents` | Body upload; trả metadata mới | Quyền thêm; Hạn chế cần `approval_id` hợp lệ |
-| `PUT /documents/{id}` | Body sửa thông tin; trả metadata | Quyền tải hiện tại B1, không hạ nhãn/lạm dụng quyền vòng đời |
-| `DELETE /documents/{id}` | ID và trạng thái tombstone | Quyền hủy, qua thời hạn, không legal hold |
-
-Metadata trả về gồm `id`, `title`, `owner_id`, `department`, `label`, `version`, `retention_until`, `legal_hold`. Yêu cầu nghiệp vụ bị từ chối không trả thuộc tính tài liệu ngoài quyền. Catalog trong console là nguồn mô tả tập mẫu của operator, không cấp quyền nghiệp vụ.
-
-### 2.1. Thêm tài liệu
-
-```json
-{
-  "title": "tai_lieu.txt",
-  "label": "restricted",
-  "content_b64": "...",
-  "approval_id": "..."
-}
-```
-
-- Tên 1–200 ký tự, đuôi TXT/CSV/PDF, không có dấu phân cách đường dẫn hoặc ký tự điều khiển bị cấm; nội dung có dữ liệu, tối đa 1.048.576 byte sau giải mã Base64.
-- `label`: `internal`, `confidential` hoặc `restricted`. API gán chủ sở hữu và phòng ban theo principal của yêu cầu, không nhận hai thuộc tính này từ client.
-- Nội bộ/Mật: staff hoặc manager theo điều kiện chung. Hạn chế: manager và phê duyệt tạo chưa dùng, đúng người/phòng ban/mục đích, còn hạn và người duyệt còn quyền.
-- Tạo Hạn chế lưu tài liệu ở phiên bản 1, grant ban đầu và consumed trong cùng giao dịch. Phê duyệt `create` được dùng thành công một lần; grant tải có thể dùng nhiều lần khi còn hiệu lực.
-
-### 2.2. Sửa thông tin
-
-```json
-{
-  "title": "ten_moi.txt",
-  "label": "restricted",
-  "legal_hold": false,
-  "retention_until": 1800000000,
-  "approval_id": "..."
-}
-```
-
-`legal_hold` và `retention_until` phải giữ trạng thái hiện có; đây không phải quyền chỉnh vòng đời. API bỏ qua sai khác dưới 60 giây do độ chính xác nhập ngày và giữ thời hạn cũ; đổi trạng thái bảo toàn hoặc đổi thời hạn từ 60 giây trở lên bị chặn. UI hai trường này chỉ để tra cứu.
-
-- Quyền tải hiện tại theo B1 là điều kiện bắt buộc, kể cả gọi API B0. Với Hạn chế phải có grant đúng người, tài liệu, phiên bản, action `download`, còn hạn và chưa thu hồi.
-- Chức năng sửa chỉ đổi tên/nâng nhãn, chưa thay thế nội dung tệp. Đổi tên không tăng phiên bản kiểm soát tài liệu.
-- Hạ nhãn bị từ chối. Đổi nhãn tăng phiên bản và giữ lưu giữ không dài hơn giới hạn của nhãn mới.
-- Nâng Nội bộ/Mật lên Hạn chế cần thêm phê duyệt `upgrade` cho đúng ID và phiên bản kế tiếp. API kiểm tra quyền tải tài liệu hiện tại trước nâng, rồi tạo grant cho phiên bản mới cùng giao dịch.
-
-## 3. API quản trị nghiệp vụ
-
-Các endpoint cần `security_admin` và điều kiện B1. Có grant không tự biến người nhận sai vai trò/phòng ban thành người được đọc.
-
-| Endpoint | Body | Hành vi |
-|---|---|---|
-| `POST /admin/restricted-approvals` | `principal_id`, `doc_id` tùy chọn, `ttl_seconds` | Tạo phê duyệt `create` nếu không có doc_id; `upgrade` nếu có. Người nhận phải là manager đang hoạt động; nâng nhãn cần cùng phòng với tài liệu |
-| `POST /admin/grants` | `principal_id`, `doc_id`, `ttl_seconds` | Cấp grant `download` cho phiên bản Hạn chế hiện tại; không tự duyệt cho chính mình |
-| `DELETE /admin/grants/{id}` | Không có | Đánh dấu grant đã thu hồi |
-| `POST /admin/documents/{id}/raise-label` | `label` | Nâng nhãn, tăng phiên bản, giới hạn lưu giữ; không hạ nhãn. Luồng quản trị này không tự cấp grant tải |
-| `PUT /admin/principals/{id}` | Một số trường active/role/department | Cập nhật registry; không tự đổi role/department, không cấp vai trò security_admin qua endpoint này |
-| `PUT /admin/devices/{id}` | Một số trường trạng thái/tín hiệu thiết bị | Cập nhật hồ sơ thiết bị có audit |
-| `GET /admin/state` | Không có | Trạng thái phục vụ quản trị, không trả title/nội dung/bản mã/bí mật |
-| `POST /alerts/{id}/ack` | Không có | Xác nhận cảnh báo |
-
-`ttl_seconds` của phê duyệt mới: mặc định 900, lớn hơn 0 và không quá 3600. Grant tải: mặc định 300, cùng giới hạn API. Có thể có nhiều grant cùng người/tài liệu/phiên bản; thu hồi một ID chỉ vô hiệu hóa grant đó. API chọn grant phù hợp còn hạn nếu vẫn có, nên phép thử từ chối phải làm mọi grant phù hợp không còn hiệu lực. UI tạo Hạn chế chọn 5–60 phút; bảng quyền tải/sửa chọn 1–60 phút. Wrapper quản lý còn kiểm tra người nhận active, role manager và cùng phòng; API grant trực tiếp kiểm tra người nhận tồn tại nhưng quyền sử dụng vẫn phải vượt chính sách đọc/sửa.
-
-`GET /audit` và `GET /alerts` cần auditor hoặc security_admin. Auditor đọc sự kiện đã lọc bí mật; security_admin đọc phạm vi sự kiện vận hành do API quy định. Danh sách rỗng với HTTP 200 là kết quả thành công.
-
-## 4. API quản lý trên console
-
-| Endpoint | Vai trò trong web |
+| Chủ thể | Dữ liệu và quyền quản lý |
 |---|---|
-| `GET /lab/bootstrap` | CSRF, danh tính phiên, danh sách tài khoản hiện có |
-| `GET /lab/state` | Trạng thái an toàn phục vụ giao diện operator |
-| `GET /lab/dataset` | Danh mục/căn cứ phân loại bộ mẫu, không nội dung tệp |
-| `POST /lab/employees` | Tạo tài khoản Keycloak, chứng thư và bản ghi nhân viên |
-| `PUT /lab/employees/{id}` | Đổi tên/vai trò/phòng ban/active theo đặc quyền operator |
-| `POST /lab/documents` | Thêm từ biểu mẫu; chuyển phê duyệt và upload qua API nghiệp vụ |
-| `PUT /lab/documents/{id}` | Sửa tên/nâng nhãn bằng người thực hiện qua API nghiệp vụ |
-| `POST /lab/documents/{id}/grants` | Chọn người nhận, người phê duyệt và thời hạn; gọi API grant |
-| `DELETE /lab/documents/{id}/grants/{grant_id}` | Thu hồi bằng danh tính quản trị được chọn |
-| `POST /lab/request` | Chuyển yêu cầu tự thử qua gateway, trả phản hồi và bằng chứng |
+| Bên quản lý tài khoản | Tài khoản, thiết bị, lịch sử thay đổi và hàng đợi thông báo trong cơ sở dữ liệu `bmdl_partner` |
+| Bộ điều phối | Liên kết danh tính, phiên, dạng băm của bí mật phiên, trạng thái đã xác minh và dấu vết xử lý trong `bmdl_coordinator` |
+| Kho tài liệu | Thành viên, vai trò, nhãn, quyền có thời hạn, bản mã và nhật ký trong `bmdl` |
 
-Biểu mẫu tài liệu nhận `filename`, `title`, `owner_id`, `label`, `content_b64`; khi Hạn chế có `approver_id`, `ttl_seconds`. Sửa nhận `actor_id`, tên/nhãn và trạng thái vòng đời hiện tại, kèm thông tin phê duyệt khi nâng lên Hạn chế. Nếu có phiên Keycloak, máy chủ thay `owner_id`/`actor_id` bằng người trong phiên và dùng token phiên.
+Quyền quản trị đối tác được kiểm tra tại dữ liệu của đối tác. Vai trò quản trị ở kho không tạo quyền quản trị tài khoản đối tác. Kho cung cấp nguồn trạng thái có chữ ký riêng cho nhân viên do kho tự quản lý.
 
-Biểu mẫu nhân viên nhận `username`, `display_name`, `password`, `role`, `department`, `active`. Role là staff/manager/auditor/security_admin; staff/manager ở A/B, auditor/security_admin ở OPS. Tên đăng nhập 3–32 ký tự, bắt đầu bằng chữ thường; mật khẩu 8–128 ký tự. Đây là cấp danh tính trong môi trường kiểm thử bởi operator, tách với endpoint quản trị principal nghiệp vụ hạn chế đặc quyền.
+## Đầu vào và kiểm tra danh tính
 
-Các chức năng `/lab/lessons`, job, test cases, fault, backup/restore và chỉnh trạng thái được mô tả ở [hướng dẫn web](huong_dan_nhanh.md), [kịch bản trình diễn](huong-dan-trinh-dien-va-doi-chieu-bao-cao.md) và [tái lập](reproduction.md). Chỉ một tác vụ thay đổi môi trường chạy tại một thời điểm; reset/bộ chuẩn có thể thay bộ tài liệu và lịch sử.
+Cổng NGINX xác minh chứng thư và ghi đè các thông tin thiết bị, cách kiểm tra do người gửi tự khai. API chỉ tin thuộc tính xác minh khi yêu cầu đi qua cổng và có bí mật xác nhận cổng phù hợp.
 
-## 5. Phản hồi, lỗi và tính nhất quán
+Khi tạo phiên, API và bộ điều phối kiểm tra thông tin đăng nhập có chữ ký từ Keycloak. Bộ điều phối chọn đúng bên quản lý bằng liên kết đã đăng ký giữa nơi phát hành và định danh người dùng. Tên đăng nhập hoặc tên đơn vị do phía gửi đưa vào không đủ để lựa chọn nguồn trạng thái.
 
-Lỗi nghiệp vụ có dạng `{detail:{reason,request_id}}`; phản hồi có `X-Request-ID`, `X-Policy-Reason`, `X-Policy-Version`, `X-Policy-Mode` khi thích hợp. Lỗi biểu mẫu quản lý có `{detail:{message,fields,...}}` để đánh dấu đúng ô. Không nhập token, cookie hoặc host tùy ý qua phần Header bổ sung.
+API kết nối bộ điều phối bằng thông tin xác thực dịch vụ riêng. Bộ điều phối xác thực các yêu cầu tạo và kiểm tra phiên; mã phiên công khai không thay được bí mật phiên.
 
-| Nhóm lý do | Ý nghĩa |
+## Trạng thái và thông báo có chữ ký
+
+Nguồn trạng thái ký bằng RS256. Bộ điều phối kiểm tra thuật toán, nơi phát hành, bên nhận, loại thông tin, thời hạn, đúng người, đúng thiết bị, đúng bên quản lý và đúng lượt hỏi.
+
+Mỗi lượt hỏi có giá trị ngẫu nhiên riêng; phản hồi phải chứa đúng giá trị đó. Thời điểm ký không thay thế thời điểm thực sự quan sát thiết bị. Thông tin quan sát quá hạn không được làm hợp lệ chỉ bằng cách ký lại.
+
+Thông báo thay đổi có mã riêng và số phiên bản theo đối tượng. Bản trùng hoặc cũ không ghi đè trạng thái mới hơn. Bộ đếm thu hồi tăng khi có thay đổi quản trị giúp phát hiện khóa rồi mở giữa hai lần hỏi lại. Mở khóa không khôi phục phiên đã thu hồi.
+
+Khóa ký riêng của bên quản lý tài khoản không được cấp cho API tài liệu hoặc bộ điều phối. Thông tin xác thực và khóa sinh trên từng máy nằm trong `runtime/`, ngoài phần mã công khai.
+
+## Kênh truyền và lưu trữ
+
+Kết nối khách đến cổng dùng TLS xác thực hai chiều bằng chứng thư, thường gọi là mTLS. Các kênh giữa nguồn trạng thái và bộ điều phối, giữa API và bộ điều phối dùng HTTPS kiểm tra cơ quan cấp chứng thư cùng thông tin xác thực dịch vụ có phạm vi.
+
+Cổng đến API và một số kênh nội bộ đến OPA, OpenBao chạy trong mạng Docker của nguyên mẫu. Không coi mọi kênh nội bộ là mTLS. Nội dung tài liệu được mã hóa bằng OpenBao Transit; PostgreSQL lưu bản mã và thông tin quản lý cần thiết. Bộ điều phối chỉ giữ dạng băm của bí mật phiên; công cụ điều khiển giữ bí mật trong bộ nhớ để gửi yêu cầu.
+
+## Quy tắc tiếp tục hoặc dừng yêu cầu
+
+- Cả ba cách kiểm tra dùng cùng quy tắc quyền tài liệu tại kho.
+- Cách Kiểm tra khi đăng nhập không cập nhật thay đổi nguồn vào phiên đang dùng.
+- Cách Thu hồi theo thông báo thu hồi khi nhận và xác minh thông báo thay đổi.
+- Cách Thu hồi theo thông báo và tự kiểm tra lại còn hỏi lại định kỳ và khi thông tin đã lưu hết hạn. Nếu chưa nhận được trạng thái hợp lệ mới, không cấp nội dung.
+- Khi không kiểm tra được quyền, chưa ghi được nhật ký bắt buộc, giải mã lỗi hoặc nội dung không toàn vẹn, không trả nội dung như một yêu cầu thành công.
+- Trước khi hoàn tất giao dịch tài liệu, kiểm tra lại phiên và các thời hạn áp dụng. Vẫn tồn tại khoảng đua sau lần kiểm tra cuối.
+
+Thời hạn phiên mặc định 900 giây; thời gian dùng trạng thái đã xác minh tối đa 5 giây; hỏi lại mỗi 5 giây; tuổi quan sát thiết bị tối đa 60 giây. Không dùng chu kỳ hỏi lại để thay cho giới hạn sử dụng thông tin cũ trên đường xử lý yêu cầu.
+
+## Khởi động và khôi phục
+
+Khi dịch vụ phiên khởi động lại, phiên từ lần chạy trước không còn hợp lệ. Tình huống khôi phục cơ sở dữ liệu phiên từ bản sao kiểm tra việc này bằng cơ sở dữ liệu tạm và dịch vụ tạm, không phục hồi đè lên hệ thống đang dùng.
+
+Bài kiểm tra đó xác nhận hành vi của phiên sau khôi phục; không phải diễn tập khôi phục đầy đủ dịch vụ danh tính, thiết bị, dữ liệu tài liệu và hạ tầng của cả hai bên.
+
+## Trường kỹ thuật cần đối chiếu
+
+| Trường trong phản hồi hoặc dữ liệu | Nghĩa |
 |---|---|
-| `INACTIVE`, `ROLE`, `DEPARTMENT`, `OWNER_OR_LABEL` | Danh tính/quyền/phạm vi không đáp ứng |
-| `DEVICE_MISMATCH`, `DEVICE_REVOKED`, `NONCOMPLIANT`, `RISK_HIGH`, `MISSING_OR_STALE` | Chứng thư, thiết bị hoặc tín hiệu không đáp ứng |
-| `RESTRICTED_ROLE`, `RESTRICTED_APPROVAL`, `RESTRICTED_GRANT` | Sai vai trò, phê duyệt tạo/nâng hoặc grant sử dụng Hạn chế |
-| `LABEL_DOWNGRADE`, `LIFECYCLE_ADMIN_REQUIRED` | Hạ nhãn hoặc dùng quyền nội dung để đổi vòng đời |
-| `RETENTION_EXPIRED`, `LEGAL_HOLD`, `RETENTION_ACTIVE` | Điều kiện đọc/hủy theo vòng đời |
-| `PDP_UNAVAILABLE`, `PDP_INVALID`, `KMS_UNAVAILABLE`, `AUDIT_UNAVAILABLE`, `REGISTRY_UNAVAILABLE` | Phụ thuộc kiểm soát lỗi, không cấp bản rõ |
-| `LEDGER_UNAVAILABLE` | Ghi DB có thể đã commit nhưng ghi nhận đối chiếu chưa hoàn tất; kiểm tra trạng thái trước khi thử lại |
+| `request_id` | Mã nối yêu cầu với nhật ký và dấu vết kiểm tra |
+| `nonce` | Giá trị ngẫu nhiên gắn phản hồi với đúng lượt hỏi trạng thái |
+| `observed_at` | Thời điểm thực sự quan sát trạng thái thiết bị |
+| `issued_at`, `iat` | Thời điểm phát hành hoặc ký thông tin |
+| `valid_until` | Thời điểm cuối được sử dụng trạng thái đang giữ |
+| `state_version` | Phiên bản trạng thái, dùng nhận biết bản cũ |
+| `subject_epoch`, `device_epoch` | Bộ đếm thay đổi quản trị cần thu hồi phiên của người hoặc thiết bị |
+| `event_id` | Mã thông báo riêng, dùng phát hiện xử lý lặp |
 
-HTTP thường gặp: 400/422 đầu vào, 401 xác thực, 403 chính sách, 404 tài nguyên, 409 xung đột console, 503 phụ thuộc. Chứng thư bị chặn ở TLS có thể không tạo phản hồi từ API. Luôn đọc cả HTTP và reason.
+Các tên trường này phục vụ kiểm tra mã, không phải cách gọi trong phần thuyết trình.
 
-Giao dịch giữ khóa trạng thái cần thiết và kiểm tra thời hạn trước commit. Mã hóa và OPA là lời gọi dịch vụ ngoài PostgreSQL, không được mô tả như giao dịch phân tán nguyên tử. Hủy giao dịch thêm không lưu tài liệu dở dang; lỗi ledger sau commit có ngữ nghĩa khác và phải được đối chiếu. Nhật ký và kết quả thử không chứa token, private key hoặc bản rõ tài liệu.
+## Giới hạn tin cậy
 
-## Ghi chú về hiệu lực phê duyệt và phiên bản
+Nguyên mẫu dùng chung Keycloak, máy chủ, cụm PostgreSQL và Docker Engine. Công cụ điều khiển có quyền vận hành, quyền truy cập Docker và dữ liệu phục hồi; nó thuộc môi trường đáng tin cậy. Chủ máy hoặc nguồn trạng thái có thẩm quyền đã bị chiếm quyền nằm ngoài phạm vi đối thủ được kiểm tra.
 
-Phê duyệt tạo/nâng nhãn được tiêu thụ một lần khi giao dịch PostgreSQL commit. Nếu ledger lỗi sau commit, HTTP có thể báo lỗi dù tài liệu/grant/trạng thái đã dùng đã được lưu; cần làm mới trạng thái trước khi gửi lại. Trường version là phiên bản kiểm soát tài liệu: nâng nhãn và xóa logic làm tăng; đổi tên hiện không tăng. Nhãn policy_version không thay thế hash mã nguồn của lượt kiểm chứng.
+Chưa có đồng bộ tài khoản doanh nghiệp tự động, tự đăng ký công khai, thu hồi tệp đã tải về hoặc cách ly vật lý giữa hai bên. Xem [đánh giá bằng chứng](verification-review.md).

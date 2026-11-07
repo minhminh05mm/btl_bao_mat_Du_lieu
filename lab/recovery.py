@@ -316,8 +316,8 @@ def _ledger_events(checkpoint):
 
 
 REPLAY = {
-    "principal": ("principals", {"active", "role", "department", "permission_version", "updated_at"}),
-    "device": ("devices", {"compliant", "revoked", "risk", "observed_at", "risk_at", "auto_refresh", "updated_at"}),
+    "principal": ("principals", {"active", "role", "department", "permission_version", "organization", "updated_at"}),
+    "device": ("devices", {"compliant", "revoked", "risk", "observed_at", "risk_at", "auto_refresh", "state_version", "updated_at"}),
     "document": ("documents", {"label", "version", "retention_until", "legal_hold", "deleted", "deleted_at", "updated_at"}),
     "grant": ("grants", {"principal_id", "doc_id", "doc_version", "action", "expires_at", "revoked", "approver", "created_at", "updated_at"}),
 }
@@ -392,6 +392,10 @@ def _verify_live_security(conn):
 
 
 def restore(snapshot):
+    # Invalidate independent resource sessions before recovery validation.
+    if (RT/'federation/coordinator/ops-token').exists():
+        from federation.bootstrap import private
+        private('coordinator','/ops/invalidate',{})
     """Restore and verify a pair in temporary services, leaving primary data intact."""
     started = time.time()
     manifest = _snapshot_manifest(snapshot)

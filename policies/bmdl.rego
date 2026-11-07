@@ -69,7 +69,10 @@ fresh_signal(timestamp) if {
     input.now - timestamp <= 60
 }
 
+device_context_valid if input.federation_verified == true
+
 device_context_valid if {
+    not input.federation_verified == true
     is_boolean(input.device.compliant)
     is_boolean(input.device.revoked)
     input.device.risk in {"NORMAL", "HIGH"}
@@ -210,12 +213,15 @@ reason := "INVALID_METADATA" if {
     not baseline
     not input.subject.active == true
 } else := "DEVICE_REVOKED" if {
+    not input.federation_verified == true
     not baseline
     input.device.revoked == true
 } else := "NONCOMPLIANT" if {
+    not input.federation_verified == true
     not baseline
     input.device.compliant == false
 } else := "RISK_HIGH" if {
+    not input.federation_verified == true
     not baseline
     input.device.risk == "HIGH"
 } else := "MISSING_OR_STALE" if {

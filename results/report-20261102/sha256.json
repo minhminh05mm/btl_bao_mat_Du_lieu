@@ -1,0 +1,58 @@
+[
+  {
+    "name": "01-allow.png",
+    "sha256": "211f52ed0fde3538542eaa1b5f9a9275cb9e616dc202feee5c13134855d00b21"
+  },
+  {
+    "name": "02-f0-after-lock.png",
+    "sha256": "055da6879fc9ecf0c4877b71416a1d1f5b5f2ace4071590fcc902609822ee9c8"
+  },
+  {
+    "name": "03-f2-after-lock.png",
+    "sha256": "179d19ab72ef61b83d35f6a7707f89ec702e8769a6c27c7087982e55b8376dd2"
+  },
+  {
+    "name": "04-wrong-device.png",
+    "sha256": "7178c9a322509793a7a6e93eb2bc2060e66e8a7267e860ca56fb85843ba30946"
+  },
+  {
+    "name": "05-source.png",
+    "sha256": "f9050a7145c3900bf348dcdd0fec238094f2b38b845d6d805b61350e9a8573f8"
+  },
+  {
+    "name": "06-results.png",
+    "sha256": "261b520f4a172621d22249b50aec8c20ac505d673c8ca2b50417dda0af9413af"
+  },
+  {
+    "name": "federation-console-smoke.json",
+    "sha256": "f74693eb2da67eeef33ae38ac0abc9e41bdd09d48812364c6e7b16d12f00e249"
+  },
+  {
+    "name": "federation-environment.json",
+    "sha256": "925e45abed5b3ffeadc974513263484f2acf945116a803bf9a8951c1565f37ca"
+  },
+  {
+    "name": "federation-latest.csv",
+    "sha256": "55eea3ee30ef28120425b4b45e7a04eedccf02fb1fd59fe3a803da10c9fdf503"
+  },
+  {
+    "name": "federation-latest.html",
+    "sha256": "d5cb2a0d44ec10d8850d437e4b256054b28057d6fd0e075477d95d092c814f68"
+  },
+  {
+    "name": "federation-latest.json",
+    "sha256": "bb3fa7a2867eebab69f906a00a22b078a0c2e501570d439b7edccf89ebbcc93a"
+  },
+  {
+    "name": "federation-policy-tests.txt",
+    "sha256": "d013e81ed357419e26e116d49c6555d0831d874049ff0044729ce4a47db74fe3"
+  },
+  {
+    "name": "federation-python-tests.txt",
+    "sha256": "3633c392dd9aadf79f11be7ff8eae48552da9da197a98f177268993c53b0d34d"
+  },
+  {
+    "name": "report-qa.json",
+    "sha256": "6539e817ddb3554bd639c2bee2e8e97e0924f30ace7462c13f0fcba146edd2b8"
+  }
+]

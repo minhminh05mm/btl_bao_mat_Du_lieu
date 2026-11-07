@@ -20,7 +20,7 @@ from . import operations as ops
 from .client import LabClient
 
 PROFILES = ops.RT / 'shared/employee-profiles.json'
-ROLES = {'staff', 'manager', 'auditor', 'security_admin'}
+ROLES = {'staff', 'manager', 'auditor', 'security_admin', 'partner_admin'}
 LABELS = {'internal', 'confidential', 'restricted'}
 
 
@@ -77,7 +77,7 @@ def validate_employee(body, creating=False):
         errors['role'] = 'Chọn một vai trò trong danh sách.'
     if not isinstance(department,str) or department not in {'A', 'B', 'OPS'}:
         errors['department'] = 'Chọn một phòng ban trong danh sách.'
-    elif isinstance(role,str) and role in {'auditor', 'security_admin'} and department != 'OPS':
+    elif isinstance(role,str) and role in {'auditor', 'security_admin', 'partner_admin'} and department != 'OPS':
         errors['department'] = 'Kiểm toán và quản trị an toàn thuộc bộ phận An toàn thông tin.'
     elif isinstance(role,str) and role in {'staff', 'manager'} and department not in {'A', 'B'}:
         errors['department'] = 'Nhân viên và trưởng phòng thuộc Kinh doanh hoặc Vận hành.'
@@ -93,6 +93,10 @@ def validate_employee(body, creating=False):
 
 def create_employee(body):
     username, name, role, department, active, password = validate_employee(body, creating=True)
+    if body.get('organization','P') not in {'P','R'}:
+        raise InputError('Chọn miền quản lý tài khoản.',{'organization':'Chọn nguồn P hoặc kho R.'})
+    if role=='partner_admin'and body.get('organization','P')!='P':
+        raise InputError('Quản trị nguồn phải thuộc P.',{'organization':'Chọn nguồn P.'})
     with ops.LOCK:
         cfg = ops.config()
         if username in known_users() or username in cfg['users']:
@@ -164,8 +168,20 @@ def create_employee(body):
                         ('dev-'+username, username, format(cert.serial_number, 'X'), stamp, stamp, stamp))
                     ops._ledger('principal', username, {'active': active, 'role': role, 'department': department, 'permission_version': 1, 'updated_at': stamp})
                     ops._ledger('device', 'dev-'+username, {'compliant': True, 'revoked': False, 'risk': 'NORMAL', 'observed_at': stamp, 'risk_at': stamp, 'auto_refresh': True, 'updated_at': stamp})
+                if (ops.RT/'federation/coordinator/ops-token').exists():
+                    from federation.bootstrap import register
+                    org=body.get('organization','P')
+                    if org not in {'P','R'}:org='P'
+                    try:register(username,org)
+                    except Exception:
+                        # Identity is already committed. Preserve it for idempotent reconciliation.
+                        return {'id':username,'username':username,'display_name':name,'role':role,'department':department,
+                            'active':active,'device_id':'dev-'+username,'registration_pending':True}
                 return {'id': username, 'username': username, 'display_name': name, 'role': role, 'department': department, 'active': active, 'device_id': 'dev-'+username}
             except Exception as error:
+                import logging
+                logging.getLogger('bmdl.provision').warning('Provisioning failed: %s status=%s',
+                    type(error).__name__,getattr(getattr(error,'response',None),'status_code',None))
                 cleanup = []
                 for path, original in reversed(saved_files):
                     try: write_json(path, original)

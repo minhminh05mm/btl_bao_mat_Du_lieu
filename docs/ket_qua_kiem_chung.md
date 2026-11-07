@@ -1,40 +1,46 @@
-# Chỉ mục bằng chứng kiểm chứng
+# Kết quả kiểm tra và nơi mở bằng chứng
 
-Cập nhật chỉ mục ngày 25/10/2026. Các kết quả bên dưới được giữ theo ngày và phạm vi thực hiện; đây không phải kết quả vừa chạy ngày cập nhật tài liệu. [Mục lục](muc_luc.md).
+## Kết quả dùng trong báo cáo
 
-## 1. Chức năng web hiện hành, kiểm tra ngày 21/10
+Lượt ngày 02/11/2026 có ba tập kết quả riêng:
 
-Bản bổ sung quyền Hạn chế đã đạt **39/39 kiểm tra tích hợp**: thêm trực tiếp có phê duyệt; tải và sửa; sai vai trò/phòng ban; thu hồi/hết hạn; phê duyệt sai người, sai mục đích hoặc đã dùng; lỗi audit hủy giao dịch; nâng nhãn và giới hạn lưu giữ. OPA có 31 kiểm thử đạt; 18 kiểm thử Python hồi quy được chạy riêng. Không cộng các số này vào bộ chuẩn ngày 19/10.
+| Tập kiểm tra | Kết quả | Phạm vi |
+|---|---|---|
+| Tình huống sử dụng thực tế | 19/19 đạt | Đăng nhập, phiên, quyền tài liệu, thu hồi, lỗi thành phần và khôi phục phiên |
+| Mã xử lý Python | 42/42 đạt | Các phần kiểm tra thông tin trạng thái, xác thực và bộ chạy tình huống được chọn |
+| Quy tắc truy cập Rego | 31/31 đạt | Điều kiện quyền của chính sách tài liệu |
 
-- [Kết quả 39 kiểm tra](../results/restricted-management-20261021/validation.json).
-- [Phạm vi triển khai và kiểm tra](bang_chung/20261021-quyen-han-che.md).
-- [Mã kiểm tra tích hợp bổ sung](../results/restricted-management-20261021/validate_restricted.py).
-- [Giao diện cấp quyền](../results/restricted-management-20261021/restricted-permissions.png), [từ chối sửa sau thu hồi](../results/restricted-management-20261021/restricted-revoked.png).
-- [Đối chiếu mã đã triển khai](../results/restricted-management-20261021/deployed-source-check.json).
-- [Thay đổi báo cáo](../results/restricted-management-20261021/report-changes.json), [kiểm tra dàn trang](../results/restricted-management-20261021/report-qa.json).
+Không cộng ba số này thành số tình huống sử dụng thực tế. Ngày sửa hướng dẫn không phải ngày chạy lại kiểm tra.
 
-Bản quản lý tài liệu/nhân viên và giao diện hướng dẫn trước đó có bằng chứng riêng tại [management-ui-20261021](bang_chung/20261021-quan-ly-web.md) và [guided-ui-20261021](bang_chung/20261021-huong-dan-web.md). Chúng mô tả thời điểm tương ứng, có thể có chức năng đã được thay thế ở bản Hạn chế mới.
+Bản lưu cố định nằm trong [thư mục bằng chứng ngày 02/11/2026](../results/report-20261102/): [JSON chi tiết](../results/report-20261102/federation-latest.json), [CSV](../results/report-20261102/federation-latest.csv), [HTML](../results/report-20261102/federation-latest.html), [kết quả Python](../results/report-20261102/federation-python-tests.txt), [kết quả Rego](../results/report-20261102/federation-policy-tests.txt) và [môi trường](../results/report-20261102/federation-environment.json).
 
-## 2. Lượt chuẩn ngày 19/10/2026
+## Ba quan sát chính
 
-Lượt `run-20261019-084335-960c43` ghi nhận **127/127 mục tổng hợp đạt** trên `business-v1`: 20 tài liệu TXT UTF-8, gồm 10 nội bộ, 6 mật, 4 hạn chế. 125 mục tích hợp gồm 40 oracle và 85 mục trạng thái/lỗi/vận hành. Hai mục tổng hợp còn lại xác nhận 31 kiểm thử Rego và 32 kiểm thử Python của lượt đó. Không quan sát cho phép sai trong 73 ca cần từ chối hoặc từ chối sai trong 42 ca cần cho phép; các kiểm chứng lưu trữ/phục hồi dùng tiêu chí riêng.
+| Tình huống | Kiểm tra khi đăng nhập | Thu hồi theo thông báo | Thu hồi theo thông báo và tự kiểm tra lại |
+|---|---|---|---|
+| Tài khoản, thiết bị và quyền đều hợp lệ | Cho phép | Cho phép | Cho phép |
+| Tài khoản bị khóa, phiên còn hạn, thông báo đến được | Có thể tiếp tục tải | Thu hồi và từ chối | Thu hồi và từ chối |
+| Thông báo khóa bị mất | Có thể tiếp tục tải | Có thể tiếp tục tải | Hỏi lại, phát hiện và thu hồi |
+| Không hỏi lại được khi thông tin trạng thái đã hết hạn | Có thể tiếp tục tải | Có thể tiếp tục tải nếu chưa nhận thay đổi | Tạm dừng, không trả nội dung |
 
-- [JSON](../results/run-20261019-084335-960c43/results.json), [CSV](../results/run-20261019-084335-960c43/results.csv), [HTML](../results/run-20261019-084335-960c43/report.html).
-- [Kiểm thử Rego](../results/run-20261019-084335-960c43/opa-tests.txt), [kiểm thử Python](../results/run-20261019-084335-960c43/identity-tests.txt).
-- [Môi trường trước](../results/capture-20261019-final/environment.before.json), [môi trường sau và hash kết quả](../results/run-20261019-084335-960c43/environment.after.json).
-- [Catalog và SHA-256 dữ liệu](../fixtures/dataset-manifest.json).
+Quyền với tài liệu giữ nguyên giữa ba cách. Sự khác nhau cho thấy tác dụng của thông báo, việc tự hỏi lại và giới hạn thời gian dùng thông tin cũ.
 
-Ảnh của giao diện tại thời điểm này:
+## Khôi phục cơ sở dữ liệu phiên
 
-- [Quy chuẩn phân loại](../results/revision-20261019/screenshots/01-data-classification.png).
-- [Tổng hợp kết quả và T15](../results/revision-20261019/screenshots/02-full-suite-and-t15.png).
-- [B1 chặn người không sở hữu](../results/revision-20261019/screenshots/03-b1-owner-denied.png), [B0 cho phép cùng tài liệu](../results/revision-20261019/screenshots/04-b0-same-document-allowed.png).
-- [Quyền hiện tại bị thu hồi](../results/revision-20261019/screenshots/05-current-right-revoked.png), [chứng thư sai người](../results/revision-20261019/screenshots/06-device-binding-denied.png), [OPA dừng](../results/revision-20261019/screenshots/07-opa-outage-denied.png).
+Tình huống khôi phục tạo bản sao thật của cơ sở dữ liệu phiên và khởi động dịch vụ bộ điều phối tạm trên bản đó. Bằng chứng có kích thước, mã băm của bản sao, trạng thái phiên trước khởi động và phản hồi kiểm tra sau khởi động.
 
-## 3. Cách dùng kết quả
+Phiên cũ không dùng lại được sau khi dịch vụ khởi động trên bản sao. Cơ sở dữ liệu tạm được tách khỏi dữ liệu đang dùng. Kết quả này chưa xác nhận việc khôi phục đầy đủ Keycloak, thiết bị, dữ liệu tài liệu và hạ tầng của cả hai bên.
 
-Đối chiếu ngày, tập dữ liệu, mã nguồn và phạm vi từng lượt trước khi sử dụng số liệu. Các thư mục `before/`, bản nháp báo cáo và benchmark trước ngày 19/10 là lịch sử; không phải hướng dẫn web hiện hành hoặc bằng chứng hiệu năng của bản mới.
+## Kết quả gần nhất trên web
 
-Kết quả chỉ áp dụng cho dữ liệu tổng hợp, tín hiệu thiết bị giả lập và cấu hình một máy. B0 là đối chứng do nhóm xây dựng; phục hồi là diễn tập DB/KMS cô lập. Không suy rộng thành bảo đảm doanh nghiệp, khả năng thu hồi bản rõ đã cấp hoặc kết luận tải đồng thời.
+Mục Kết quả kiểm tra hiển thị tên tình huống, Đạt hoặc Không đạt, giải thích và thời điểm. Mở Tải bằng chứng kỹ thuật để lấy dữ liệu chi tiết.
 
-Đọc tiếp: [hướng dẫn web](huong_dan_nhanh.md), [ma trận kiểm chứng](test-matrix.md), [quy trình tái lập](reproduction.md), [đánh giá phạm vi](verification-review.md).
+Các tệp [JSON gần nhất](../results/federation-latest.json), [CSV gần nhất](../results/federation-latest.csv) và [HTML gần nhất](../results/federation-latest.html) có thể được thay khi chạy lại. Mỗi lượt còn lưu tệp mang dấu thời gian. Khi dẫn kết quả, giữ đúng lượt, ngày, bộ mã và bản kiểm kê môi trường.
+
+Ảnh trong thư mục bằng chứng phản ánh giao diện tại thời điểm chụp. Một số ảnh lịch sử có cách gọi cũ; dùng tên hiện tại trên web và trong [script](script_thuyet_trinh_10_phut.md) khi trình bày. Kết quả của nguyên mẫu trước khi bổ sung bộ điều phối không được tính vào 19 tình huống hiện tại.
+
+Xem [ma trận kiểm tra](test-matrix.md) và [giới hạn diễn giải](verification-review.md).
+
+## Ảnh minh họa hiện hành
+
+[Ảnh web ngày 07/11/2026](../results/report-20261107-ui/) được dùng trong [báo cáo chính](bao_cao/BaoCao_BMDL_Nhom03_ZeroTrust_DaSua.docx). Ảnh minh họa thao tác và phản hồi, không thay ngày hoặc số liệu của bộ kiểm tra cố định ngày 02/11/2026.

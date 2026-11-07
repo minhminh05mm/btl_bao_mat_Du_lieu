@@ -1,90 +1,54 @@
-# Mục lục và thứ tự đọc tài liệu
+# Mục lục tài liệu
 
-Cập nhật ngày 25/10/2026. Toàn bộ hướng dẫn và biên bản cần đọc được tập trung trong `docs/`. Bắt đầu từ kiến thức nền, sau đó sử dụng web và đối chiếu kiến trúc. [Trang đầu dự án](../README.md).
+Tài liệu hiện hành mô tả bên quản lý tài khoản, bộ điều phối và kho tài liệu. Tên thành phần, ba cách kiểm tra và thao tác sử dụng thống nhất với giao diện web và PowerPoint hiện tại.
 
-## 1. Đọc theo thứ tự nào để hiểu bài?
+## Bộ tài liệu hiện hành
 
-| Bước | Đọc ở đâu? | Đọc để trả lời được |
-|---|---|---|
-| 1 | [Kiến thức nền](kien_thuc_nen.md), phần tóm tắt trước, phần chi tiết sau | Bài này làm gì, bảo vệ cái gì, các thành phần phối hợp ra sao? |
-| 2 | [Hướng dẫn nhanh](huong_dan_nhanh.md) | Bật web, thêm tài liệu/nhân viên, cấp và thu hồi quyền như thế nào? |
-| 3 | [Kiến trúc nhóm](architecture.md) | Một yêu cầu đi qua đâu, ai xác minh, ai đánh giá và ai thực thi? |
-| 4 | [Kế thừa Google/Microsoft](ke_thua.md) | Nhóm lấy ý tưởng nào, áp dụng vào đâu, đóng góp và giới hạn nằm ở đâu? |
-| 5 | [Dữ liệu và phân loại](data-classification.md) | Vì sao một tài liệu là Nội bộ, Mật hoặc Hạn chế; ai được dùng? |
-| 6 | [Kết quả kiểm chứng](ket_qua_kiem_chung.md) rồi [giới hạn bằng chứng](verification-review.md) | Đã thử những gì, kết quả chứng minh được đến đâu? |
-
-Không cần đọc mã nguồn hoặc hợp đồng API trước khi nắm được sáu bước trên. Khi gặp mã như B0, B1, A-C02, grant hoặc TTL, tra [Giải thích ký hiệu](giai_thich_ky_hieu.md).
-
-## 2. Chọn tài liệu theo việc đang cần làm
-
-### 2.1. Hiểu bài và chuẩn bị vấn đáp
-
-| Tài liệu | Nội dung chính |
+| Tài liệu | Công dụng |
 |---|---|
-| [kien_thuc_nen.md](kien_thuc_nen.md) | Tóm tắt bài; kiến thức nền; tech stack; kiến trúc; B0/B1; ví dụ xuyên suốt; mục đích và giới hạn |
-| [giai_thich_ky_hieu.md](giai_thich_ky_hieu.md) | Bảng tra mã tài liệu, mã ca thử, vai trò, nhãn, trường dữ liệu, HTTP và thuật ngữ |
-| [ke_thua.md](ke_thua.md) | Ánh xạ BeyondCorp/Microsoft vào hệ thống; vì sao dùng hai nguồn; điều kiện để gọi một thay đổi là cải tiến |
-| [data-classification.md](data-classification.md) | Bộ 20 tài liệu tổng hợp, tiêu chí ba nhãn và quan hệ giữa nội dung với quyền |
+| [Báo cáo chính](bao_cao/BaoCao_BMDL_Nhom03_ZeroTrust_DaSua.docx) | Nghiên cứu đầy đủ 38 trang, kiến trúc tham chiếu, thiết kế, luồng xử lý và kết quả |
+| [PowerPoint 8 slide](../trinh_chieu/Slide_ThuyetTrinh_BMDL_Nhom03_PhongCachSteam.pptx) | Thuyết trình bài toán, kiến trúc, luồng và demo |
+| [Script 10 phút](script_thuyet_trinh_10_phut.md) | Lời thuyết trình và thao tác tương ứng với slide |
+| [Ảnh web ngày 07/11/2026](../results/report-20261107-ui/) | Minh họa giao diện và các phản hồi hiện hành |
 
-### 2.2. Dùng web và thuyết trình
+Tải Word và PowerPoint về máy để đọc. Các bản tóm tắt và trình chiếu cũ chưa cập nhật được loại khỏi bộ tài liệu công bố để tránh dùng nhầm.
 
-| Tài liệu | Nội dung chính |
+## Đọc nhanh để hiểu và trình bày
+
+1. Đọc phần tóm tắt trong [Kiến thức nền](kien_thuc_nen.md) để hiểu mục đích bài.
+2. Xem [Kiến trúc](architecture.md) để theo dõi một yêu cầu từ đăng nhập đến trả kết quả.
+3. Làm theo [Hướng dẫn nhanh](huong_dan_nhanh.md) để thử khóa tài khoản, mất thông báo và mất kết nối.
+4. Đọc [Tham chiếu Microsoft và Google](ke_thua.md) để giải thích căn cứ và phần tích hợp.
+5. Dùng [Script 10 phút](script_thuyet_trinh_10_phut.md) cùng [PowerPoint 8 slide](../trinh_chieu/Slide_ThuyetTrinh_BMDL_Nhom03_PhongCachSteam.pptx).
+
+## Tra cứu theo nhu cầu
+
+| Cần tìm | Tài liệu |
 |---|---|
-| [huong_dan_nhanh.md](huong_dan_nhanh.md) | Bật/tắt, tài khoản, biểu mẫu, quyền Hạn chế, cách đọc kết quả và xử lý lỗi |
-| [huong-dan-trinh-dien-va-doi-chieu-bao-cao.md](huong-dan-trinh-dien-va-doi-chieu-bao-cao.md) | Chuẩn bị ca trình diễn; thao tác; điều kiện và kết quả kỳ vọng; liên hệ các mục báo cáo |
+| Bật, tắt, gửi yêu cầu và sửa lỗi thường gặp | [Hướng dẫn nhanh](huong_dan_nhanh.md) |
+| Mục đích, kiến thức nền và công nghệ | [Kiến thức nền](kien_thuc_nen.md) |
+| Sơ đồ, tạo phiên, tải tài liệu và thu hồi | [Kiến trúc](architecture.md) |
+| Căn cứ tham chiếu và cơ chế tích hợp | [Tham chiếu Microsoft và Google](ke_thua.md) |
+| Ý nghĩa các trường và cách gọi trên web | [Giải thích cách gọi và tính năng](giai_thich_ky_hieu.md) |
+| Vai trò, nhãn và căn cứ phân loại 20 tài liệu mẫu | [Phân loại dữ liệu](data-classification.md) |
+| Lý do chọn từng cơ chế và đánh đổi | [Quyết định thiết kế](design-approved.md) |
+| Ai tin ai, kênh truyền, đầu vào và lỗi | [Quy tắc phối hợp giữa các thành phần](implementation-contract.md) |
+| Trình diễn từng tình huống và liên hệ báo cáo | [Kịch bản trình diễn](huong-dan-trinh-dien-va-doi-chieu-bao-cao.md) |
+| Điều kiện đạt của 19 tình huống | [Ma trận kiểm tra](test-matrix.md) |
+| Mở kết quả, ảnh và bằng chứng đã lưu | [Kết quả kiểm tra](ket_qua_kiem_chung.md) |
+| Đọc bằng chứng và giới hạn kết luận | [Rà soát bằng chứng](verification-review.md) |
+| Phiên bản công nghệ và môi trường | [Danh mục phần mềm](software-inventory.md) |
+| Cài trên máy khác, chạy kiểm tra và tái lập | [Tái lập môi trường](reproduction.md) |
 
-Muốn trình diễn nhanh: chọn tài liệu Hạn chế có đúng một grant còn hạn cho trưởng phòng cùng phòng → tải thành công → thu hồi grant → yêu cầu tải/sửa mới bị chặn → cấp lại và thử lại. Hướng dẫn trình diễn giải thích cả trường hợp còn nhiều grant.
+Tên tệp `giai_thich_ky_hieu.md` được giữ để các liên kết cũ tiếp tục mở được. Nội dung giải thích bằng tên đầy đủ đang dùng trên web.
 
-### 2.3. Hiểu cách thiết kế và hiện thực
+## Đối chiếu mã nguồn
 
-| Tài liệu | Nội dung chính |
+| Nội dung | Tệp chính |
 |---|---|
-| [architecture.md](architecture.md) | Sơ đồ, đường truy cập, ranh giới tin cậy, nguồn trạng thái, mật mã, audit và phục hồi |
-| [design-approved.md](design-approved.md) | Quyết định thiết kế hiện hành, lý do và đánh đổi |
-| [implementation-contract.md](implementation-contract.md) | API, cấu trúc yêu cầu, điều kiện thực thi, giao dịch và hợp đồng giữa các thành phần |
-| [software-inventory.md](software-inventory.md) | Phiên bản đã ghi nhận, nguồn cấu hình, giấy phép và giới hạn của việc kiểm kê |
-
-Chỉ mở `implementation-contract.md` khi cần tra endpoint hoặc đối chiếu triển khai. Danh sách phiên bản đầy đủ được duy trì ở `software-inventory.md` để tránh nhiều bản sao khác nhau.
-
-### 2.4. Đánh giá và tái lập thực nghiệm
-
-| Tài liệu | Nội dung chính |
-|---|---|
-| [test-matrix.md](test-matrix.md) | Nhóm ca thử, tầng kiểm tra, oracle và bộ bổ sung cho web |
-| [ket_qua_kiem_chung.md](ket_qua_kiem_chung.md) | Điểm vào kết quả thực tế theo ngày; liên kết JSON, log, ảnh và biên bản |
-| [verification-review.md](verification-review.md) | Cách diễn giải kết quả, giới hạn đối chứng, giả lập, lỗi phụ thuộc và phục hồi |
-| [reproduction.md](reproduction.md) | Cách ghi nhận môi trường và chạy lại đúng phạm vi; tác động reset và thao tác có trạng thái |
-
-## 3. Nếu giảng viên hỏi thì tra ở đâu?
-
-| Câu hỏi | Nơi đọc |
-|---|---|
-| Mục đích bài và đóng góp của nhóm là gì? | `kien_thuc_nen.md` và `design-approved.md` |
-| Vì sao đăng nhập đúng vẫn bị từ chối? | `kien_thuc_nen.md`, phần xác thực/phân quyền và ví dụ yêu cầu |
-| Vì sao dùng cả Google và Microsoft? | `ke_thua.md`; phần tóm tắt trong `kien_thuc_nen.md` |
-| B0/B1 dùng để làm gì, so sánh chứng minh gì? | `kien_thuc_nen.md`, `giai_thich_ky_hieu.md`, `verification-review.md` |
-| Vì sao tài liệu mang nhãn Hạn chế? | `data-classification.md` |
-| Trưởng phòng hoặc quản trị an toàn có được đọc mọi tài liệu không? | `giai_thich_ky_hieu.md` và `architecture.md` |
-| Máy bị nhiễm mã độc thì demo có phát hiện được không? | `kien_thuc_nen.md`, phần thực thi thật và dữ liệu giả lập |
-| Hệ thống có hơn một chuỗi if/else ở điểm nào? | `kien_thuc_nen.md`, phần kiến trúc và phân chia trách nhiệm; `architecture.md` |
-| Đã kiểm tra được gì, số 127 và 39 nghĩa là gì? | `ket_qua_kiem_chung.md` và `verification-review.md` |
-| Môi trường và phiên bản cụ thể là gì? | `software-inventory.md` và manifest được liên kết trong đó |
-
-## 4. Biên bản chi tiết và kết quả gốc
-
-Các biên bản sau được giữ theo thời điểm để truy vết, không dùng thay hướng dẫn hiện hành:
-
-- [Cập nhật quyền Hạn chế ngày 21/10](bang_chung/20261021-quyen-han-che.md).
-- [Cập nhật giao diện quản lý ngày 21/10](bang_chung/20261021-quan-ly-web.md).
-- [Cập nhật luồng hướng dẫn ngày 21/10](bang_chung/20261021-huong-dan-web.md).
-
-JSON, CSV, HTML, ảnh, log và bản môi trường gốc vẫn nằm trong [results/](../results/); các tệp này là bằng chứng thực nghiệm. Ngày sửa một tài liệu hướng dẫn không phải ngày chạy lại kiểm thử.
-
-`scripts/summarize_results.py` chỉ tạo bản tổng hợp tự động theo lượt trong `docs/bang_chung/`. Điểm vào kết quả đã được phân loại theo phạm vi là `ket_qua_kiem_chung.md`; bản tự sinh không thay thế nó.
-
-## 5. Quy ước sau khi sắp xếp
-
-- `README.md` ở thư mục gốc là điểm mở đầu và cách bật/tắt nhanh; `docs/muc_luc.md` là mục lục tài liệu.
-- Mỗi hướng dẫn hiện hành có một vị trí trong `docs/`. Các đường dẫn cũ của ba file hướng dẫn ở thư mục gốc đã được chuyển vào đây.
-- Trang chỉ dẫn trùng và các bản Markdown nháp/trước sửa được bỏ khỏi danh sách file đang dùng. Bản trước sắp xếp được lưu trong [gói lưu trữ Markdown](luu_tru/markdown-truoc-20261025.zip), chỉ mở khi cần đối chiếu lịch sử.
-- Khi cập nhật chức năng, sửa tài liệu có trách nhiệm tương ứng và cập nhật mục lục nếu thêm hoặc bỏ file. Kết quả thực nghiệm cũ giữ nguyên nội dung và ngày của lượt chạy.
+| Trạng thái tài khoản và thiết bị của đối tác | [Dịch vụ quản lý tài khoản](../federation/partner.py) |
+| Phiên, thông báo thay đổi và kiểm tra lại | [Bộ điều phối](../federation/coordinator.py) |
+| Kết nối kho với bộ điều phối | [Thành phần kết nối tại kho](../app/federated.py) |
+| Kiểm tra yêu cầu và quy tắc quyền | [Kiểm soát tại kho](../app/security.py), [quy tắc OPA](../policies/bmdl.rego) |
+| Tên và giải thích trên web | [Cách gọi dùng chung](../lab/static/demo-language.js) |
+| Bộ kiểm tra sử dụng thực tế | [Các tình huống kiểm tra](../federation/verify.py) |

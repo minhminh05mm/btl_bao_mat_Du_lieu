@@ -7,6 +7,8 @@ x-app: &app
   working_dir: /project
   volumes:
     - ./app:/project/app:ro
+    - ./federation:/project/federation:ro
+    - ./runtime/federation/resource:/runtime/federation:ro
     - ./runtime/shared:/runtime
     - ./runtime/api-secrets:/runtime/secrets:ro
     - ./runtime/pki-public:/runtime/pki:ro
@@ -22,6 +24,7 @@ x-app: &app
     OIDC_JWKS_URL: http://keycloak:8080/realms/bmdl/protocol/openid-connect/certs
     OIDC_AUDIENCE: zt-api
     POLICY_MODE: B1
+    FEDERATION_REQUIRED: "true"
   depends_on:
     - postgres
     - opa
@@ -78,9 +81,10 @@ services:
     <<: *app
   api-baseline:
     <<: *app
+    profiles: [legacy]
     environment:
       <<: *env
-      POLICY_MODE: B0
+      POLICY_MODE: B1
   gateway:
     image: nginx:stable-alpine
     volumes:
@@ -91,6 +95,7 @@ services:
     ports:
       - 127.0.0.1:8443:8443
       - 127.0.0.1:8444:8444
+      - 127.0.0.1:8445:8445
       - 127.0.0.1:9443:9443
     networks: [edge, control]
     mem_limit: 128m
@@ -112,6 +117,42 @@ services:
       - 127.0.0.1:8088:8088
     mem_limit: 1g
     networks: [edge, control, data]
+  partner:
+    image: bmdl-app:local
+    working_dir: /project
+    command: [uvicorn, federation.partner:app, --host, 0.0.0.0, --port, '8080', --ssl-keyfile, /runtime/service/server.key, --ssl-certfile, /runtime/service/server.crt, --no-access-log]
+    user: '1000:1000'
+    environment:
+      SERVICE_DATABASE_URL_FILE: /runtime/service/database-url
+      OIDC_ISSUER: https://localhost:9443/realms/bmdl
+      OIDC_JWKS_URL: http://keycloak:8080/realms/bmdl/protocol/openid-connect/certs
+    volumes:
+      - ./federation:/project/federation:ro
+      - ./runtime/federation/partner:/runtime/service:ro
+      - ./runtime/federation/public:/runtime/source-public:ro
+      - ./runtime/pki/ca.crt:/runtime/pki/ca.crt:ro
+    networks: [control, data]
+    mem_limit: 256m
+    restart: unless-stopped
+
+  coordinator:
+    image: bmdl-app:local
+    working_dir: /project
+    command: [uvicorn, federation.coordinator:app, --host, 0.0.0.0, --port, '8080', --ssl-keyfile, /runtime/service/server.key, --ssl-certfile, /runtime/service/server.crt, --no-access-log]
+    user: '1000:1000'
+    environment:
+      SERVICE_DATABASE_URL_FILE: /runtime/service/database-url
+      OIDC_ISSUER: https://localhost:9443/realms/bmdl
+      OIDC_JWKS_URL: http://keycloak:8080/realms/bmdl/protocol/openid-connect/certs
+    volumes:
+      - ./federation:/project/federation:ro
+      - ./runtime/federation/coordinator:/runtime/service:ro
+      - ./runtime/federation/public:/runtime/source-public:ro
+      - ./runtime/pki/ca.crt:/runtime/pki/ca.crt:ro
+    networks: [control, data]
+    mem_limit: 256m
+    restart: unless-stopped
+
 volumes:
   pgdata:
   baodata:

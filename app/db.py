@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS devices (
  risk text, observed_at double precision, risk_at double precision,
  auto_refresh boolean NOT NULL DEFAULT true, updated_at double precision NOT NULL
 );
+ALTER TABLE principals ADD COLUMN IF NOT EXISTS organization text NOT NULL DEFAULT 'P';
+ALTER TABLE devices ADD COLUMN IF NOT EXISTS state_version bigint NOT NULL DEFAULT 1;
 CREATE TABLE IF NOT EXISTS documents (
  id text PRIMARY KEY, title text NOT NULL, owner_id text NOT NULL REFERENCES principals(id),
  department text NOT NULL, label text NOT NULL, version integer NOT NULL DEFAULT 1,
@@ -140,5 +142,5 @@ def refresh_devices():
     with connect() as conn:
         now = time.time()
         conn.execute(
-            "UPDATE devices SET observed_at=%s,risk_at=%s WHERE auto_refresh=true", (now, now)
+            "UPDATE devices SET observed_at=%s,risk_at=%s WHERE auto_refresh=true" + (" AND principal_id IN (SELECT id FROM principals WHERE organization='R')" if config.FEDERATION_REQUIRED else ""), (now, now)
         )

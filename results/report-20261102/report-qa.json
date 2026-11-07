@@ -1,0 +1,15 @@
+{
+  "pages": 38,
+  "cover_xml_identical": true,
+  "cover_pixels_identical": true,
+  "table_geometry_and_cells_preserved": true,
+  "all_tables_single_page": true,
+  "native_lists_separate_pages": [
+    3,
+    4
+  ],
+  "native_captions_12pt_italic": 23,
+  "bibliography_entries": 7,
+  "heading2_count": 20,
+  "output_sha256": "59192646a5fc0930d3629537e5e81abc3229ec92de63a69ff5fd1b18d9c1e8c6"
+}

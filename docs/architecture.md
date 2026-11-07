@@ -1,125 +1,101 @@
-# Kiến trúc và ranh giới tin cậy
+# Kiến trúc và luồng xử lý yêu cầu
 
-Cập nhật tài liệu ngày 25/10/2026 theo mã nguồn hiện hành. [Mục lục tài liệu](muc_luc.md) · [Cách sử dụng web](huong_dan_nhanh.md) · [Hợp đồng API](implementation-contract.md)
+## Bài toán và trách nhiệm
 
-## 1. Phạm vi và thành phần
+Một nhân viên đã đăng nhập và có phiên tại kho tài liệu. Sau đó bên quản lý tài khoản khóa tài khoản hoặc thu hồi thiết bị của nhân viên. Kho cần nhận biết thay đổi này để chặn các yêu cầu tiếp theo, dù phiên vẫn còn hạn.
 
-Nguyên mẫu bảo vệ kho tài liệu của hai phòng Kinh doanh (A) và Vận hành (B), theo ba nhãn Nội bộ, Mật và Hạn chế. Bộ khởi tạo `business-v1` có 20 tài liệu và tám tài khoản mẫu; số đang có trên web có thể lớn hơn vì cho phép thêm nhân viên và tài liệu. Nhãn được phân loại thủ công theo [quy chuẩn dữ liệu](data-classification.md).
+| Thành phần | Trách nhiệm |
+|---|---|
+| Bên quản lý tài khoản | Xác nhận tài khoản và thiết bị của đối tác có còn hợp lệ; gửi thông báo thay đổi |
+| Bộ điều phối | Liên kết đúng người, thiết bị và bên quản lý; cấp, kiểm tra và thu hồi phiên tại kho |
+| Kho tài liệu | Quản lý thành viên, vai trò, nhãn, quyền có thời hạn, nội dung mã hóa và nhật ký |
 
-Đơn vị quyết định là một yêu cầu, một tài nguyên và một hành động. Đăng nhập chỉ xác minh danh tính; quyết định còn dùng quyền hiện tại, phòng ban, chủ sở hữu, nhãn, thiết bị, thời hạn và grant. Nguyên mẫu chạy trên một host, sử dụng dữ liệu tổng hợp và phần mềm miễn phí.
+Nhân viên do kho tự quản lý có nguồn trạng thái nội bộ của kho. Việc thuộc bên quản lý nào được xác định bằng liên kết đã đăng ký, không suy từ tên đăng nhập.
+
+## Sơ đồ các thành phần
 
 ```mermaid
-flowchart TB
-    B[Trình duyệt] --> C[Giao diện và phiên người vận hành]
-    C --> L[Thành phần khách: JWT và chứng thư]
-    L --> G[Cổng truy cập NGINX: TLS và mTLS]
-    G --> P[FastAPI: thực thi chính sách và điều phối giao dịch]
-    P --> O[OPA và Rego: đánh giá quy tắc]
-    O -->|Quyết định và mã lý do| P
-    P --> D[PostgreSQL: quyền, tài liệu mã hóa, phê duyệt, grant, audit]
-    P --> K[OpenBao Transit: mã hóa và giải mã]
-    B --> A[Cổng xác thực TLS]
-    C -->|Trao đổi mã và PKCE| A
-    A --> I[Keycloak: cung cấp danh tính]
-    L -->|Xác thực phục vụ kiểm thử| I
-    C -.-> X[Đặc quyền vận hành: chuẩn bị, mô phỏng lỗi, sao lưu, phục hồi]
-    X -.-> D
-    X -.-> K
+flowchart LR
+  person[Người dùng] --> login[Keycloak: đăng nhập]
+  person --> gateway[Cổng truy cập: xác minh thiết bị]
+  login --> create[Tạo phiên truy cập]
+  gateway --> create
+  create --> coordinator[Bộ điều phối]
+  accounts[Bên quản lý tài khoản và thiết bị] -->|Trạng thái và thông báo có chữ ký| coordinator
+  coordinator -->|Hỏi lại trạng thái| accounts
+  local[Trạng thái nhân viên do kho tự quản lý] -->|Trạng thái có chữ ký riêng| coordinator
+  gateway --> repository[Kho tài liệu: xử lý yêu cầu]
+  repository -->|Kiểm tra phiên| coordinator
+  repository --> policy[OPA: kiểm tra quy tắc truy cập]
+  repository --> encrypted[(Nội dung đã mã hóa)]
+  repository --> keys[OpenBao: mã hóa và giải mã]
+  repository --> audit[Nhật ký]
+  accounts --- accountdb[(Dữ liệu tài khoản và thiết bị)]
+  coordinator --- sessiondb[(Dữ liệu phiên)]
 ```
 
-Đường liền thể hiện yêu cầu nghiệp vụ hoặc xác thực; đường nét đứt thể hiện đặc quyền của người vận hành cục bộ. Thêm/sửa tài liệu và cấp/thu hồi grant từ web được chuyển thành yêu cầu qua gateway. Tạo nhân viên, chuẩn bị trạng thái và phục hồi thuộc miền vận hành riêng.
+Ba cơ sở dữ liệu dùng chung một máy chủ PostgreSQL, có tài khoản dịch vụ và quyền kết nối riêng. Bên quản lý tài khoản và kho dùng khóa ký khác nhau. Bộ điều phối giữ khóa công khai để kiểm tra; dịch vụ tài liệu không được cấp khóa ký hay quyền đọc cơ sở dữ liệu của đối tác.
 
-| Thành phần | Trách nhiệm | Nguồn hiện thực |
-|---|---|---|
-| `lab` | Giao diện, phiên, biểu mẫu quản lý, bài hướng dẫn, runner | [web.py](../lab/web.py), [management.py](../lab/management.py), `lab/static/`, `lab/templates/` |
-| `gateway` | Xác minh chứng thư client, ghi đè thuộc tính đã xác minh, chuyển đúng B0/B1 | [nginx.conf](../infra/nginx.conf) |
-| `keycloak` | OIDC, JWT ký RS256, đăng nhập tương tác và tài khoản mới | `infra/keycloak-realm.json`, `scripts/prepare.py` |
-| `api`, `api-baseline` | PEP, lấy thuộc tính hiện tại, gọi OPA/KMS, giao dịch và audit | [main.py](../app/main.py), [security.py](../app/security.py) |
-| `opa` | Đánh giá chính sách Rego | [bmdl.rego](../policies/bmdl.rego) |
-| `postgres` | Registry, metadata, bản mã, phê duyệt, grant, audit | [db.py](../app/db.py) |
-| `openbao` | Khóa Transit không cho xuất, lưu trữ Raft | `infra/openbao.hcl` |
+## Luồng xử lý từng bước
 
-Có tám dịch vụ Compose, gồm hai API. restic là công cụ sao lưu, không phải container dịch vụ thứ chín. Cấu hình image khóa bằng digest và thư viện nằm trong [Compose](../compose.yaml), [khóa image](../compose.lock.yaml), [khóa thư viện](../requirements.lock.txt); phiên bản quan sát được ghi trong [danh mục phần mềm](software-inventory.md).
+Sơ đồ và tên bước dưới đây thống nhất với PowerPoint. Bước 1–4 tạo phiên. Với một phiên đang dùng, mỗi yêu cầu tải đi qua bước 5–10; kết nối gửi yêu cầu vẫn cần thiết bị đã xác minh tại cổng.
 
-## 2. Định danh và miền tin cậy
+```mermaid
+flowchart TD
+  signin[1. Đăng nhập] --> device[2. Kiểm tra thiết bị]
+  device --> binding[3. Ghép đúng người]
+  binding --> session[4. Cấp phiên truy cập]
+  session --> check[5. Kiểm tra phiên]
+  check --> access[6. Kiểm tra quyền]
+  access --> decision{7. Quyết định}
+  decision -->|Đủ điều kiện| prepare[8. Chuẩn bị tài liệu]
+  decision -->|Không đủ điều kiện| denied[Trả lý do dừng yêu cầu]
+  prepare --> final[9. Kiểm tra lần cuối]
+  final --> result[10. Trả kết quả]
+```
 
-| Đường vào cục bộ | Mục đích |
+Mọi bước xác minh có thể dừng ngay khi phát hiện điều kiện không hợp lệ. Ô Quyết định tổng hợp điều kiện tiếp tục; hệ thống không chờ đến bước này mới xử lý mọi lỗi.
+
+| Bước | Thành phần và cách xử lý |
 |---|---|
-| `http://localhost:8088` | Console của người vận hành tin cậy |
-| `https://localhost:9443` | Đăng nhập Keycloak qua TLS |
-| `https://localhost:8443/api/` | API B1, bắt buộc JWT và mTLS |
-| `https://localhost:8444/api/` | API B0 đối chứng, cũng bắt buộc JWT và mTLS |
+| 1. Đăng nhập | Keycloak xác thực người dùng và cấp thông tin đăng nhập có chữ ký. Trong trình thử, máy chủ dùng tài khoản mẫu đang chọn. |
+| 2. Kiểm tra thiết bị | NGINX xác minh chứng thư của thiết bị. Thông tin thiết bị do người gửi tự khai không thay được kết quả xác minh tại cổng. |
+| 3. Ghép đúng người | API và bộ điều phối kiểm tra tài khoản, bên quản lý và chứng thư có thuộc đúng liên kết đã đăng ký hay không. |
+| 4. Cấp phiên truy cập | Bộ điều phối hỏi đúng bên quản lý, kiểm tra chữ ký và tính hợp lệ của phản hồi rồi tạo phiên gắn với người, thiết bị, cách kiểm tra và thời hạn. |
+| 5. Kiểm tra phiên | Kho hỏi bộ điều phối xem phiên còn hạn, đúng thiết bị, đúng cách kiểm tra, chưa thu hồi và thuộc lần khởi động hiện tại. Khi dùng cách tự kiểm tra lại, thông tin trạng thái đã quá hạn phải được xác nhận lại. |
+| 6. Kiểm tra quyền | Kho đọc quyền hiện tại và thông tin tài liệu; OPA xét vai trò, phòng ban, nhãn, chủ sở hữu, thời hạn và quyền riêng của tài liệu Hạn chế. |
+| 7. Quyết định | Chỉ tiếp tục khi các điều kiện áp dụng đều đạt. Nếu không, trả nguyên nhân và mã yêu cầu để đối chiếu. |
+| 8. Chuẩn bị tài liệu | API lấy bản mã, gọi OpenBao giải mã và đối chiếu mã băm nội dung. Tệp chưa được gửi ở bước này. |
+| 9. Kiểm tra lần cuối | Ghi nhật ký bắt buộc, kiểm tra lại phiên, thời hạn quyền và lưu giữ trước khi hoàn tất giao dịch. |
+| 10. Trả kết quả | Hoàn tất xử lý rồi gửi nội dung. Nếu một bước trước thất bại, không trả nội dung tài liệu. |
 
-PostgreSQL, OPA, OpenBao và hai API không công bố cổng trực tiếp ra host. Các mạng là `edge`, `control`, `data`; hai mạng sau là mạng nội bộ. HTTP giữa một số dịch vụ nội bộ chưa được thay bằng mTLS toàn hệ thống.
+Đăng nhập và tạo phiên dùng `POST /sessions`. Các yêu cầu tiếp theo dùng bí mật phiên riêng của kho. Bộ điều phối chỉ lưu dạng băm của bí mật này; mã phiên công khai không đủ để truy cập. Bí mật phiên được công cụ điều khiển giữ trong bộ nhớ, không hiển thị như mã đăng nhập cho người dùng.
 
-- API kiểm tra chữ ký JWT, thuật toán, issuer, audience, thời hạn và ánh xạ `sub` với danh tính trong registry.
-- Gateway xác minh chứng thư, gắn serial và kết quả TLS; API kiểm tra chứng thư đăng ký cho đúng chủ thể. Header do client tự khai không thay thế thuộc tính máy chủ.
-- Đăng nhập tương tác dùng Authorization Code + PKCE; console kiểm tra state/nonce và giữ token phía máy chủ. Chế độ Chọn tài khoản dùng client kiểm thử cho phép người vận hành đóng vai tài khoản mẫu.
-- Với thêm/sửa tài liệu khi có phiên Keycloak, máy chủ lấy danh tính từ phiên. Sửa ô username trong yêu cầu không đổi được người đang đăng nhập.
-- Phiên console dùng cookie HttpOnly, SameSite và CSRF cho thay đổi; phiên hết hạn hoặc console khởi động lại có thể yêu cầu đăng nhập lại.
+Liệt kê tài liệu, xem thông tin, đọc nhật ký và cảnh báo dùng kiểm tra phiên, quyền tương ứng; chúng không cần giải mã nội dung tài liệu.
 
-Console có Docker socket, quyền DB quản trị và vật liệu phục hồi; đây chưa phải cổng nhiều người dùng cho chủ thể không tin cậy. Chọn người phê duyệt trên web gửi một yêu cầu riêng bằng tài khoản quản trị được chọn. Cơ chế này minh họa tách danh tính và kiểm tra thật qua API, chưa hiện thực hàng đợi duyệt độc lập giữa nhiều người.
+## Cách kho cập nhật thay đổi
 
-API nghiệp vụ không được gắn Docker socket, CA private key, private key client, DB admin credential hoặc root/unseal material OpenBao. API chỉ có quyền mật mã encrypt/decrypt cần thiết.
-
-## 3. Quyền và nguồn trạng thái
-
-OPA là thành phần đánh giá quy tắc, không phải toàn bộ PDP theo mô hình chức năng NIST. FastAPI lấy nguồn thuộc tính, xây input, xác minh quyết định, giữ khóa giao dịch, kiểm tra thời hạn và thực thi. Thiếu dữ liệu, phản hồi không hợp lệ hoặc lỗi phụ thuộc không được biến thành cho phép.
-
-| Nguồn | Nội dung quyết định |
-|---|---|
-| `principals` | Danh tính, vai trò, phòng ban, active, phiên bản quyền |
-| `devices` | Liên kết chủ thể/chứng thư, tuân thủ, thu hồi, rủi ro và thời điểm tín hiệu |
-| `documents` | Chủ sở hữu, phòng ban, nhãn, phiên bản, lưu giữ, bảo toàn, xóa logic, bản mã và hash |
-| `restricted_approvals` | Phê duyệt tạo/nâng nhãn Hạn chế: người nhận, tài liệu, phiên bản, mục đích, thời hạn, trạng thái đã dùng |
-| `grants` | Quyền tải theo người nhận, tài liệu, phiên bản, hành động, thời hạn và trạng thái thu hồi |
-| `audit`, `alerts`, ledger | Dấu vết yêu cầu, thay đổi quản trị và trạng thái cần đối chiếu sau phục hồi |
-
-Điều kiện chung B1 gồm tài khoản hoạt động, chứng thư đúng người, thiết bị chưa thu hồi, compliant, rủi ro NORMAL và tín hiệu còn mới. Thời hạn tín hiệu là 60 giây; bộ giả lập làm mới mỗi 20 giây khi `auto_refresh` bật.
-
-| Tài liệu | Xem metadata | Tải và sửa thông tin |
+| Cách kiểm tra | Cơ chế | Khi thông báo bị mất |
 |---|---|---|
-| Nội bộ | Nhân viên/trưởng phòng cùng phòng | Cùng phạm vi, nếu các điều kiện chung hợp lệ |
-| Mật | Nhân viên sở hữu hoặc trưởng phòng cùng phòng | Cùng phạm vi, nếu các điều kiện chung hợp lệ |
-| Hạn chế | Trưởng phòng cùng phòng | Trưởng phòng cùng phòng, có grant đúng người/tài liệu/phiên bản/action `download`, còn hạn, chưa thu hồi và người duyệt khác người nhận |
+| Kiểm tra khi đăng nhập | Xác nhận tài khoản và thiết bị khi cấp phiên | Phiên có thể tiếp tục dùng đến khi hết hạn; quyền tài liệu vẫn được kiểm tra |
+| Thu hồi theo thông báo | Thêm thông báo thay đổi có chữ ký; nhận thông báo thì thu hồi đúng phiên liên quan | Có thể tiếp tục dùng phiên cũ do chưa biết thay đổi |
+| Thu hồi theo thông báo và tự kiểm tra lại | Thêm việc hỏi lại định kỳ và hỏi lại khi thông tin đã lưu hết hạn | Phát hiện thay đổi và thu hồi; tạm dừng nếu chưa xác nhận lại được trạng thái |
 
-Kiểm toán đọc audit/cảnh báo; quản trị an toàn quản lý trạng thái và phê duyệt, không mặc nhiên đọc nội dung. Sở hữu một tài liệu Hạn chế không tự cấp quyền. Danh sách nghiệp vụ được lọc theo quyền metadata; catalog mô tả trên console là dữ liệu của miền vận hành, không phải phản hồi nghiệp vụ bị từ chối.
+Mỗi thay đổi quản trị tài khoản hoặc thiết bị ở bên quản lý tài khoản được ghi cùng thông báo chờ gửi trong một giao dịch. Thông báo có chữ ký, mã riêng và số phiên bản. Bộ điều phối bỏ qua thông báo trùng hoặc cũ; việc mở khóa không khôi phục phiên đã thu hồi.
 
-### 3.1. Thêm Hạn chế và sửa thông tin
+Bộ đếm thu hồi tăng khi trạng thái quản trị thay đổi. Nhờ vậy, ngay cả khi tài khoản bị khóa rồi mở lại giữa hai lần kiểm tra, bộ điều phối vẫn nhận ra phiên cũ không còn được dùng. Việc gửi lại quan sát thiết bị định kỳ không tự tăng bộ đếm thu hồi.
 
-1. Quản trị an toàn gửi phê duyệt tạo mới cho trưởng phòng. Máy chủ đặt định danh tài liệu dự kiến, phiên bản 1, phòng ban, mục đích `create` và thời hạn.
-2. Trưởng phòng thêm tệp với nhãn `restricted` và `approval_id`. API kiểm tra danh tính/thiết bị, người nhận, mục đích, thời hạn và người duyệt hiện còn quyền.
-3. API mã hóa và lưu tài liệu, grant tải ban đầu, trạng thái phê duyệt đã dùng cùng giao dịch PostgreSQL; không lưu tạm một bản Mật rồi nâng nhãn.
-4. Phê duyệt tạo chỉ được sử dụng thành công một lần. Grant tải được dùng ở nhiều yêu cầu trong thời hạn, nếu các điều kiện khác vẫn hợp lệ. Hủy giao dịch không tạo tài liệu dở dang; lỗi ledger sau commit phải được đối chiếu bằng cách làm mới dữ liệu trước khi gửi lại.
+## Thời gian và phạm vi bảo vệ
 
-`PUT /documents/{id}` kiểm tra quyền tải hiện tại theo B1, kể cả khi gọi đường API B0. Chức năng sửa hiện tại đổi tên hoặc nâng nhãn, chưa thay thế nội dung tệp. Xem metadata chưa đủ để sửa. Không được hạ nhãn; quyền nội dung không cho phép sửa thời hạn/bảo toàn.
+| Tham số mặc định | Giá trị |
+|---|---|
+| Thời hạn phiên | 900 giây |
+| Thời gian tối đa dùng trạng thái đã kiểm tra | 5 giây |
+| Khoảng cách giữa các lượt hỏi lại | 5 giây |
+| Tuổi tối đa của thông tin quan sát thiết bị | 60 giây |
 
-Nâng Nội bộ/Mật lên Hạn chế cần phê duyệt mục đích `upgrade` cho đúng tài liệu và phiên bản kế tiếp. Máy chủ tăng phiên bản, giới hạn lưu giữ theo nhãn mới và cấp grant cho phiên bản mới. Đổi tên giữ phiên bản kiểm soát tài liệu. Một người có thể có nhiều grant cho cùng tài liệu/phiên bản. Yêu cầu tải và sửa chỉ bị chặn do thiếu grant khi mọi grant phù hợp đều đã bị thu hồi, hết hạn hoặc không còn đúng phiên bản; thu hồi một dòng không vô hiệu hóa các grant khác.
+Thời gian thực tế được dùng trạng thái còn phụ thuộc thời điểm quan sát thiết bị. Ký hoặc nhận lại một thông tin cũ không biến nó thành quan sát mới. Khoảng hỏi lại là cấu hình lập lịch, không phải cam kết độ trễ tuyệt đối.
 
-### 3.2. B0 và B1
+Thu hồi có thời gian truyền và xử lý. Kiểm tra cuối giảm khoảng thời gian giữa xác minh và trả nội dung; vẫn có thể tồn tại khoảng đua sau kiểm tra cuối. Phạm vi kết luận là các yêu cầu tiếp theo sau khi kho ghi nhận thu hồi. Tệp đã tải về máy nằm ngoài phạm vi này.
 
-B1 là chính sách đề xuất theo trạng thái hiện tại. B0 là đối chứng quyền đọc tĩnh do nhóm tạo, dùng thuộc tính đối chứng `b0_role`/`b0_department` trong JWT và bỏ qua một số điều kiện owner/nhãn/sức khỏe thiết bị/rủi ro/grant/active đối với đường đọc được chọn. B0 vẫn kiểm tra danh tính, quan hệ chứng thư, tài nguyên tồn tại và lưu giữ.
-
-Các thuộc tính đối chứng này được cấu hình trong Keycloak khi chuẩn bị hoặc tạo tài khoản, tách khỏi registry hiện tại. Cập nhật registry không tự đồng bộ chúng, kể cả khi xin token mới.
-
-Các thao tác sửa và quản trị không dùng B0 để bỏ qua kiểm tra B1. B0/B1 cùng dùng TLS, mTLS, dữ liệu, Transit và audit. Đối chứng không phải kiến trúc riêng của Google/Microsoft và không chứng minh hệ thống vượt trội toàn diện.
-
-## 4. Bảo vệ dữ liệu và vận hành
-
-Nội dung được mã hóa bằng OpenBao Transit trước khi lưu PostgreSQL; metadata phục vụ quyết định vẫn ở dạng rõ có kiểm soát. Khóa Transit không cho phép xuất; token ứng dụng không được quản trị/rotate/export khóa. Hash hỗ trợ kiểm tra toàn vẹn sau giải mã và phục hồi.
-
-Lưu giữ 180/90/30 ngày theo Nội bộ/Mật/Hạn chế là giả định thử nghiệm. Hết hạn chặn đọc; xóa chỉ được thực hiện khi đúng quyền, đã qua lưu giữ và không có legal hold. Xóa tạo tombstone, không làm snapshot cũ biến mất. Chưa có scheduler tự xóa/prune mọi bản sao.
-
-Audit ghi Request ID, chủ thể, tài nguyên, hành động, quyết định, lý do và phiên bản chính sách. Ghi audit bắt buộc phải thành công trước trả bản rõ. Trạng thái phản hồi đã chuẩn bị không đồng nghĩa client đã nhận trọn file. Năm lần deny của một chủ thể trong 60 giây tạo cảnh báo mẫu; bước xử lý/thu hồi do người vận hành thực hiện riêng.
-
-Sao lưu tạm dừng ghi nghiệp vụ, tạo cặp PostgreSQL dump + OpenBao Raft snapshot, kiểm tra hash và lưu vào repository restic mã hóa. Phục hồi dựng DB/KMS cô lập, xác minh nội dung, đối chiếu ledger quyền thu hồi/tombstone mới hơn checkpoint, xóa phê duyệt tạo/nâng nhãn chờ trong bản phục hồi rồi kiểm tra trạng thái. Nó không thay thế hệ thống chính và không khôi phục đầy đủ Keycloak/PKI/host. Repository cùng nằm trên ổ E chưa bảo vệ trước mất ổ vật lý.
-
-## 5. Căn cứ thiết kế và bằng chứng
-
-Thiết kế vận dụng quan hệ danh tính, kiểm kê, chứng thư và proxy từ BeyondCorp; cách xem xét nhiều miền bảo vệ từ Microsoft Zero Trust; thuật ngữ và mô hình chức năng từ NIST SP 800-207; truy vết yêu cầu theo SABSA rút gọn. Chính sách ba nhãn, grant, phê duyệt tạo Hạn chế, phối hợp thành phần và bộ kiểm chứng là phần cụ thể hóa của nhóm.
-
-Các tài liệu tham chiếu đã dùng trong báo cáo: [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final), [BeyondCorp 2014](https://www.usenix.org/system/files/login/articles/login_dec14_02_ward.pdf), [Microsoft Zero Trust adoption framework](https://learn.microsoft.com/en-us/security/zero-trust/adopt/zero-trust-adoption-overview), [SABSA Executive Summary](https://sabsa.org/sabsa-executive-summary/). Danh mục công nghệ và nguồn chính thức nằm trong [software-inventory.md](software-inventory.md); tài liệu tham chiếu không thay thế bằng chứng chạy nguyên mẫu.
-
-Xem [ma trận kiểm chứng](test-matrix.md), [cách tái lập](reproduction.md) và [kết quả](ket_qua_kiem_chung.md). Lượt chuẩn ngày 19/10 và kiểm tra bổ sung ngày 21/10 là hai phạm vi khác nhau; không cộng số kiểm tra để tạo một kết quả tổng hợp mới.
-
-Giới hạn chính: dữ liệu giả lập; tín hiệu thiết bị chưa lấy từ thiết bị thật; nội bộ chưa có mTLS toàn bộ; log chưa chống quản trị viên host; chưa kiểm chứng HA/tải đồng thời; bản rõ đã cấp không thể thu hồi bằng đổi quyền. Mô hình triển khai trên một máy chưa bảo đảm cách ly khi host bị chiếm toàn bộ.
+Xem thêm [quy tắc phối hợp](implementation-contract.md), [phân loại dữ liệu](data-classification.md) và [ma trận kiểm tra](test-matrix.md).

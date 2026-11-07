@@ -1,0 +1,641 @@
+{
+  "schema": "federation-evidence-v1",
+  "started_at": 1793575506.000712,
+  "finished_at": 1793575540.0967588,
+  "duration_seconds": 34.096,
+  "passed": 19,
+  "total": 19,
+  "policy": "B1 for all F0/F1/F2",
+  "versions": {
+    "python": "3.12.15",
+    "fastapi": "0.143.1",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1",
+    "PyJWT": "2.15.1",
+    "psycopg": "3.3.6",
+    "cryptography": "50.0.2"
+  },
+  "test_document": "U-fb7f4dcbcf6c46a0a13712a3bcc8e9a7",
+  "scope": "New requests in a local two-authority prototype; shared Keycloak and host; no real vendor cloud integration.",
+  "cases": [
+    {
+      "id": "K01",
+      "name": "Cùng quyền tài liệu, ba chế độ đều tải đúng nội dung",
+      "pass": true,
+      "duration_seconds": 0.418,
+      "evidence": {
+        "requests": {
+          "F0": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "83a93c3a-02b7-4187-8487-949f4330134e",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 140.902,
+            "at": 1793575507.9439366
+          },
+          "F1": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "8622c7fb-0961-44d1-8d48-9ac66cc68c8a",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 142.207,
+            "at": 1793575508.0862117
+          },
+          "F2": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "090a73e7-dc16-474f-99d0-ee9b26863515",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 134.722,
+            "at": 1793575508.221002
+          }
+        },
+        "same_policy": "B1",
+        "expected_sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5"
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K02",
+      "name": "Quyền tài liệu tại R vẫn được kiểm tra trong mọi chế độ",
+      "pass": true,
+      "duration_seconds": 0.754,
+      "evidence": {
+        "F0": {
+          "status": 403,
+          "reason": "DEPARTMENT",
+          "request_id": "3bf1bc35-0560-4ca5-bc01-d1bccbe52a52",
+          "bytes": 86,
+          "sha256": null,
+          "latency_ms": 82.1,
+          "at": 1793575508.7975945
+        },
+        "F1": {
+          "status": 403,
+          "reason": "DEPARTMENT",
+          "request_id": "7c7251c3-6c58-4472-a5ef-9811b6ca2bb5",
+          "bytes": 86,
+          "sha256": null,
+          "latency_ms": 87.406,
+          "at": 1793575508.885086
+        },
+        "F2": {
+          "status": 403,
+          "reason": "DEPARTMENT",
+          "request_id": "c650bfb2-af49-4335-963f-e8fbbb456264",
+          "bytes": 86,
+          "sha256": null,
+          "latency_ms": 89.894,
+          "at": 1793575508.9750478
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K03",
+      "name": "Khóa nguồn thu hồi F1/F2 dù JWT và phiên còn hạn",
+      "pass": true,
+      "duration_seconds": 1.86,
+      "evidence": {
+        "source_changed_at": 1793575510.0396187,
+        "jwt_still_unexpired": true,
+        "jwt_expires_at": 1793575807,
+        "sessions": {
+          "F0": "6e90a5b5-aeca-4461-b4db-3fc67dc8569d",
+          "F1": "b63bf9a5-7305-4538-beb0-68f8d508c651",
+          "F2": "a77a69a6-2418-441b-ad20-c391a1e9ce99"
+        },
+        "requests": {
+          "F0": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "57739ca3-d7c7-4018-94e4-d2c75ae87bf5",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 187.192,
+            "at": 1793575510.83466
+          },
+          "F1": {
+            "status": 403,
+            "reason": "SOURCE_ACCOUNT_DISABLED",
+            "request_id": "ec36bfad-6431-4e8a-bf69-b690b8a3bf4a",
+            "bytes": 99,
+            "sha256": null,
+            "latency_ms": 91.399,
+            "at": 1793575510.8346689
+          },
+          "F2": {
+            "status": 403,
+            "reason": "SOURCE_ACCOUNT_DISABLED",
+            "request_id": "29213fff-a8dd-491d-8f36-cd75d3f8209d",
+            "bytes": 99,
+            "sha256": null,
+            "latency_ms": 62.54,
+            "at": 1793575510.8346746
+          }
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K03b",
+      "name": "Mở khóa không phục hồi phiên cũ; đăng nhập mới được phép",
+      "pass": true,
+      "duration_seconds": 0.831,
+      "evidence": {
+        "old_session": {
+          "status": 403,
+          "reason": "SOURCE_ACCOUNT_DISABLED",
+          "request_id": "72236568-d757-4c82-b515-cba112d79ad7",
+          "bytes": 99,
+          "sha256": null,
+          "latency_ms": 62.473,
+          "at": 1793575511.3647783
+        },
+        "new_session": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "7d18a5eb-fbbf-4598-98f5-531b8563233c",
+          "bytes": 45,
+          "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+          "latency_ms": 140.5,
+          "at": 1793575511.6660798
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K04",
+      "name": "Thu hồi thiết bị làm mất hiệu lực phiên đúng người",
+      "pass": true,
+      "duration_seconds": 1.625,
+      "evidence": {
+        "source_changed_at": 1793575512.7337732,
+        "requests": {
+          "F0": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "5a8fe3f5-9a42-4c2d-aee6-f649f9475c22",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 140.518,
+            "at": 1793575513.2911932
+          },
+          "F1": {
+            "status": 403,
+            "reason": "SOURCE_DEVICE_REVOKED",
+            "request_id": "5f99b15b-603b-499a-a722-953f78f1dafc",
+            "bytes": 97,
+            "sha256": null,
+            "latency_ms": 60.565,
+            "at": 1793575513.2912
+          },
+          "F2": {
+            "status": 403,
+            "reason": "SOURCE_DEVICE_REVOKED",
+            "request_id": "84ec256c-74a5-48dc-b88f-94f5dc74f5af",
+            "bytes": 97,
+            "sha256": null,
+            "latency_ms": 68.461,
+            "at": 1793575513.2912052
+          }
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K05",
+      "name": "Mất sự kiện: F1 giữ phiên, F2 đối soát và chặn",
+      "pass": true,
+      "duration_seconds": 2.376,
+      "evidence": {
+        "source_changed_at": 1793575514.4152296,
+        "event_lost": true,
+        "requests": {
+          "F0": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "a1872237-4937-468f-939b-416702620a26",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 133.546,
+            "at": 1793575515.6668677
+          },
+          "F1": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "9fd5a0d2-db2e-43f4-b381-97f121f361bb",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 137.929,
+            "at": 1793575515.66688
+          },
+          "F2": {
+            "status": 403,
+            "reason": "SOURCE_ACCOUNT_DISABLED",
+            "request_id": "eeed97d8-2103-43d5-89b6-286794e703ed",
+            "bytes": 99,
+            "sha256": null,
+            "latency_ms": 60.137,
+            "at": 1793575515.6668868
+          }
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K06",
+      "name": "Nguồn không phản hồi: F2 dừng khi trạng thái hết độ mới",
+      "pass": true,
+      "duration_seconds": 2.695,
+      "evidence": {
+        "cache_seconds": 1,
+        "poll_disabled": true,
+        "requests": {
+          "F0": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "d9a72324-a24a-494d-ba22-d7880fea88b1",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 138.108,
+            "at": 1793575518.3614948
+          },
+          "F1": {
+            "status": 200,
+            "reason": "ALLOW",
+            "request_id": "df5190e7-7512-48b7-8efe-945950716f82",
+            "bytes": 45,
+            "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+            "latency_ms": 132.083,
+            "at": 1793575518.3615062
+          },
+          "F2": {
+            "status": 503,
+            "reason": "SOURCE_UNAVAILABLE",
+            "request_id": "f25deb4d-c492-4204-94c1-c8d92b697a80",
+            "bytes": 94,
+            "sha256": null,
+            "latency_ms": 84.977,
+            "at": 1793575518.3615127
+          }
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K07",
+      "name": "Sự kiện giả bị loại; trùng và sai thứ tự không hồi sinh phiên",
+      "pass": true,
+      "duration_seconds": 1.369,
+      "evidence": {
+        "newer": {
+          "outcome": "applied",
+          "affected": 0,
+          "received_at": 1793575519.1715472,
+          "applied_at": 1793575519.1841266
+        },
+        "duplicate": {
+          "outcome": "duplicate",
+          "affected": 0
+        },
+        "older": {
+          "outcome": "stale",
+          "affected": 0,
+          "received_at": 1793575519.2286236,
+          "applied_at": 1793575519.2399697
+        },
+        "forged": {
+          "status": 401,
+          "reason": "SOURCE_PROOF_INVALID",
+          "request_id": null,
+          "bytes": 44,
+          "sha256": null,
+          "latency_ms": 0,
+          "at": 1793575519.7310476
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "K08",
+      "name": "Phục hồi cơ sở dữ liệu thật vào môi trường riêng không phục hồi phiên cũ",
+      "pass": true,
+      "duration_seconds": 3.093,
+      "evidence": {
+        "dump_bytes": 138504,
+        "dump_sha256": "054c1cb1737bb3a93878aa499154d6f0d120e6b3497f0b82710b36a7db80ba73",
+        "scratch_database": "bmdl_restore_d13e1c7e9a",
+        "before_restore_boot": {
+          "revoked": false
+        },
+        "after_boot": {
+          "revoked": true,
+          "reason": "SESSION_SERVICE_RESTARTED"
+        },
+        "introspection": {
+          "status": 401,
+          "reason": "SESSION_SERVICE_RESTARTED",
+          "request_id": null,
+          "bytes": 49,
+          "sha256": null,
+          "latency_ms": 0,
+          "at": 1793575522.4455028
+        },
+        "isolated": true
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S01",
+      "name": "Không vượt qua bằng JWT thô, chứng thư khác hoặc cổng khác chế độ",
+      "pass": true,
+      "duration_seconds": 0.856,
+      "evidence": {
+        "jwt_without_resource_session": {
+          "status": 401,
+          "reason": "RESOURCE_SESSION_REQUIRED",
+          "request_id": "cc693bd2-1939-42f6-a27c-ae4178a72420",
+          "bytes": 101,
+          "sha256": null,
+          "latency_ms": 46.378,
+          "at": 1793575523.5883052
+        },
+        "wrong_device": {
+          "status": 403,
+          "reason": "DEVICE_MISMATCH",
+          "request_id": "0333d549-bf2b-4f93-b045-5a8b96e933fb",
+          "bytes": 91,
+          "sha256": null,
+          "latency_ms": 20.53,
+          "at": 1793575523.6145756
+        },
+        "wrong_gateway_mode": {
+          "status": 401,
+          "reason": "SESSION_MODE_MISMATCH",
+          "request_id": "7b95b9fb-83a7-4655-9a1a-8b26ce42af79",
+          "bytes": 97,
+          "sha256": null,
+          "latency_ms": 65.279,
+          "at": 1793575523.6799147
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S02",
+      "name": "Tách quyền quản trị nguồn P và tài nguyên R",
+      "pass": true,
+      "duration_seconds": 0.66,
+      "evidence": {
+        "resource_admin_cannot_manage_source": {
+          "status": 403,
+          "reason": "PARTNER_ADMIN_REQUIRED",
+          "request_id": null,
+          "bytes": 46,
+          "sha256": null,
+          "latency_ms": 0,
+          "at": 1793575524.3397236
+        },
+        "source_cannot_manage_R": {
+          "status": 404,
+          "reason": "PARTNER_OBJECT_NOT_FOUND",
+          "request_id": null,
+          "bytes": 48,
+          "sha256": null,
+          "latency_ms": 0,
+          "at": 1793575524.33973
+        },
+        "source_admin_has_no_resource_admin": {
+          "status": 403,
+          "reason": "ROLE",
+          "request_id": "0a2c39e6-1a5e-41c4-83bb-ce16992fda16",
+          "bytes": 80,
+          "sha256": null,
+          "latency_ms": 85.433,
+          "at": 1793575524.3397381
+        },
+        "resource_cannot_change_P_device": {
+          "status": 403,
+          "reason": "PARTNER_DEVICE_AUTHORITY_REQUIRED",
+          "request_id": "53fadca7-26e9-4587-88b0-e251e82c9ea3",
+          "bytes": 109,
+          "sha256": null,
+          "latency_ms": 83.041,
+          "at": 1793575524.3397439
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S03",
+      "name": "Tài khoản dịch vụ không được đọc cơ sở dữ liệu của miền kia",
+      "pass": true,
+      "duration_seconds": 0.045,
+      "evidence": [
+        {
+          "role": "bmdl_app",
+          "database": "bmdl_partner",
+          "blocked": true,
+          "sqlstate": null,
+          "reason": "CONNECT_PRIVILEGE_DENIED",
+          "own_database_connection_verified": true,
+          "own_database": "bmdl"
+        },
+        {
+          "role": "bmdl_app",
+          "database": "bmdl_coordinator",
+          "blocked": true,
+          "sqlstate": null,
+          "reason": "CONNECT_PRIVILEGE_DENIED",
+          "own_database_connection_verified": true,
+          "own_database": "bmdl"
+        },
+        {
+          "role": "bmdl_partner",
+          "database": "bmdl",
+          "blocked": true,
+          "sqlstate": null,
+          "reason": "CONNECT_PRIVILEGE_DENIED",
+          "own_database_connection_verified": true,
+          "own_database": "bmdl_partner"
+        }
+      ],
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S04",
+      "name": "Ký trạng thái mới không làm mới một quan sát thiết bị đã cũ",
+      "pass": true,
+      "duration_seconds": 1.049,
+      "evidence": {
+        "status": 403,
+        "reason": "SOURCE_OBSERVATION_STALE",
+        "request_id": "bf896d5e-8b1b-48cd-99aa-e8fd1d750bf0",
+        "bytes": 100,
+        "sha256": null,
+        "latency_ms": 136.511,
+        "at": 1793575525.4332938
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S05",
+      "name": "Khóa rồi mở nhanh giữa hai lần đối soát vẫn thu hồi phiên cũ",
+      "pass": true,
+      "duration_seconds": 2.772,
+      "evidence": {
+        "status": 403,
+        "reason": "SOURCE_STATE_CHANGED",
+        "request_id": "8823cd56-053e-405a-9058-97dc43e8ae1e",
+        "bytes": 96,
+        "sha256": null,
+        "latency_ms": 172.735,
+        "at": 1793575528.2051914
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S06",
+      "name": "Kiểm tra nonce, đúng người, đúng miền và đúng chứng thư",
+      "pass": true,
+      "duration_seconds": 0.656,
+      "evidence": {
+        "validation_rejections": [
+          "SOURCE_NONCE_MISMATCH",
+          "SOURCE_BINDING_MISMATCH",
+          "SOURCE_BINDING_MISMATCH",
+          "DEVICE_MISMATCH"
+        ],
+        "signed_state_observed_at": 1793575528.2792656,
+        "signed_state_issued_at": 1793575528.8196166
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S07",
+      "name": "Lỗi chính sách, nhật ký hoặc mã hóa đều dừng yêu cầu và không trả nội dung",
+      "pass": true,
+      "duration_seconds": 6.071,
+      "evidence": {
+        "dependency_failures": {
+          "opa_response_invalid": {
+            "status": 503,
+            "reason": "PDP_INVALID",
+            "request_id": "c55a8b6e-6cc2-4e48-b337-11a3cc7b70a1",
+            "bytes": 87,
+            "sha256": null,
+            "latency_ms": 73.114,
+            "at": 1793575529.6855452
+          },
+          "audit_write_failure": {
+            "status": 503,
+            "reason": "AUDIT_UNAVAILABLE",
+            "request_id": "71793aa8-9c23-4c8b-ae3f-4ffb3a4a4494",
+            "bytes": 93,
+            "sha256": null,
+            "latency_ms": 90.14,
+            "at": 1793575529.7852411
+          },
+          "kms_paused": {
+            "status": 503,
+            "reason": "KMS_UNAVAILABLE",
+            "request_id": "691340fc-eace-4718-8038-ff33ebe23109",
+            "bytes": 91,
+            "sha256": null,
+            "latency_ms": 5096.223,
+            "at": 1793575534.9195838
+          }
+        },
+        "not_counted_as_policy_denials": true
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "S08",
+      "name": "Bằng chứng trạng thái bị sửa chữ ký không tạo được phiên",
+      "pass": true,
+      "duration_seconds": 0.71,
+      "evidence": {
+        "status": 401,
+        "reason": "SOURCE_PROOF_INVALID",
+        "request_id": "e5ba7a44-ada1-4965-b765-fa97dc177d1f",
+        "bytes": 96,
+        "sha256": null,
+        "latency_ms": 117.178,
+        "at": 1793575535.6217723
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "R01",
+      "name": "Tạo, sửa, tải tài liệu Hạn chế và đọc audit/cảnh báo vẫn hoạt động",
+      "pass": true,
+      "duration_seconds": 2.976,
+      "evidence": {
+        "audit": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "1d2d8f40-53a7-458c-b223-a39a7ed0e763",
+          "bytes": 190404,
+          "sha256": "0415293e1e48066645d92a6f82a0c5b871784177d373849034351b3739fdefae",
+          "latency_ms": 146.477,
+          "at": 1793575538.6189275
+        },
+        "alerts": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "dad3d2d1-d945-406f-8957-c34cfaeb9fb4",
+          "bytes": 686,
+          "sha256": "7a7b9ac56c3589125a9685df98443f4a57bff78f7ff5fe15c6f3b5efddf41592",
+          "latency_ms": 130.159,
+          "at": 1793575538.6189682
+        },
+        "restricted_document_created": "U-abef9906929b427ab82786d77b02fc98",
+        "edit_success": "U-abef9906929b427ab82786d77b02fc98",
+        "download": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "ab660ee9-4b89-46a8-958f-b73df7b47a5b",
+          "bytes": 45,
+          "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+          "latency_ms": 140.649,
+          "at": 1793575538.6190221
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    },
+    {
+      "id": "R02",
+      "name": "Thêm nhân viên R và đổi quyền hiện tại có hiệu lực với phiên đang dùng",
+      "pass": true,
+      "duration_seconds": 0.595,
+      "evidence": {
+        "new_resource_member": "case_resource_user",
+        "absent_from_partner_database": true,
+        "before_role_change": {
+          "status": 200,
+          "reason": "ALLOW",
+          "request_id": "558ec239-88b5-4e91-9054-fc0e3c65b12c",
+          "bytes": 45,
+          "sha256": "c736b5f754e07c191dbc8b78a4eb10ceb8fb9ad094faef3f01b2a38dfebf64b5",
+          "latency_ms": 135.717,
+          "at": 1793575539.2140014
+        },
+        "after_role_change": {
+          "status": 403,
+          "reason": "DEPARTMENT",
+          "request_id": "5b74e94f-77ab-48ef-af9b-763843b2624e",
+          "bytes": 86,
+          "sha256": null,
+          "latency_ms": 83.824,
+          "at": 1793575539.2140167
+        }
+      },
+      "summary": "Đúng điều kiện và phản hồi yêu cầu."
+    }
+  ]
+}

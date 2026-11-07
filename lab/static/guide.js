@@ -30,7 +30,7 @@ const reasonText = {
 function explainResponse(r) {
   let title=r.ok?"Yêu cầu được chấp nhận":"Yêu cầu chưa được chấp nhận";
   if(!r.ok)title=Number(r.status)===403?"Yêu cầu bị chặn theo chính sách":Number(r.status)===404?"Không tìm thấy đối tượng yêu cầu":Number(r.status)===401?"Yêu cầu chưa xác thực hợp lệ":"Chưa thể hoàn tất yêu cầu";
-  let explanation=friendlyFailure(r);
+  let explanation=DemoLanguage.reason(r.reason, friendlyFailure(r));
   const path=r.request?.path||"";
   if(r.ok && path.includes("/download")) {
     title="Được tải nội dung tài liệu";
@@ -49,7 +49,7 @@ function explainResponse(r) {
     title="Đã xóa tài liệu";
     explanation="Tài liệu không còn được cung cấp cho các yêu cầu truy cập.";
   } else if(r.ok && path==="/me") {
-    title=`Danh tính đang dùng: ${r.payload?.username||r.payload?.id||r.request?.username||""}`;
+    title=`Đang dùng tài khoản ${personById(r.payload?.username||r.payload?.id||r.request?.username)}`;
     explanation="";
   }
   if(r.ok && r.request?.method==="POST" && path==="/documents"){title="Đã thêm tài liệu";explanation=`${r.payload?.title||"Tài liệu"} đã được lưu vào kho.`;}

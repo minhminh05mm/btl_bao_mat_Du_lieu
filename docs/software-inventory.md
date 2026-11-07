@@ -1,58 +1,56 @@
-# Phần mềm và nguồn phiên bản
+# Môi trường và phiên bản phần mềm
 
-Cập nhật tài liệu: 25/10/2026. [Mục lục tài liệu](muc_luc.md) · [Tái lập kiểm chứng](reproduction.md).
+## Môi trường thử nghiệm
 
-## 1. Phân biệt cấu hình ghim và phép quan sát
+Nguyên mẫu chạy trên Windows với WSL 2, môi trường Linux tên `bmdl-demo`, Docker Engine và Docker Compose. Web mở trên máy tại `http://localhost:8088`; không cần GPU hoặc Docker Desktop.
 
-| Nguồn trong dự án | Ý nghĩa |
+Dự án đặt tại `E:\btl_bao_mat_Du_lieu`. Hồ sơ vận hành và ổ đĩa của môi trường Linux được đặt trong phần `runtime/` của dự án. Dữ liệu container còn tồn tại sau khi dừng; kết quả kiểm tra nằm trong `results/`.
+
+## Bộ phiên bản dùng trong bằng chứng đã lưu
+
+| Thành phần | Phiên bản |
 |---|---|
-| [infra/images.lock.json](../infra/images.lock.json) | Digest image/nguyên liệu được ghi từ lần kiểm kê 15/10/2026; không phải phép đo lại ngày cập nhật tài liệu |
-| [compose.lock.yaml](../compose.lock.yaml) và [infra/Dockerfile](../infra/Dockerfile) | Tham chiếu bất biến dùng khi khởi chạy/build |
-| [requirements.lock.txt](../requirements.lock.txt) | 36 gói Python, kể cả phụ thuộc gián tiếp, được ghim từ image đã đo ngày 15/10 |
-| [environment.after.json ngày 19/10](../results/run-20261019-084335-960c43/environment.after.json) | Quan sát host, container, thư viện và hash gắn với đúng lượt kiểm chứng ngày 19/10 |
-| [deployed-source-check.json ngày 21/10](../results/restricted-management-20261021/deployed-source-check.json) | Đối chiếu mã đã triển khai với bản chuẩn bị của cập nhật quyền; không thay thế kiểm kê môi trường đầy đủ |
+| Python | 3.12.15 |
+| FastAPI | 0.143.1 |
+| Uvicorn | 0.54.0 |
+| HTTPX | 0.28.1 |
+| PyJWT | 2.15.1 |
+| psycopg | 3.3.6 |
+| cryptography | 50.0.2 |
+| Keycloak | 26.8.0 |
+| OPA | 1.21.2 |
+| OpenBao | 2.7.1 |
+| PostgreSQL | 17.11 |
+| NGINX | 1.30.6 |
+| Docker Engine | 29.8.2 |
+| Docker Compose | 5.1.4 |
 
-Mã được bind mount nên image ID riêng lẻ không định danh toàn bộ thí nghiệm. Build lại có thể tạo image ID mới dù phụ thuộc giữ nguyên. Dùng manifest trước/sau cho mỗi lượt mới; không đổi ngày của kết quả cũ thành ngày hiện tại.
+Bảng phản ánh bộ phiên bản ghi trong dự án và lượt bằng chứng đã lưu, không phải tuyên bố về phiên bản mới nhất trên Internet hoặc trạng thái dịch vụ đang chạy hôm nay. Khi tái lập trên máy khác, đối chiếu bản kiểm kê của lượt mới.
 
-## 2. Bộ phiên bản đã ghi nhận
+[Danh sách thư viện đã ghim](../requirements.lock.txt), [ảnh dịch vụ đã ghim](../infra/images.lock.json) và [cấu hình khóa ảnh](../compose.lock.yaml) xác định bộ cài. Ảnh hạ tầng được cố định bằng mã băm, không chỉ bằng tên phiên bản.
 
-Các giá trị dưới đây có trong kiểm kê/manifest đã lưu, cùng bộ tham chiếu ghim của dự án; không tuyên bố là phiên bản mới nhất trên Internet.
+[Bản kiểm kê dùng cho báo cáo](../results/report-20261102/federation-environment.json) ghi môi trường, phiên bản dịch vụ, ảnh container và dấu vân tay mã nguồn ở thời điểm thu thập. [Bản kiểm kê gần nhất](../results/federation-environment.json) có thể được thay khi khởi động lại môi trường. Hai tệp có thể thuộc hai thời điểm khác nhau.
 
-| Thành phần | Phiên bản ghi nhận | Nguồn chính |
+## Dịch vụ và giới hạn tài nguyên
+
+| Dịch vụ | Vai trò | Giới hạn bộ nhớ cấu hình |
 |---|---|---|
-| WSL riêng | Alpine Linux 3.24.2; kernel 6.18.54.1-microsoft-standard-WSL2 | Manifest môi trường 19/10 |
-| Docker Engine / Compose | 29.8.2 / 5.1.4 | Manifest 19/10 và image lock |
-| Image ứng dụng | Debian GNU/Linux 13.7; linux/amd64; CPython 3.12.15 | Manifest 19/10, Dockerfile |
-| FastAPI / Uvicorn / HTTPX | 0.143.1 / 0.54.0 / 0.28.1 | requirements.lock.txt, manifest 19/10 |
-| psycopg / PyJWT / cryptography | 3.3.6 / 2.15.1 / 50.0.2 | requirements.lock.txt, manifest 19/10 |
-| PostgreSQL | 17.11 | Image lock, manifest 19/10 |
-| Keycloak | 26.8.0 | Image lock, Compose lock |
-| OPA | 1.21.2, Rego v1 | Image lock, manifest 19/10 |
-| OpenBao | 2.7.1 | Image lock, manifest 19/10 |
-| NGINX | 1.30.6 | Image lock, manifest 19/10 |
-| restic | 0.19.1 | Dockerfile, image lock, manifest 19/10 |
+| `postgres` | Lưu ba cơ sở dữ liệu được phân quyền riêng | 512 MiB |
+| `keycloak` | Dịch vụ đăng nhập dùng chung | 1 GiB |
+| `opa` | Đánh giá quy tắc truy cập | 256 MiB |
+| `openbao` | Mã hóa, giải mã và quản lý khóa | 512 MiB |
+| `api` | Xử lý yêu cầu tài liệu | 768 MiB |
+| `gateway` | Cổng xác minh thiết bị | 128 MiB |
+| `partner` | Quản lý tài khoản và thiết bị đối tác | 256 MiB |
+| `coordinator` | Quản lý phiên và thu hồi | 256 MiB |
+| `lab` | Web và công cụ thử nghiệm | 1 GiB |
 
-Gói khác như Docker SDK, pytest, Jinja2 và psutil xem đầy đủ trong tệp khóa; không duy trì thêm một bản sao danh sách 36 gói ở đây.
+Đây là chín dịch vụ của bản hiện tại. `api-baseline` thuộc cấu hình nguyên mẫu cũ, không tham gia so sánh ba cách cập nhật trạng thái. Giới hạn cấu hình không phải lượng bộ nhớ luôn sử dụng thực tế.
 
-## 3. Phạm vi sử dụng miễn phí và giấy phép
+Tình huống khôi phục dữ liệu phiên tạo thêm cơ sở dữ liệu tạm và container bộ điều phối tạm, rồi dọn các tài nguyên do lượt kiểm tra tạo. Thời gian chạy bộ kiểm tra không phải độ trễ xử lý một yêu cầu hoặc số đo chịu tải doanh nghiệp.
 
-Demo dùng bản nguồn mở, chạy trên máy sẵn có, không cần Docker Desktop, cloud, API trả phí hoặc trial. Windows/WSL và tài nguyên máy là môi trường sẵn có; điện, mạng và dung lượng vẫn là chi phí vận hành tại chỗ.
+## Khi cần mô tả môi trường trong báo cáo
 
-Các tệp khóa xác định phiên bản, không thay thế giấy phép đi kèm gói/image. Khi sao chép hoặc phân phối lại, giữ thông báo bản quyền của bản phân phối. Các nguồn giấy phép chính thức đã được liên kết trong hồ sơ dự án:
+Ghi hệ điều hành, WSL, tài nguyên máy, phiên bản dịch vụ và ngày chạy từ bản kiểm kê tương ứng. Phân biệt cấu hình giới hạn với tài nguyên quan sát. Nếu mã hoặc phiên bản thay đổi, cần một lượt kiểm tra và bản kiểm kê mới trước khi dùng kết quả để kết luận.
 
-| Thành phần | Giấy phép / nguồn chính thức |
-|---|---|
-| Docker Engine/Moby, Compose, Keycloak, OPA | Apache 2.0: [Moby](https://github.com/moby/moby/blob/master/LICENSE), [Compose](https://github.com/docker/compose/blob/main/LICENSE), [Keycloak](https://github.com/keycloak/keycloak/blob/main/LICENSE.txt), [OPA](https://github.com/open-policy-agent/opa/blob/main/LICENSE) |
-| OpenBao | [MPL 2.0](https://github.com/openbao/openbao/blob/main/LICENSE) |
-| NGINX / restic | BSD 2-Clause: [NGINX](https://nginx.org/LICENSE), [restic](https://github.com/restic/restic/blob/master/LICENSE) |
-| PostgreSQL | [PostgreSQL License](https://www.postgresql.org/about/licence/) |
-| Python | [PSF và thông báo đi kèm Python](https://docs.python.org/3.12/license.html) |
-| FastAPI / PyJWT / pytest | MIT: [FastAPI](https://github.com/fastapi/fastapi/blob/master/LICENSE), [PyJWT](https://github.com/jpadilla/pyjwt/blob/master/LICENSE), [pytest](https://github.com/pytest-dev/pytest/blob/main/LICENSE) |
-| psycopg | [LGPL 3; chú ý thông báo của bản binary](https://github.com/psycopg/psycopg/blob/master/LICENSE.txt) |
-| cryptography | [Apache 2.0 hoặc BSD](https://github.com/pyca/cryptography/blob/main/LICENSE) |
-
-## 4. Cách ghi nhận lại
-
-Dùng [quy trình tái lập](reproduction.md) để thu phiên bản bằng các truy vấn chỉ đọc, image ID/RepoDigest, thư viện và hash nguồn. Không pull image hoặc rebuild chỉ để đọc phiên bản. Không in toàn bộ `.env`, thông tin container hoặc biến môi trường vì có thể chứa bí mật.
-
-Image/volume của demo nằm trong VHD `runtime/wsl` trên E, không dùng kho Docker Desktop trên C. `Start-Demo.ps1` kiểm dung lượng trước khi chuẩn bị môi trường. Không khẳng định Windows/WSL tuyệt đối không sử dụng tài nguyên ở ổ C.
+[Bản kiểm kê máy chủ](../results/report-20261102/host-reference.json) được thu thập ngày 19/10/2026 và dùng làm thông tin tham chiếu về máy thử. Tệp này không thay thế bản kiểm kê dịch vụ của lượt ngày 02/11.

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thử truy cập kho tài liệu</title>
+  <link rel="stylesheet" href="/static/federation.css?v=plain-language">
+  <script defer src="/static/demo-language.js?v=plain-language"></script>
+  <script defer src="/static/federation.js?v=plain-language"></script>
+</head>
+<body>
+<header>
+  <a class="brand" href="/">Kho tài liệu <span>Thử nghiệm Zero Trust</span></a>
+  <nav aria-label="Điều hướng chính">
+    <a href="#access">Thử truy cập</a>
+    <a href="#source">Tài khoản và thiết bị</a>
+    <a href="#tests">Kết quả kiểm tra</a>
+    <a href="/workspace#documents">Quản lý tài liệu</a>
+    <a href="/workspace#employees">Nhân viên và quyền</a>
+  </nav>
+  <span class="local">Chạy trên máy này</span>
+</header>
+<main>
+  <div class="intro">
+    <div>
+      <h1>Điều gì xảy ra khi tài khoản bị khóa?</h1>
+      <p>Đăng nhập và tải một tài liệu. Sau đó khóa tài khoản rồi gửi lại bằng phiên đang dùng để xem kho có chặn lượt tải tiếp theo hay không.</p>
+    </div>
+    <div class="actions"><label class="check"><input type="checkbox" id="auto-refresh" checked>Tự động làm mới</label><button id="refresh" class="secondary">Làm mới trạng thái</button></div>
+  </div>
+  <div id="message" role="status" hidden></div>
+  <section class="authorities" aria-label="Các phần của hệ thống">
+    <article><span class="tag">Tài khoản và thiết bị</span><h2>Bên quản lý tài khoản</h2><p>Khóa hoặc mở khóa tài khoản, cập nhật tình trạng thiết bị và gửi thông báo khi có thay đổi.</p><strong id="source-status">Đang kết nối…</strong></article>
+    <article><span class="tag violet">Phiên truy cập</span><h2>Bộ điều phối</h2><p>Theo dõi phiên đang dùng và thu hồi khi tài khoản hoặc thiết bị không còn đủ điều kiện.</p><strong id="broker-status">Đang kết nối…</strong></article>
+    <article><span class="tag green">Tài liệu và quyền</span><h2>Kho tài liệu</h2><p>Kiểm tra người dùng có quyền thực hiện thao tác với tài liệu đang chọn hay không.</p><strong>Mọi cách kiểm tra dùng cùng quy tắc truy cập tài liệu.</strong></article>
+  </section>
+  <section id="access">
+    <div class="section-title"><h2>1. Đăng nhập và thử truy cập</h2><p>Mỗi cách kiểm tra có phiên riêng. Sau khi khóa tài khoản, hãy gửi lại bằng phiên hiện tại để kiểm tra hiệu lực thu hồi.</p></div>
+    <div class="two">
+      <article class="card">
+        <div class="form-grid"><label>Tài khoản<select id="user"></select></label><label>Thiết bị dùng để truy cập<select id="device"></select></label></div>
+        <label>Cách kiểm tra trạng thái tài khoản<select id="mode" aria-describedby="mode-help"><option value="F2" selected></option><option value="F1"></option><option value="F0"></option></select></label>
+        <p class="hint" id="mode-help"></p>
+        <div class="actions"><button id="login">Đăng nhập và tạo phiên</button><span id="selected-session" class="hint">Chưa tạo phiên trên trang này.</span></div>
+        <hr>
+        <div class="form-grid"><label>Tài liệu<select id="document"></select></label><label>Thao tác<select id="action"><option value="download">Tải tài liệu</option><option value="metadata">Xem thông tin tài liệu</option><option value="list">Xem tài liệu được phép</option><option value="audit">Đọc nhật ký</option><option value="alerts">Đọc cảnh báo</option></select></label></div>
+        <button id="send">Gửi yêu cầu bằng phiên hiện tại</button>
+        <details>
+          <summary>Gửi yêu cầu kỹ thuật tùy chỉnh</summary>
+          <p class="hint">Hệ thống dùng tài khoản, thiết bị và cách kiểm tra đã chọn ở trên.</p>
+          <div class="form-grid"><label>Phương thức<select id="custom-method"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select></label><label>Đường dẫn API<input id="custom-path" value="/documents"></label></div>
+          <label>Dữ liệu JSON<textarea id="custom-json" rows="4">{}</textarea></label><button id="custom-send" class="secondary">Gửi yêu cầu tùy chỉnh</button>
+        </details>
+      </article>
+      <article class="card">
+        <h3>Kết quả truy cập</h3>
+        <div role="status" aria-live="polite">
+          <div id="decision" class="decision neutral">Chưa gửi yêu cầu</div>
+          <p id="explanation" class="hint">Kết quả sẽ cho biết yêu cầu được phép hay dừng ở bước nào.</p>
+        </div>
+        <div id="request-items" class="request-items" hidden></div>
+        <div id="workflow" class="workflow"></div>
+        <button id="download" class="secondary" hidden>Lưu tài liệu về máy</button>
+        <details><summary>Xem chi tiết kỹ thuật và mã yêu cầu</summary><pre id="response">{}</pre></details>
+      </article>
+    </div>
+    <article class="card">
+      <h3>Các phiên truy cập tại kho</h3>
+      <p class="hint">Sau khi kho thu hồi phiên, người dùng cần đăng nhập lại khi tài khoản và thiết bị đủ điều kiện.</p>
+      <div class="table-wrap"><table><thead><tr><th>Tài khoản</th><th>Cách kiểm tra</th><th>Trạng thái phiên</th><th>Lần kiểm tra gần nhất</th><th>Thao tác</th></tr></thead><tbody id="sessions"></tbody></table></div>
+    </article>
+  </section>
+  <section id="source">
+    <div class="section-title"><h2>2. Quản lý tài khoản và thiết bị</h2><p>Trang này quản lý trạng thái của tài khoản đối tác và thiết bị của họ. Mục Nhân viên và quyền dùng để cấp quyền trong kho.</p></div>
+    <div class="two">
+      <article class="card">
+        <label>Người thực hiện<select id="actor"></select></label>
+        <label>Tài khoản cần thay đổi<select id="source-user"></select></label>
+        <div id="source-facts" class="facts"></div>
+        <div class="actions"><button id="disable" class="danger">Khóa tài khoản</button><button id="enable" class="secondary">Mở khóa tài khoản</button></div>
+        <hr>
+        <label>Thiết bị cần thay đổi<select id="source-device"></select></label>
+        <div class="actions"><button id="revoke-device" class="danger">Thu hồi thiết bị</button><button id="healthy-device" class="secondary">Khôi phục thiết bị</button><button id="risk-device" class="secondary">Đánh dấu rủi ro cao</button><button id="noncompliant-device" class="secondary">Đánh dấu chưa đạt yêu cầu an toàn</button></div>
+        <p id="source-result" class="hint">Chọn người có quyền quản lý tài khoản đối tác để thực hiện thay đổi.</p>
+      </article>
+      <article class="card">
+        <h3>Thử khi mất thông báo hoặc mất kết nối</h3>
+        <p class="hint">Các lựa chọn ở đây tạo tình huống để xem kho xử lý ra sao khi thông báo không đến hoặc kho chưa hỏi lại được trạng thái.</p>
+        <label class="check"><input type="checkbox" id="drop-events">Làm mất các thông báo mới</label>
+        <label class="check"><input type="checkbox" id="pause-events">Tạm dừng gửi thông báo</label>
+        <label class="check"><input type="checkbox" id="outage">Giả lập bên quản lý tài khoản không phản hồi</label>
+        <label class="check"><input type="checkbox" id="no-poll">Tạm dừng việc tự kiểm tra định kỳ</label>
+        <div class="form-grid"><label>Thông tin đã kiểm tra dùng được bao lâu (giây)<input type="number" min="1" max="10" value="5" id="cache-seconds"></label><label>Kho hỏi lại sau mỗi bao nhiêu giây<input type="number" min="1" max="30" value="5" id="poll-seconds"></label></div>
+        <div class="actions"><button id="settings">Áp dụng tình huống thử</button><button id="settings-reset" class="secondary">Khôi phục mặc định</button></div>
+      </article>
+    </div>
+    <article class="card">
+      <h3>Thay đổi và lượt kiểm tra gần đây</h3>
+      <p class="hint">Xem lúc tài khoản thay đổi, lúc kho nhận thông báo và lúc phiên bị thu hồi.</p>
+      <div id="timeline" class="timeline"></div>
+    </article>
+  </section>
+  <section id="tests">
+    <div class="section-title"><h2>3. Kết quả kiểm tra tự động</h2><p>Hệ thống gửi yêu cầu thật, thử các tình huống lỗi rồi khôi phục thiết lập. Mỗi hàng cho biết tình huống có cho kết quả như mong đợi hay không.</p></div>
+    <article class="card">
+      <div class="actions"><button id="verify">Chạy tất cả tình huống</button><span id="test-status" class="hint" role="status"></span></div>
+      <details class="test-exports"><summary>Tải bằng chứng kỹ thuật</summary><div class="actions"><a href="/lab/federation/export/json">Tải JSON</a><a href="/lab/federation/export/csv">Tải CSV</a><a href="/lab/federation/export/html">Mở bảng kết quả chi tiết</a></div></details>
+      <div class="table-wrap"><table><thead><tr><th>Tình huống</th><th>Kết quả</th><th>Giải thích</th></tr></thead><tbody id="test-results"></tbody></table></div>
+    </article>
+  </section>
+  <footer>Đây là hệ thống thử nghiệm trên một máy. Các dịch vụ dùng dữ liệu mẫu và mô phỏng hai bên quản lý độc lập. Tệp đã lưu về máy nằm ngoài phạm vi thu hồi phiên.</footer>
+</main>
+</body>
+</html>

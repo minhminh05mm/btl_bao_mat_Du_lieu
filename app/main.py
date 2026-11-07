@@ -102,6 +102,8 @@ def audit_event(conn, ctx, request_id, action, doc_id, decision, reason, phase="
         raise Problem("AUDIT_UNAVAILABLE", 503)
     principal_id = ctx.id if ctx else None
     now = time.time()
+    if ctx and ctx.federation:
+        details = {**(details or {}), "federation": ctx.federation["session"]}
     conn.execute(
         "INSERT INTO audit(event_id,request_id,principal_id,subject_id,device_id,doc_id,action,decision,reason,policy_version,phase,mode,created_at,details) "
         "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
@@ -145,6 +147,13 @@ def run(request, action, operation, doc_id=None):
         result = operation(conn, ctx)
         # Locks prevent concurrent state changes, but time itself may invalidate
         # signals, retention or a grant while PDP/KMS/audit work is in progress.
+        if ctx.federation:
+            from .federated import call, request_data
+            from federation.common import FederationError
+            try:
+                call('/introspect', request_data(request, ctx.resource_token, 'pre_commit'))
+            except FederationError as exc:
+                raise Problem(exc.reason, exc.status) from None
         for deadline, reason in ctx.deadlines:
             if time.time() >= deadline:
                 raise Problem(reason)
@@ -223,11 +232,12 @@ def check(conn, ctx, action, doc=None, grant=None, *, admin=False):
         grant = get_grant(conn, ctx.id, doc)
     decision = decide(ctx, action, resource(doc) if doc else None, grant, force_b1=admin)
     if ctx.mode == "B1" or admin or action not in {"me", "list", "metadata", "download"}:
-        for field in ("observed_at", "risk_at"):
-            assessed = ctx.device.get(field)
-            if not isinstance(assessed, (int, float)):
-                raise Problem("MISSING_OR_STALE")
-            ctx.deadlines.append((assessed + config.SIGNAL_TTL, "MISSING_OR_STALE"))
+        if not ctx.federation:
+            for field in ("observed_at", "risk_at"):
+                assessed = ctx.device.get(field)
+                if not isinstance(assessed, (int, float)):
+                    raise Problem("MISSING_OR_STALE")
+                ctx.deadlines.append((assessed + config.SIGNAL_TTL, "MISSING_OR_STALE"))
         if doc and action == "download" and doc["label"] == "restricted" and grant:
             ctx.deadlines.append((grant["expires_at"], "RESTRICTED_GRANT"))
     if doc and action in {"metadata", "download", "list"}:
@@ -568,9 +578,12 @@ def update_device(device_id: str, body: DeviceUpdate, request: Request):
         if not row:
             raise Problem("NOT_FOUND", 404)
         success_audit(conn, ctx, "admin", details={"target_type": "device", "target_id": device_id, "changes": changes})
+        if config.FEDERATION_REQUIRED:
+            owner = conn.execute('SELECT organization FROM principals WHERE id=%s',(row['principal_id'],)).fetchone()
+            if owner['organization'] != 'R': raise Problem('PARTNER_DEVICE_AUTHORITY_REQUIRED')
         assignments = ",".join(f"{column}=%s" for column in changes)
         now = time.time()
-        conn.execute(f"UPDATE devices SET {assignments},updated_at=%s WHERE id=%s", [*changes.values(), now, device_id])
+        conn.execute(f"UPDATE devices SET {assignments},updated_at=%s,state_version=state_version+1 WHERE id=%s", [*changes.values(), now, device_id])
         updated = conn.execute("SELECT * FROM devices WHERE id=%s", (device_id,)).fetchone()
         payload = {key: updated[key] for key in (
             "compliant", "revoked", "risk", "observed_at", "risk_at", "auto_refresh", "updated_at"
@@ -676,3 +689,25 @@ def acknowledge_alert(alert_id: str, request: Request):
         conn.execute("UPDATE alerts SET acknowledged=true,acknowledged_by=%s,acknowledged_at=%s WHERE id=%s", (ctx.id, now, alert_id))
         return {"id": alert_id, "acknowledged": True, "acknowledged_by": ctx.id, "acknowledged_at": now}
     return run(request, "admin", operation)
+
+
+@app.post('/sessions')
+def resource_login(request: Request):
+    from .federated import call
+    from federation.common import FederationError
+    try:
+        with db.connect() as conn:
+            ctx=authenticate(request,conn,login=True)
+            if not ctx.subject['active']: raise Problem('INACTIVE')
+            return call('/sessions', {'id_token':request.headers['authorization'][7:],
+                'cert_serial':request.headers.get('x-verified-serial'),
+                'mode':request.headers.get('x-verified-federation-mode'),
+                'request_id':request.state.request_id})
+    except FederationError as exc: raise Problem(exc.reason,exc.status) from None
+
+@app.post('/internal/federation-state')
+def federation_resource_state(request: Request, body: dict):
+    from .federated import local_state
+    from federation.common import FederationError
+    try: return local_state(request,body)
+    except FederationError as exc: raise Problem(exc.reason,exc.status) from None
