@@ -46,6 +46,7 @@ Web có ba cách kiểm tra: Kiểm tra khi đăng nhập; Thu hồi theo thông
 | Mục đích | Mở tài liệu |
 |---|---|
 | Đọc báo cáo nghiên cứu đầy đủ | [Báo cáo chính 38 trang](docs/bao_cao/BaoCao_BMDL_Nhom03_ZeroTrust_DaSua.docx) |
+| Đọc bản tóm tắt có hình và luồng xử lý | [Tóm tắt 10 trang](docs/bao_cao/BaoCao_TomTat_10Trang_TheoChuong.docx) |
 | Hiểu nhanh bài toán và cơ chế | [Kiến thức nền](docs/kien_thuc_nen.md), rồi [kiến trúc và luồng 10 bước](docs/architecture.md) |
 | Chạy và thử sản phẩm | [Hướng dẫn nhanh](docs/huong_dan_nhanh.md) |
 | Chuẩn bị thuyết trình | [Slide 8 trang](trinh_chieu/Slide_ThuyetTrinh_BMDL_Nhom03_PhongCachSteam.pptx) và [lời thuyết trình 10 phút](docs/script_thuyet_trinh_10_phut.md) |
@@ -73,7 +74,7 @@ Word và PowerPoint cần tải về để mở đầy đủ; GitHub không hi�
 | `infra/`, `scripts/`, `tests/`, `fixtures/` | Triển khai, chuẩn bị môi trường, bộ kiểm tra và dữ liệu mẫu |
 | `results/` | Bằng chứng theo ngày; số liệu báo cáo trong `report-20261102/`, ảnh web mới trong `report-20261107-ui/` |
 
-Các bản Word tóm tắt, slide và trang mô phỏng cũ chưa theo kiến trúc và cách gọi hiện hành không được đưa vào bộ tài liệu công bố. Báo cáo chính, slide và script ở các liên kết trên là tài liệu cần dùng.
+Báo cáo chính và bản tóm tắt trong `docs/bao_cao/` thống nhất kiến trúc và cách gọi hiện hành. Dùng các liên kết ở trên để đọc báo cáo, thuyết trình và thử sản phẩm.
 
 ## Kiểm tra sau khi khởi động
 

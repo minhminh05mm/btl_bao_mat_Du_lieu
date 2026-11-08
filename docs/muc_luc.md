@@ -7,11 +7,12 @@ Tài liệu hiện hành mô tả bên quản lý tài khoản, bộ điều ph�
 | Tài liệu | Công dụng |
 |---|---|
 | [Báo cáo chính](bao_cao/BaoCao_BMDL_Nhom03_ZeroTrust_DaSua.docx) | Nghiên cứu đầy đủ 38 trang, kiến trúc tham chiếu, thiết kế, luồng xử lý và kết quả |
+| [Tóm tắt báo cáo 10 trang](bao_cao/BaoCao_TomTat_10Trang_TheoChuong.docx) | Bốn chương rút gọn, 7 hình, 9 bảng, kiến trúc và luồng truy cập 10 bước |
 | [PowerPoint 8 slide](../trinh_chieu/Slide_ThuyetTrinh_BMDL_Nhom03_PhongCachSteam.pptx) | Thuyết trình bài toán, kiến trúc, luồng và demo |
 | [Script 10 phút](script_thuyet_trinh_10_phut.md) | Lời thuyết trình và thao tác tương ứng với slide |
 | [Ảnh web ngày 07/11/2026](../results/report-20261107-ui/) | Minh họa giao diện và các phản hồi hiện hành |
 
-Tải Word và PowerPoint về máy để đọc. Các bản tóm tắt và trình chiếu cũ chưa cập nhật được loại khỏi bộ tài liệu công bố để tránh dùng nhầm.
+Tải Word và PowerPoint về máy để đọc. Bản tóm tắt 10 trang đã được cập nhật theo báo cáo chính và cách gọi hiện hành.
 
 ## Đọc nhanh để hiểu và trình bày
 
